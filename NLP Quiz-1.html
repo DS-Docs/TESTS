@@ -1,0 +1,867 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Science & Generative AI Exam</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        h2 {
+            color: #2980b9;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question p {
+            font-weight: bold;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .answer {
+            display: none;
+            background-color: #e8f4f9;
+            padding: 10px;
+            border-left: 4px solid #2980b9;
+            margin-top: 10px;
+        }
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #e74c3c;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        .download-btn {
+            display: block;
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px 20px;
+            background: #27ae60;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .download-btn:hover {
+            background: #219653;
+        }
+        .toggle-btn {
+            cursor: pointer;
+            color: #2980b9;
+            text-decoration: underline;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        code {
+            font-family: Consolas, monospace;
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="timer" id="timer">30:00</div>
+    <div class="container">
+        <h1>Data Science & Generative AI by SATISH @ Sathya Technologies</h1>
+        <h2>NLP Programming Exam (30 Minutes)</h2>
+        
+        <div class="question">
+            <p>1. What is the primary goal of Natural Language Processing (NLP)?</p>
+            <div class="options">
+                <p>a) To process images</p>
+                <p>b) To understand and generate human language</p>
+                <p>c) To cluster numerical data</p>
+                <p>d) To optimize neural networks</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(1)">Show Answer</span>
+            <div class="answer" id="answer1">
+                <p><strong>Answer:</strong> b) To understand and generate human language</p>
+                <p><strong>Explanation:</strong> NLP focuses on enabling computers to understand, interpret, and generate human language for tasks like sentiment analysis and translation.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>2. Which Python library is commonly used for basic NLP tasks?</p>
+            <div class="options">
+                <p>a) NumPy</p>
+                <p>b) NLTK</p>
+                <p>c) Pandas</p>
+                <p>d) Matplotlib</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(2)">Show Answer</span>
+            <div class="answer" id="answer2">
+                <p><strong>Answer:</strong> b) NLTK</p>
+                <p><strong>Explanation:</strong> NLTK (Natural Language Toolkit) provides tools for text processing, tokenization, and other NLP tasks.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>3. What is tokenization in NLP?</p>
+            <div class="options">
+                <p>a) Converting text to numerical vectors</p>
+                <p>b) Splitting text into words or sentences</p>
+                <p>c) Removing stop words</p>
+                <p>d) Normalizing text</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(3)">Show Answer</span>
+            <div class="answer" id="answer3">
+                <p><strong>Answer:</strong> b) Splitting text into words or sentences</p>
+                <p><strong>Explanation:</strong> Tokenization breaks text into smaller units (tokens), such as words or sentences, for further processing.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>4. Which NLTK function performs word tokenization?</p>
+            <div class="options">
+                <p>a) <code>word_tokenize()</code></p>
+                <p>b) <code>sent_tokenize()</code></p>
+                <p>c) <code>tokenize()</code></p>
+                <p>d) <code>split_text()</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(4)">Show Answer</span>
+            <div class="answer" id="answer4">
+                <p><strong>Answer:</strong> a) <code>word_tokenize()</code></p>
+                <p><strong>Explanation:</strong> <code>word_tokenize()</code> splits text into individual words, handling punctuation and special cases.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>5. What is the purpose of stop words in NLP?</p>
+            <div class="options">
+                <p>a) To increase text length</p>
+                <p>b) To remove common words</p>
+                <p>c) To encode text</p>
+                <p>d) To generate embeddings</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(5)">Show Answer</span>
+            <div class="answer" id="answer5">
+                <p><strong>Answer:</strong> b) To remove common words</p>
+                <p><strong>Explanation:</strong> Stop words (e.g., "the", "is") are removed to reduce noise and focus on meaningful words in text analysis.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>6. Which library provides advanced NLP capabilities like NER and POS tagging?</p>
+            <div class="options">
+                <p>a) scikit-learn</p>
+                <p>b) spaCy</p>
+                <p>c) TensorFlow</p>
+                <p>d) Keras</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(6)">Show Answer</span>
+            <div class="answer" id="answer6">
+                <p><strong>Answer:</strong> b) spaCy</p>
+                <p><strong>Explanation:</strong> spaCy is a powerful NLP library for tasks like Named Entity Recognition (NER) and Part-of-Speech (POS) tagging.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>7. What does <code>spacy.load('en_core_web_sm')</code> do?</p>
+            <div class="options">
+                <p>a) Trains a model</p>
+                <p>b) Loads a pre-trained English model</p>
+                <p>c) Tokenizes text</p>
+                <p>d) Generates embeddings</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(7)">Show Answer</span>
+            <div class="answer" id="answer7">
+                <p><strong>Answer:</strong> b) Loads a pre-trained English model</p>
+                <p><strong>Explanation:</strong> <code>spacy.load('en_core_web_sm')</code> loads a small pre-trained English NLP model for processing text.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>8. What is lemmatization in NLP?</p>
+            <div class="options">
+                <p>a) Converting words to their base form</p>
+                <p>b) Removing punctuation</p>
+                <p>c) Splitting text into tokens</p>
+                <p>d) Encoding text as vectors</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(8)">Show Answer</span>
+            <div class="answer" id="answer8">
+                <p><strong>Answer:</strong> a) Converting words to their base form</p>
+                <p><strong>Explanation:</strong> Lemmatization reduces words to their root form (e.g., "running" to "run") while preserving meaning.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>9. Which NLTK function performs stemming?</p>
+            <div class="options">
+                <p>a) <code>PorterStemmer().stem()</code></p>
+                <p>b) <code>word_tokenize()</code></p>
+                <p>c) <code>lemmatize()</code></p>
+                <p>d) <code>sent_tokenize()</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(9)">Show Answer</span>
+            <div class="answer" id="answer9">
+                <p><strong>Answer:</strong> a) <code>PorterStemmer().stem()</code></p>
+                <p><strong>Explanation:</strong> <code>PorterStemmer().stem()</code> reduces words to their stem (e.g., "running" to "run") using the Porter stemming algorithm.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>10. What is Bag of Words (BoW) in NLP?</p>
+            <div class="options">
+                <p>a) A neural network model</p>
+                <p>b) A text representation method</p>
+                <p>c) A tokenization technique</p>
+                <p>d) A clustering algorithm</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(10)">Show Answer</span>
+            <div class="answer" id="answer10">
+                <p><strong>Answer:</strong> b) A text representation method</p>
+                <p><strong>Explanation:</strong> BoW represents text as a vector of word frequencies, ignoring word order and grammar.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>11. Which scikit-learn class creates a BoW representation?</p>
+            <div class="options">
+                <p>a) <code>CountVectorizer</code></p>
+                <p>b) <code>TfidfVectorizer</code></p>
+                <p>c) <code>LabelEncoder</code></p>
+                <p>d) <code>StandardScaler</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(11)">Show Answer</span>
+            <div class="answer" id="answer11">
+                <p><strong>Answer:</strong> a) <code>CountVectorizer</code></p>
+                <p><strong>Explanation:</strong> <code>CountVectorizer</code> converts text into a matrix of word counts for BoW representation.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>12. What does TF-IDF stand for in NLP?</p>
+            <div class="options">
+                <p>a) Term Frequency-Inverse Document Frequency</p>
+                <p>b) Text Feature-Important Data Frequency</p>
+                <p>c) Tokenized Feature-Indexed Document</p>
+                <p>d) Term Feature-Information Density</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(12)">Show Answer</span>
+            <div class="answer" id="answer12">
+                <p><strong>Answer:</strong> a) Term Frequency-Inverse Document Frequency</p>
+                <p><strong>Explanation:</strong> TF-IDF weights words based on their frequency in a document and rarity across documents, highlighting important terms.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>13. Which scikit-learn class computes TF-IDF?</p>
+            <div class="options">
+                <p>a) <code>CountVectorizer</code></p>
+                <p>b) <code>TfidfVectorizer</code></p>
+                <p>c) <code>LabelEncoder</code></p>
+                <p>d) <code>StandardScaler</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(13)">Show Answer</span>
+            <div class="answer" id="answer13">
+                <p><strong>Answer:</strong> b) <code>TfidfVectorizer</code></p>
+                <p><strong>Explanation:</strong> <code>TfidfVectorizer</code> transforms text into a TF-IDF feature matrix for text analysis.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>14. What are word embeddings in NLP?</p>
+            <div class="options">
+                <p>a) Sparse word vectors</p>
+                <p>b) Dense vector representations of words</p>
+                <p>c) Tokenized text</p>
+                <p>d) Stemmed words</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(14)">Show Answer</span>
+            <div class="answer" id="answer14">
+                <p><strong>Answer:</strong> b) Dense vector representations of words</p>
+                <p><strong>Explanation:</strong> Word embeddings map words to dense vectors in a continuous space, capturing semantic relationships.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>15. Which library provides pre-trained word embeddings like GloVe?</p>
+            <div class="options">
+                <p>a) NLTK</p>
+                <p>b) spaCy</p>
+                <p>c) Gensim</p>
+                <p>d) scikit-learn</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(15)">Show Answer</span>
+            <div class="answer" id="answer15">
+                <p><strong>Answer:</strong> c) Gensim</p>
+                <p><strong>Explanation:</strong> Gensim provides tools for loading and training word embeddings like Word2Vec and GloVe.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>16. What is the purpose of the <code>Word2Vec</code> model?</p>
+            <div class="options">
+                <p>a) To classify text</p>
+                <p>b) To generate word embeddings</p>
+                <p>c) To tokenize text</p>
+                <p>d) To remove stop words</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(16)">Show Answer</span>
+            <div class="answer" id="answer16">
+                <p><strong>Answer:</strong> b) To generate word embeddings</p>
+                <p><strong>Explanation:</strong> Word2Vec creates dense word vectors that capture semantic relationships based on word co-occurrence.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>17. Which neural network is best for sequential text data?</p>
+            <div class="options">
+                <p>a) CNN</p>
+                <p>b) RNN</p>
+                <p>c) Dense</p>
+                <p>d) Transformer</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(17)">Show Answer</span>
+            <div class="answer" id="answer17">
+                <p><strong>Answer:</strong> b) RNN</p>
+                <p><strong>Explanation:</strong> Recurrent Neural Networks (RNNs) are designed for sequential data, maintaining memory of previous inputs.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>18. Which Keras layer is used for processing sequential text data?</p>
+            <div class="options">
+                <p>a) <code>Conv2D</code></p>
+                <p>b) <code>LSTM</code></p>
+                <p>c) <code>MaxPooling2D</code></p>
+                <p>d) <code>Flatten</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(18)">Show Answer</span>
+            <div class="answer" id="answer18">
+                <p><strong>Answer:</strong> b) <code>LSTM</code></p>
+                <p><strong>Explanation:</strong> <code>LSTM</code> (Long Short-Term Memory) is an RNN layer for processing sequential text data.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>19. What is the purpose of the Transformer model in NLP?</p>
+            <div class="options">
+                <p>a) To preprocess text</p>
+                <p>b) To model long-range dependencies</p>
+                <p>c) To reduce dimensionality</p>
+                <p>d) To cluster text</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(19)">Show Answer</span>
+            <div class="answer" id="answer19">
+                <p><strong>Answer:</strong> b) To model long-range dependencies</p>
+                <p><strong>Explanation:</strong> Transformers use attention mechanisms to capture long-range dependencies in text, outperforming RNNs for many tasks.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>20. Which library provides pre-trained Transformer models like BERT?</p>
+            <div class="options">
+                <p>a) NLTK</p>
+                <p>b) spaCy</p>
+                <p>c) Transformers</p>
+                <p>d) Gensim</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(20)">Show Answer</span>
+            <div class="answer" id="answer20">
+                <p><strong>Answer:</strong> c) Transformers</p>
+                <p><strong>Explanation:</strong> The Hugging Face Transformers library provides pre-trained models like BERT for NLP tasks.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>21. What does the <code>Tokenizer</code> class do in Keras?</p>
+            <div class="options">
+                <p>a) Trains a model</p>
+                <p>b) Converts text to sequences of integers</p>
+                <p>c) Generates embeddings</p>
+                <p>d) Removes stop words</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(21)">Show Answer</span>
+            <div class="answer" id="answer21">
+                <p><strong>Answer:</strong> b) Converts text to sequences of integers</p>
+                <p><strong>Explanation:</strong> <code>Tokenizer</code> converts text into numerical sequences for input to neural networks.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>22. What is Named Entity Recognition (NER)?</p>
+            <div class="options">
+                <p>a) Classifying text sentiment</p>
+                <p>b) Identifying entities like names and locations</p>
+                <p>c) Generating text</p>
+                <p>d) Tokenizing text</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(22)">Show Answer</span>
+            <div class="answer" id="answer22">
+                <p><strong>Answer:</strong> b) Identifying entities like names and locations</p>
+                <p><strong>Explanation:</strong> NER identifies and classifies named entities (e.g., person, organization) in text.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>23. Which spaCy attribute extracts entities from text?</p>
+            <div class="options">
+                <p>a) <code>doc.ents</code></p>
+                <p>b) <code>doc.tokens</code></p>
+                <p>c) <code>doc.pos</code></p>
+                <p>d) <code>doc.sentences</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(23)">Show Answer</span>
+            <div class="answer" id="answer23">
+                <p><strong>Answer:</strong> a) <code>doc.ents</code></p>
+                <p><strong>Explanation:</strong> <code>doc.ents</code> returns a list of named entities extracted from a processed spaCy document.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>24. What is the purpose of the attention mechanism in Transformers?</p>
+            <div class="options">
+                <p>a) To reduce model size</p>
+                <p>b) To focus on relevant parts of input</p>
+                <p>c) To normalize data</p>
+                <p>d) To split text</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(24)">Show Answer</span>
+            <div class="answer" id="answer24">
+                <p><strong>Answer:</strong> b) To focus on relevant parts of input</p>
+                <p><strong>Explanation:</strong> Attention mechanisms allow Transformers to weigh the importance of different words in a sequence.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>25. Which function loads a pre-trained BERT model in Transformers?</p>
+            <div class="options">
+                <p>a) <code>TFBertModel.from_pretrained()</code></p>
+                <p>b) <code>load_bert()</code></p>
+                <p>c) <code>bert_model()</code></p>
+                <p>d) <code>fit_bert()</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(25)">Show Answer</span>
+            <div class="answer" id="answer25">
+                <p><strong>Answer:</strong> a) <code>TFBertModel.from_pretrained()</code></p>
+                <p><strong>Explanation:</strong> <code>TFBertModel.from_pretrained()</code> loads a pre-trained BERT model from Hugging Face’s model hub.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>26. What is sentiment analysis in NLP?</p>
+            <div class="options">
+                <p>a) Generating text</p>
+                <p>b) Classifying text as positive, negative, or neutral</p>
+                <p>c) Tokenizing text</p>
+                <p>d) Extracting entities</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(26)">Show Answer</span>
+            <div class="answer" id="answer26">
+                <p><strong>Answer:</strong> b) Classifying text as positive, negative, or neutral</p>
+                <p><strong>Explanation:</strong> Sentiment analysis determines the emotional tone of text, often used in reviews or social media analysis.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>27. Which Keras layer is used for word embeddings?</p>
+            <div class="options">
+                <p>a) <code>Embedding</code></p>
+                <p>b) <code>LSTM</code></p>
+                <p>c) <code>Dense</code></p>
+                <p>d) <code>Conv1D</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(27)">Show Answer</span>
+            <div class="answer" id="answer27">
+                <p><strong>Answer:</strong> a) <code>Embedding</code></p>
+                <p><strong>Explanation:</strong> The <code>Embedding</code> layer maps integer-encoded words to dense vectors for NLP tasks.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>28. What is the purpose of padding in NLP?</p>
+            <div class="options">
+                <p>a) To remove stop words</p>
+                <p>b) To ensure equal sequence lengths</p>
+                <p>c) To generate embeddings</p>
+                <p>d) To classify text</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(28)">Show Answer</span>
+            <div class="answer" id="answer28">
+                <p><strong>Answer:</strong> b) To ensure equal sequence lengths</p>
+                <p><strong>Explanation:</strong> Padding adds tokens to make all sequences the same length for batch processing in neural networks.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>29. Which Keras function pads sequences?</p>
+            <div class="options">
+                <p>a) <code>pad_sequences()</code></p>
+                <p>b) <code>pad_text()</code></p>
+                <p>c) <code>sequence_pad()</code></p>
+                <p>d) <code>fit_sequences()</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(29)">Show Answer</span>
+            <div class="answer" id="answer29">
+                <p><strong>Answer:</strong> a) <code>pad_sequences()</code></p>
+                <p><strong>Explanation:</strong> <code>pad_sequences()</code> pads or truncates sequences to a fixed length for neural network input.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>30. What is transfer learning in NLP?</p>
+            <div class="options">
+                <p>a) Training a model from scratch</p>
+                <p>b) Using a pre-trained model for a new task</p>
+                <p>c) Splitting text into tokens</p>
+                <p>d) Removing stop words</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(30)">Show Answer</span>
+            <div class="answer" id="answer30">
+                <p><strong>Answer:</strong> b) Using a pre-trained model for a new task</p>
+                <p><strong>Explanation:</strong> Transfer learning uses pre-trained models like BERT and fine-tunes them for specific NLP tasks, saving training time.</p>
+            </div>
+        </div>
+
+        <a href="#" class="download-btn" onclick="downloadTest()">Download Exam (TXT)</a>
+    </div>
+
+    <script>
+        // Timer functionality
+        let timeLeft = 30 * 60; // 30 minutes in seconds
+        const timerDisplay = document.getElementById('timer');
+        
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                timerDisplay.textContent = "Time's Up!";
+                alert("Time is up!");
+            } else {
+                timeLeft--;
+            }
+        }
+        const timerInterval = setInterval(updateTimer, 1000);
+
+        // Toggle answer visibility
+        function toggleAnswer(id) {
+            const answer = document.getElementById(`answer${id}`);
+            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Download exam as a text file
+        function downloadTest() {
+            const content = `
+Data Science & Generative AI by SATISH @ Sathya Technologies
+NLP Programming Exam (30 Minutes)
+
+1. What is the primary goal of Natural Language Processing (NLP)?
+a) To process images
+b) To understand and generate human language
+c) To cluster numerical data
+d) To optimize neural networks
+Answer: b) To understand and generate human language
+Explanation: NLP focuses on enabling computers to understand, interpret, and generate human language for tasks like sentiment analysis and translation.
+
+2. Which Python library is commonly used for basic NLP tasks?
+a) NumPy
+b) NLTK
+c) Pandas
+d) Matplotlib
+Answer: b) NLTK
+Explanation: NLTK (Natural Language Toolkit) provides tools for text processing, tokenization, and other NLP tasks.
+
+3. What is tokenization in NLP?
+a) Converting text to numerical vectors
+b) Splitting text into words or sentences
+c) Removing stop words
+d) Normalizing text
+Answer: b) Splitting text into words or sentences
+Explanation: Tokenization breaks text into smaller units (tokens), such as words or sentences, for further processing.
+
+4. Which NLTK function performs word tokenization?
+a) word_tokenize()
+b) sent_tokenize()
+c) tokenize()
+d) split_text()
+Answer: a) word_tokenize()
+Explanation: word_tokenize() splits text into individual words, handling punctuation and special cases.
+
+5. What is the purpose of stop words in NLP?
+a) To increase text length
+b) To remove common words
+c) To encode text
+d) To generate embeddings
+Answer: b) To remove common words
+Explanation: Stop words (e.g., "the", "is") are removed to reduce noise and focus on meaningful words in text analysis.
+
+6. Which library provides advanced NLP capabilities like NER and POS tagging?
+a) scikit-learn
+b) spaCy
+c) TensorFlow
+d) Keras
+Answer: b) spaCy
+Explanation: spaCy is a powerful NLP library for tasks like Named Entity Recognition (NER) and Part-of-Speech (POS) tagging.
+
+7. What does spacy.load('en_core_web_sm') do?
+a) Trains a model
+b) Loads a pre-trained English model
+c) Tokenizes text
+d) Generates embeddings
+Answer: b) Loads a pre-trained English model
+Explanation: spacy.load('en_core_web_sm') loads a small pre-trained English NLP model for processing text.
+
+8. What is lemmatization in NLP?
+a) Converting words to their base form
+b) Removing punctuation
+c) Splitting text into tokens
+d) Encoding text as vectors
+Answer: a) Converting words to their base form
+Explanation: Lemmatization reduces words to their root form (e.g., "running" to "run") while preserving meaning.
+
+9. Which NLTK function performs stemming?
+a) PorterStemmer().stem()
+b) word_tokenize()
+c) lemmatize()
+d) sent_tokenize()
+Answer: a) PorterStemmer().stem()
+Explanation: PorterStemmer().stem() reduces words to their stem (e.g., "running" to "run") using the Porter stemming algorithm.
+
+10. What is Bag of Words (BoW) in NLP?
+a) A neural network model
+b) A text representation method
+c) A tokenization technique
+d) A clustering algorithm
+Answer: b) A text representation method
+Explanation: BoW represents text as a vector of word frequencies, ignoring word order and grammar.
+
+11. Which scikit-learn class creates a BoW representation?
+a) CountVectorizer
+b) TfidfVectorizer
+c) LabelEncoder
+d) StandardScaler
+Answer: a) CountVectorizer
+Explanation: CountVectorizer converts text into a matrix of word counts for BoW representation.
+
+12. What does TF-IDF stand for in NLP?
+a) Term Frequency-Inverse Document Frequency
+b) Text Feature-Important Data Frequency
+c) Tokenized Feature-Indexed Document
+d) Term Feature-Information Density
+Answer: a) Term Frequency-Inverse Document Frequency
+Explanation: TF-IDF weights words based on their frequency in a document and rarity across documents, highlighting important terms.
+
+13. Which scikit-learn class computes TF-IDF?
+a) CountVectorizer
+b) TfidfVectorizer
+c) LabelEncoder
+d) StandardScaler
+Answer: b) TfidfVectorizer
+Explanation: TfidfVectorizer transforms text into a TF-IDF feature matrix for text analysis.
+
+14. What are word embeddings in NLP?
+a) Sparse word vectors
+b) Dense vector representations of words
+c) Tokenized text
+d) Stemmed words
+Answer: b) Dense vector representations of words
+Explanation: Word embeddings map words to dense vectors in a continuous space, capturing semantic relationships.
+
+15. Which library provides pre-trained word embeddings like GloVe?
+a) NLTK
+b) spaCy
+c) Gensim
+d) scikit-learn
+Answer: c) Gensim
+Explanation: Gensim provides tools for loading and training word embeddings like Word2Vec and GloVe.
+
+16. What is the purpose of the Word2Vec model?
+a) To classify text
+b) To generate word embeddings
+c) To tokenize text
+d) To remove stop words
+Answer: b) To generate word embeddings
+Explanation: Word2Vec creates dense word vectors that capture semantic relationships based on word co-occurrence.
+
+17. Which neural network is best for sequential text data?
+a) CNN
+b) RNN
+c) Dense
+d) Transformer
+Answer: b) RNN
+Explanation: Recurrent Neural Networks (RNNs) are designed for sequential data, maintaining memory of previous inputs.
+
+18. Which Keras layer is used for processing sequential text data?
+a) Conv2D
+b) LSTM
+c) MaxPooling2D
+d) Flatten
+Answer: b) LSTM
+Explanation: LSTM (Long Short-Term Memory) is an RNN layer for processing sequential text data.
+
+19. What is the purpose of the Transformer model in NLP?
+a) To preprocess text
+b) To model long-range dependencies
+c) To reduce dimensionality
+d) To cluster text
+Answer: b) To model long-range dependencies
+Explanation: Transformers use attention mechanisms to capture long-range dependencies in text, outperforming RNNs for many tasks.
+
+20. Which library provides pre-trained Transformer models like BERT?
+a) NLTK
+b) spaCy
+c) Transformers
+d) Gensim
+Answer: c) Transformers
+Explanation: The Hugging Face Transformers library provides pre-trained models like BERT for NLP tasks.
+
+21. What does the Tokenizer class do in Keras?
+a) Trains a model
+b) Converts text to sequences of integers
+c) Generates embeddings
+d) Removes stop words
+Answer: b) Converts text to sequences of integers
+Explanation: Tokenizer converts text into numerical sequences for input to neural networks.
+
+22. What is Named Entity Recognition (NER)?
+a) Classifying text sentiment
+b) Identifying entities like names and locations
+c) Generating text
+d) Tokenizing text
+Answer: b) Identifying entities like names and locations
+Explanation: NER identifies and classifies named entities (e.g., person, organization) in text.
+
+23. Which spaCy attribute extracts entities from text?
+a) doc.ents
+b) doc.tokens
+c) doc.pos
+d) doc.sentences
+Answer: a) doc.ents
+Explanation: doc.ents returns a list of named entities extracted from a processed spaCy document.
+
+24. What is the purpose of the attention mechanism in Transformers?
+a) To reduce model size
+b) To focus on relevant parts of input
+c) To normalize data
+d) To split text
+Answer: b) To focus on relevant parts of input
+Explanation: Attention mechanisms allow Transformers to weigh the importance of different words in a sequence.
+
+25. Which function loads a pre-trained BERT model in Transformers?
+a) TFBertModel.from_pretrained()
+b) load_bert()
+c) bert_model()
+d) fit_bert()
+Answer: a) TFBertModel.from_pretrained()
+Explanation: TFBertModel.from_pretrained() loads a pre-trained BERT model from Hugging Face’s model hub.
+
+26. What is sentiment analysis in NLP?
+a) Generating text
+b) Classifying text as positive, negative, or neutral
+c) Tokenizing text
+d) Extracting entities
+Answer: b) Classifying text as positive, negative, or neutral
+Explanation: Sentiment analysis determines the emotional tone of text, often used in reviews or social media analysis.
+
+27. Which Keras layer is used for word embeddings?
+a) Embedding
+b) LSTM
+c) Dense
+d) Conv1D
+Answer: a) Embedding
+Explanation: The Embedding layer maps integer-encoded words to dense vectors for NLP tasks.
+
+28. What is the purpose of padding in NLP?
+a) To remove stop words
+b) To ensure equal sequence lengths
+c) To generate embeddings
+d) To classify text
+Answer: b) To ensure equal sequence lengths
+Explanation: Padding adds tokens to make all sequences the same length for batch processing in neural networks.
+
+29. Which Keras function pads sequences?
+a) pad_sequences()
+b) pad_text()
+c) sequence_pad()
+d) fit_sequences()
+Answer: a) pad_sequences()
+Explanation: pad_sequences() pads or truncates sequences to a fixed length for neural network input.
+
+30. What is transfer learning in NLP?
+a) Training a model from scratch
+b) Using a pre-trained model for a new task
+c) Splitting text into tokens
+d) Removing stop words
+Answer: b) Using a pre-trained model for a new task
+Explanation: Transfer learning uses pre-trained models like BERT and fine-tunes them for specific NLP tasks, saving training time.
+            `;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'nlp_exam_30q.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>

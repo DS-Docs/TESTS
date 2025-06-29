@@ -1,0 +1,867 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Science & Generative AI Exam</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        h2 {
+            color: #2980b9;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question p {
+            font-weight: bold;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .answer {
+            display: none;
+            background-color: #e8f4f9;
+            padding: 10px;
+            border-left: 4px solid #2980b9;
+            margin-top: 10px;
+        }
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #e74c3c;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        .download-btn {
+            display: block;
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px 20px;
+            background: #27ae60;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .download-btn:hover {
+            background: #219653;
+        }
+        .toggle-btn {
+            cursor: pointer;
+            color: #2980b9;
+            text-decoration: underline;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        code {
+            font-family: Consolas, monospace;
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="timer" id="timer">30:00</div>
+    <div class="container">
+        <h1>Data Science & Generative AI by SATISH @ Sathya Technologies</h1>
+        <h2>LLM Programming Exam (30 Minutes)</h2>
+        
+        <div class="question">
+            <p>1. What is a Large Language Model (LLM)?</p>
+            <div class="options">
+                <p>a) A model for image processing</p>
+                <p>b) A neural network for natural language tasks</p>
+                <p>c) A clustering algorithm</p>
+                <p>d) A data preprocessing tool</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(1)">Show Answer</span>
+            <div class="answer" id="answer1">
+                <p><strong>Answer:</strong> b) A neural network for natural language tasks</p>
+                <p><strong>Explanation:</strong> LLMs are neural networks, typically based on transformers, designed for tasks like text generation and translation.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>2. Which architecture is the foundation of most LLMs?</p>
+            <div class="options">
+                <p>a) CNN</p>
+                <p>b) RNN</p>
+                <p>c) Transformer</p>
+                <p>d) Dense</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(2)">Show Answer</span>
+            <div class="answer" id="answer2">
+                <p><strong>Answer:</strong> c) Transformer</p>
+                <p><strong>Explanation:</strong> Transformers, with their attention mechanisms, are the backbone of modern LLMs like BERT and GPT.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>3. What is the primary role of the attention mechanism in LLMs?</p>
+            <div class="options">
+                <p>a) To normalize inputs</p>
+                <p>b) To focus on relevant parts of input</p>
+                <p>c) To reduce model size</p>
+                <p>d) To optimize weights</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(3)">Show Answer</span>
+            <div class="answer" id="answer3">
+                <p><strong>Answer:</strong> b) To focus on relevant parts of input</p>
+                <p><strong>Explanation:</strong> Attention mechanisms weigh the importance of different words in a sequence, enabling LLMs to capture context.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>4. Which library is commonly used for working with LLMs?</p>
+            <div class="options">
+                <p>a) NLTK</p>
+                <p>b) Transformers</p>
+                <p>c) scikit-learn</p>
+                <p>d) Matplotlib</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(4)">Show Answer</span>
+            <div class="answer" id="answer4">
+                <p><strong>Answer:</strong> b) Transformers</p>
+                <p><strong>Explanation:</strong> The Hugging Face Transformers library provides pre-trained LLMs and tools for fine-tuning and inference.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>5. What does <code>AutoModel.from_pretrained()</code> do in the Transformers library?</p>
+            <div class="options">
+                <p>a) Trains a new model</p>
+                <p>b) Loads a pre-trained model</p>
+                <p>c) Tokenizes text</p>
+                <p>d) Evaluates a model</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(5)">Show Answer</span>
+            <div class="answer" id="answer5">
+                <p><strong>Answer:</strong> b) Loads a pre-trained model</p>
+                <p><strong>Explanation:</strong> <code>AutoModel.from_pretrained()</code> loads a pre-trained model from Hugging Face’s model hub.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>6. What is tokenization in the context of LLMs?</p>
+            <div class="options">
+                <p>a) Converting text to numerical representations</p>
+                <p>b) Removing stop words</p>
+                <p>c) Normalizing text</p>
+                <p>d) Generating text</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(6)">Show Answer</span>
+            <div class="answer" id="answer6">
+                <p><strong>Answer:</strong> a) Converting text to numerical representations</p>
+                <p><strong>Explanation:</strong> Tokenization splits text into tokens and maps them to numerical IDs for LLM input.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>7. Which class in the Transformers library handles tokenization?</p>
+            <div class="options">
+                <p>a) <code>AutoTokenizer</code></p>
+                <p>b) <code>AutoModel</code></p>
+                <p>c) <code>Pipeline</code></p>
+                <p>d) <code>Trainer</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(7)">Show Answer</span>
+            <div class="answer" id="answer7">
+                <p><strong>Answer:</strong> a) <code>AutoTokenizer</code></p>
+                <p><strong>Explanation:</strong> <code>AutoTokenizer</code> loads a tokenizer specific to a pre-trained model for text preprocessing.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>8. What is fine-tuning in the context of LLMs?</p>
+            <div class="options">
+                <p>a) Training a model from scratch</p>
+                <p>b) Adapting a pre-trained model to a specific task</p>
+                <p>c) Reducing model size</p>
+                <p>d) Tokenizing text</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(8)">Show Answer</span>
+            <div class="answer" id="answer8">
+                <p><strong>Answer:</strong> b) Adapting a pre-trained model to a specific task</p>
+                <p><strong>Explanation:</strong> Fine-tuning adjusts a pre-trained LLM on a specific dataset to improve performance for a targeted task.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>9. Which class in the Transformers library is used for fine-tuning?</p>
+            <div class="options">
+                <p>a) <code>AutoModel</code></p>
+                <p>b) <code>Trainer</code></p>
+                <p>c) <code>AutoTokenizer</code></p>
+                <p>d) <code>Pipeline</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(9)">Show Answer</span>
+            <div class="answer" id="answer9">
+                <p><strong>Answer:</strong> b) <code>Trainer</code></p>
+                <p><strong>Explanation:</strong> The <code>Trainer</code> class simplifies fine-tuning of pre-trained models in the Transformers library.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>10. What is the purpose of the <code>Pipeline</code> class in Transformers?</p>
+            <div class="options">
+                <p>a) To tokenize text</p>
+                <p>b) To simplify common NLP tasks</p>
+                <p>c) To train models</p>
+                <p>d) To reduce model size</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(10)">Show Answer</span>
+            <div class="answer" id="answer10">
+                <p><strong>Answer:</strong> b) To simplify common NLP tasks</p>
+                <p><strong>Explanation:</strong> The <code>Pipeline</code> class provides a high-level API for tasks like text classification and generation.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>11. Which model is an example of a decoder-only LLM?</p>
+            <div class="options">
+                <p>a) BERT</p>
+                <p>b) GPT</p>
+                <p>c) T5</p>
+                <p>d) RoBERTa</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(11)">Show Answer</span>
+            <div class="answer" id="answer11">
+                <p><strong>Answer:</strong> b) GPT</p>
+                <p><strong>Explanation:</strong> GPT (Generative Pre-trained Transformer) is a decoder-only model optimized for text generation.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>12. Which model is an example of an encoder-only LLM?</p>
+            <div class="options">
+                <p>a) GPT</p>
+                <p>b) BERT</p>
+                <p>c) LLaMA</p>
+                <p>d) T5</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(12)">Show Answer</span>
+            <div class="answer" id="answer12">
+                <p><strong>Answer:</strong> b) BERT</p>
+                <p><strong>Explanation:</strong> BERT (Bidirectional Encoder Representations from Transformers) is an encoder-only model for tasks like classification.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>13. What is the purpose of positional encoding in transformers?</p>
+            <div class="options">
+                <p>a) To normalize inputs</p>
+                <p>b) To encode word order</p>
+                <p>c) To reduce dimensions</p>
+                <p>d) To optimize weights</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(13)">Show Answer</span>
+            <div class="answer" id="answer13">
+                <p><strong>Answer:</strong> b) To encode word order</p>
+                <p><strong>Explanation:</strong> Positional encoding adds information about the position of tokens in a sequence, as transformers lack inherent order awareness.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>14. What does the <code>attention_mask</code> do in transformer models?</p>
+            <div class="options">
+                <p>a) Normalizes token embeddings</p>
+                <p>b) Ignores padding tokens during attention</p>
+                <p>c) Trains the model</p>
+                <p>d) Generates text</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(14)">Show Answer</span>
+            <div class="answer" id="answer14">
+                <p><strong>Answer:</strong> b) Ignores padding tokens during attention</p>
+                <p><strong>Explanation:</strong> The <code>attention_mask</code> ensures padding tokens are ignored in attention calculations for proper processing.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>15. Which function generates text using a pre-trained LLM in Transformers?</p>
+            <div class="options">
+                <p>a) <code>generate()</code></p>
+                <p>b) <code>fit()</code></p>
+                <p>c) <code>predict()</code></p>
+                <p>d) <code>evaluate()</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(15)">Show Answer</span>
+            <div class="answer" id="answer15">
+                <p><strong>Answer:</strong> a) <code>generate()</code></p>
+                <p><strong>Explanation:</strong> The <code>generate()</code> method in Transformers generates text based on input prompts for models like GPT.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>16. What is the purpose of the <code>max_length</code> parameter in text generation?</p>
+            <div class="options">
+                <p>a) To set the learning rate</p>
+                <p>b) To limit the length of generated text</p>
+                <p>c) To normalize inputs</p>
+                <p>d) To split data</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(16)">Show Answer</span>
+            <div class="answer" id="answer16">
+                <p><strong>Answer:</strong> b) To limit the length of generated text</p>
+                <p><strong>Explanation:</strong> <code>max_length</code> controls the maximum number of tokens in the generated output.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>17. Which task is BERT best suited for?</p>
+            <div class="options">
+                <p>a) Text generation</p>
+                <p>b) Text classification</p>
+                <p>c) Image processing</p>
+                <p>d) Clustering</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(17)">Show Answer</span>
+            <div class="answer" id="answer17">
+                <p><strong>Answer:</strong> b) Text classification</p>
+                <p><strong>Explanation:</strong> BERT’s bidirectional encoder is ideal for understanding tasks like sentiment analysis and classification.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>18. What is the purpose of the <code>CLS</code> token in BERT?</p>
+            <div class="options">
+                <p>a) To generate text</p>
+                <p>b) To represent the entire sequence</p>
+                <p>c) To pad sequences</p>
+                <p>d) To normalize embeddings</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(18)">Show Answer</span>
+            <div class="answer" id="answer18">
+                <p><strong>Answer:</strong> b) To represent the entire sequence</p>
+                <p><strong>Explanation:</strong> The <code>CLS</code> token’s embedding is used for sequence-level tasks like classification in BERT.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>19. Which model is designed for both encoder and decoder tasks?</p>
+            <div class="options">
+                <p>a) BERT</p>
+                <p>b) GPT</p>
+                <p>c) T5</p>
+                <p>d) RoBERTa</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(19)">Show Answer</span>
+            <div class="answer" id="answer19">
+                <p><strong>Answer:</strong> c) T5</p>
+                <p><strong>Explanation:</strong> T5 (Text-to-Text Transfer Transformer) frames all NLP tasks as text-to-text, using both encoder and decoder.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>20. What is the purpose of the <code>TrainingArguments</code> class in Transformers?</p>
+            <div class="options">
+                <p>a) To tokenize text</p>
+                <p>b) To configure training parameters</p>
+                <p>c) To generate text</p>
+                <p>d) To evaluate models</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(20)">Show Answer</span>
+            <div class="answer" id="answer20">
+                <p><strong>Answer:</strong> b) To configure training parameters</p>
+                <p><strong>Explanation:</strong> <code>TrainingArguments</code> specifies hyperparameters like learning rate and batch size for fine-tuning.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>21. What is prompt engineering in LLMs?</p>
+            <div class="options">
+                <p>a) Designing model architecture</p>
+                <p>b) Crafting inputs to guide model output</p>
+                <p>c) Training a model</p>
+                <p>d) Reducing model size</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(21)">Show Answer</span>
+            <div class="answer" id="answer21">
+                <p><strong>Answer:</strong> b) Crafting inputs to guide model output</p>
+                <p><strong>Explanation:</strong> Prompt engineering involves designing input prompts to elicit desired responses from LLMs.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>22. What is the purpose of the <code>pad_token_id</code> in tokenization?</p>
+            <div class="options">
+                <p>a) To encode word order</p>
+                <p>b) To mark padding tokens</p>
+                <p>c) To generate text</p>
+                <p>d) To normalize embeddings</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(22)">Show Answer</span>
+            <div class="answer" id="answer22">
+                <p><strong>Answer:</strong> b) To mark padding tokens</p>
+                <p><strong>Explanation:</strong> <code>pad_token_id</code> identifies padding tokens to ensure uniform sequence lengths for batch processing.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>23. Which parameter controls the randomness of text generation in LLMs?</p>
+            <div class="options">
+                <p>a) <code>max_length</code></p>
+                <p>b) <code>temperature</code></p>
+                <p>c) <code>learning_rate</code></p>
+                <p>d) <code>batch_size</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(23)">Show Answer</span>
+            <div class="answer" id="answer23">
+                <p><strong>Answer:</strong> b) <code>temperature</code></p>
+                <p><strong>Explanation:</strong> <code>temperature</code> adjusts the randomness of generated text, with higher values increasing diversity.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>24. What is the purpose of the <code>top_k</code> parameter in text generation?</p>
+            <div class="options">
+                <p>a) To limit sequence length</p>
+                <p>b) To sample from the top k probable tokens</p>
+                <p>c) To set the learning rate</p>
+                <p>d) To normalize inputs</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(24)">Show Answer</span>
+            <div class="answer" id="answer24">
+                <p><strong>Answer:</strong> b) To sample from the top k probable tokens</p>
+                <p><strong>Explanation:</strong> <code>top_k</code> restricts sampling to the k most likely tokens, controlling generation diversity.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>25. What is the role of the <code>SEP</code> token in BERT?</p>
+            <div class="options">
+                <p>a) To generate text</p>
+                <p>b) To separate input sequences</p>
+                <p>c) To pad sequences</p>
+                <p>d) To normalize embeddings</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(25)">Show Answer</span>
+            <div class="answer" id="answer25">
+                <p><strong>Answer:</strong> b) To separate input sequences</p>
+                <p><strong>Explanation:</strong> The <code>SEP</code> token separates two input sequences (e.g., question and answer) in BERT.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>26. Which task is GPT best suited for?</p>
+            <div class="options">
+                <p>a) Text classification</p>
+                <p>b) Text generation</p>
+                <p>c) Image processing</p>
+                <p>d) Clustering</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(26)">Show Answer</span>
+            <div class="answer" id="answer26">
+                <p><strong>Answer:</strong> b) Text generation</p>
+                <p><strong>Explanation:</strong> GPT’s decoder-only architecture is optimized for generating coherent text based on prompts.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>27. What is LoRA in the context of LLMs?</p>
+            <div class="options">
+                <p>a) A tokenization method</p>
+                <p>b) A fine-tuning technique</p>
+                <p>c) A text generation algorithm</p>
+                <p>d) A model architecture</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(27)">Show Answer</span>
+            <div class="answer" id="answer27">
+                <p><strong>Answer:</strong> b) A fine-tuning technique</p>
+                <p><strong>Explanation:</strong> LoRA (Low-Rank Adaptation) is an efficient fine-tuning method that updates a small subset of parameters.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>28. What is the purpose of the <code>num_beams</code> parameter in text generation?</p>
+            <div class="options">
+                <p>a) To set the learning rate</p>
+                <p>b) To control beam search width</p>
+                <p>c) To normalize inputs</p>
+                <p>d) To pad sequences</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(28)">Show Answer</span>
+            <div class="answer" id="answer28">
+                <p><strong>Answer:</strong> b) To control beam search width</p>
+                <p><strong>Explanation:</strong> <code>num_beams</code> sets the number of beams in beam search, improving text generation quality.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>29. Which method evaluates an LLM’s performance on a dataset?</p>
+            <div class="options">
+                <p>a) <code>generate()</code></p>
+                <p>b) <code>evaluate()</code></p>
+                <p>c) <code>fit()</code></p>
+                <p>d) <code>predict()</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(29)">Show Answer</span>
+            <div class="answer" id="answer29">
+                <p><strong>Answer:</strong> b) <code>evaluate()</code></p>
+                <p><strong>Explanation:</strong> The <code>evaluate()</code> method in the Transformers <code>Trainer</code> class computes metrics on a test dataset.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>30. What is transfer learning in the context of LLMs?</p>
+            <div class="options">
+                <p>a) Training a model from scratch</p>
+                <p>b) Using a pre-trained model for a new task</p>
+                <p>c) Splitting data into subsets</p>
+                <p>d) Reducing model size</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(30)">Show Answer</span>
+            <div class="answer" id="answer30">
+                <p><strong>Answer:</strong> b) Using a pre-trained model for a new task</p>
+                <p><strong>Explanation:</strong> Transfer learning uses pre-trained LLMs (e.g., BERT, GPT) and fine-tunes them for specific tasks, saving training time.</p>
+            </div>
+        </div>
+
+        <a href="#" class="download-btn" onclick="downloadTest()">Download Exam (TXT)</a>
+    </div>
+
+    <script>
+        // Timer functionality
+        let timeLeft = 30 * 60; // 30 minutes in seconds
+        const timerDisplay = document.getElementById('timer');
+        
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                timerDisplay.textContent = "Time's Up!";
+                alert("Time is up!");
+            } else {
+                timeLeft--;
+            }
+        }
+        const timerInterval = setInterval(updateTimer, 1000);
+
+        // Toggle answer visibility
+        function toggleAnswer(id) {
+            const answer = document.getElementById(`answer${id}`);
+            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Download exam as a text file
+        function downloadTest() {
+            const content = `
+Data Science & Generative AI by SATISH @ Sathya Technologies
+LLM Programming Exam (30 Minutes)
+
+1. What is a Large Language Model (LLM)?
+a) A model for image processing
+b) A neural network for natural language tasks
+c) A clustering algorithm
+d) A data preprocessing tool
+Answer: b) A neural network for natural language tasks
+Explanation: LLMs are neural networks, typically based on transformers, designed for tasks like text generation and translation.
+
+2. Which architecture is the foundation of most LLMs?
+a) CNN
+b) RNN
+c) Transformer
+d) Dense
+Answer: c) Transformer
+Explanation: Transformers, with their attention mechanisms, are the backbone of modern LLMs like BERT and GPT.
+
+3. What is the primary role of the attention mechanism in LLMs?
+a) To normalize inputs
+b) To focus on relevant parts of input
+c) To reduce model size
+d) To optimize weights
+Answer: b) To focus on relevant parts of input
+Explanation: Attention mechanisms weigh the importance of different words in a sequence, enabling LLMs to capture context.
+
+4. Which library is commonly used for working with LLMs?
+a) NLTK
+b) Transformers
+c) scikit-learn
+d) Matplotlib
+Answer: b) Transformers
+Explanation: The Hugging Face Transformers library provides pre-trained LLMs and tools for fine-tuning and inference.
+
+5. What does AutoModel.from_pretrained() do in the Transformers library?
+a) Trains a new model
+b) Loads a pre-trained model
+c) Tokenizes text
+d) Evaluates a model
+Answer: b) Loads a pre-trained model
+Explanation: AutoModel.from_pretrained() loads a pre-trained model from Hugging Face’s model hub.
+
+6. What is tokenization in the context of LLMs?
+a) Converting text to numerical representations
+b) Removing stop words
+c) Normalizing text
+d) Generating text
+Answer: a) Converting text to numerical representations
+Explanation: Tokenization splits text into tokens and maps them to numerical IDs for LLM input.
+
+7. Which class in the Transformers library handles tokenization?
+a) AutoTokenizer
+b) AutoModel
+c) Pipeline
+d) Trainer
+Answer: a) AutoTokenizer
+Explanation: AutoTokenizer loads a tokenizer specific to a pre-trained model for text preprocessing.
+
+8. What is fine-tuning in the context of LLMs?
+a) Training a model from scratch
+b) Adapting a pre-trained model to a specific task
+c) Reducing model size
+d) Tokenizing text
+Answer: b) Adapting a pre-trained model to a specific task
+Explanation: Fine-tuning adjusts a pre-trained LLM on a specific dataset to improve performance for a targeted task.
+
+9. Which class in the Transformers library is used for fine-tuning?
+a) AutoModel
+b) Trainer
+c) AutoTokenizer
+d) Pipeline
+Answer: b) Trainer
+Explanation: The Trainer class simplifies fine-tuning of pre-trained models in the Transformers library.
+
+10. What is the purpose of the Pipeline class in Transformers?
+a) To tokenize text
+b) To simplify common NLP tasks
+c) To train models
+d) To reduce model size
+Answer: b) To simplify common NLP tasks
+Explanation: The Pipeline class provides a high-level API for tasks like text classification and generation.
+
+11. Which model is an example of a decoder-only LLM?
+a) BERT
+b) GPT
+c) T5
+d) RoBERTa
+Answer: b) GPT
+Explanation: GPT (Generative Pre-trained Transformer) is a decoder-only model optimized for text generation.
+
+12. Which model is an example of an encoder-only LLM?
+a) GPT
+b) BERT
+c) LLaMA
+d) T5
+Answer: b) BERT
+Explanation: BERT (Bidirectional Encoder Representations from Transformers) is an encoder-only model for tasks like classification.
+
+13. What is the purpose of positional encoding in transformers?
+a) To normalize inputs
+b) To encode word order
+c) To reduce dimensions
+d) To optimize weights
+Answer: b) To encode word order
+Explanation: Positional encoding adds information about the position of tokens in a sequence, as transformers lack inherent order awareness.
+
+14. What does the attention_mask do in transformer models?
+a) Normalizes token embeddings
+b) Ignores padding tokens during attention
+c) Trains the model
+d) Generates text
+Answer: b) Ignores padding tokens during attention
+Explanation: The attention_mask ensures padding tokens are ignored in attention calculations for proper processing.
+
+15. Which function generates text using a pre-trained LLM in Transformers?
+a) generate()
+b) fit()
+c) predict()
+d) evaluate()
+Answer: a) generate()
+Explanation: The generate() method in Transformers generates text based on input prompts for models like GPT.
+
+16. What is the purpose of the max_length parameter in text generation?
+a) To set the learning rate
+b) To limit the length of generated text
+c) To normalize inputs
+d) To split data
+Answer: b) To limit the length of generated text
+Explanation: max_length controls the maximum number of tokens in the generated output.
+
+17. Which task is BERT best suited for?
+a) Text generation
+b) Text classification
+c) Image processing
+d) Clustering
+Answer: b) Text classification
+Explanation: BERT’s bidirectional encoder is ideal for understanding tasks like sentiment analysis and classification.
+
+18. What is the purpose of the CLS token in BERT?
+a) To generate text
+b) To represent the entire sequence
+c) To pad sequences
+d) To normalize embeddings
+Answer: b) To represent the entire sequence
+Explanation: The CLS token’s embedding is used for sequence-level tasks like classification in BERT.
+
+19. Which model is designed for both encoder and decoder tasks?
+a) BERT
+b) GPT
+c) T5
+d) RoBERTa
+Answer: c) T5
+Explanation: T5 (Text-to-Text Transfer Transformer) frames all NLP tasks as text-to-text, using both encoder and decoder.
+
+20. What is the purpose of the TrainingArguments class in Transformers?
+a) To tokenize text
+b) To configure training parameters
+c) To generate text
+d) To evaluate models
+Answer: b) To configure training parameters
+Explanation: TrainingArguments specifies hyperparameters like learning rate and batch size for fine-tuning.
+
+21. What is prompt engineering in LLMs?
+a) Designing model architecture
+b) Crafting inputs to guide model output
+c) Training a model
+d) Reducing model size
+Answer: b) Crafting inputs to guide model output
+Explanation: Prompt engineering involves designing input prompts to elicit desired responses from LLMs.
+
+22. What is the purpose of the pad_token_id in tokenization?
+a) To encode word order
+b) To mark padding tokens
+c) To generate text
+d) To normalize embeddings
+Answer: b) To mark padding tokens
+Explanation: pad_token_id identifies padding tokens to ensure uniform sequence lengths for batch processing.
+
+23. Which parameter controls the randomness of text generation in LLMs?
+a) max_length
+b) temperature
+c) learning_rate
+d) batch_size
+Answer: b) temperature
+Explanation: temperature adjusts the randomness of generated text, with higher values increasing diversity.
+
+24. What is the purpose of the top_k parameter in text generation?
+a) To limit sequence length
+b) To sample from the top k probable tokens
+c) To set the learning rate
+d) To normalize inputs
+Answer: b) To sample from the top k probable tokens
+Explanation: top_k restricts sampling to the k most likely tokens, controlling generation diversity.
+
+25. What is the role of the SEP token in BERT?
+a) To generate text
+b) To separate input sequences
+c) To pad sequences
+d) To normalize embeddings
+Answer: b) To separate input sequences
+Explanation: The SEP token separates two input sequences (e.g., question and answer) in BERT.
+
+26. Which task is GPT best suited for?
+a) Text classification
+b) Text generation
+c) Image processing
+d) Clustering
+Answer: b) Text generation
+Explanation: GPT’s decoder-only architecture is optimized for generating coherent text based on prompts.
+
+27. What is LoRA in the context of LLMs?
+a) A tokenization method
+b) A fine-tuning technique
+c) A text generation algorithm
+d) A model architecture
+Answer: b) A fine-tuning technique
+Explanation: LoRA (Low-Rank Adaptation) is an efficient fine-tuning method that updates a small subset of parameters.
+
+28. What is the purpose of the num_beams parameter in text generation?
+a) To set the learning rate
+b) To control beam search width
+c) To normalize inputs
+d) To pad sequences
+Answer: b) To control beam search width
+Explanation: num_beams sets the number of beams in beam search, improving text generation quality.
+
+29. Which method evaluates an LLM’s performance on a dataset?
+a) generate()
+b) evaluate()
+c) fit()
+d) predict()
+Answer: b) evaluate()
+Explanation: The evaluate() method in the Transformers Trainer class computes metrics on a test dataset.
+
+30. What is transfer learning in the context of LLMs?
+a) Training a model from scratch
+b) Using a pre-trained model for a new task
+c) Splitting data into subsets
+d) Reducing model size
+Answer: b) Using a pre-trained model for a new task
+Explanation: Transfer learning uses pre-trained LLMs (e.g., BERT, GPT) and fine-tunes them for specific tasks, saving training time.
+            `;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'llm_exam_30q.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>

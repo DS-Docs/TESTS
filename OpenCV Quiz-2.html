@@ -1,0 +1,867 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Science & Generative AI Exam</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        h2 {
+            color: #2980b9;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question p {
+            font-weight: bold;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .answer {
+            display: none;
+            background-color: #e8f4f9;
+            padding: 10px;
+            border-left: 4px solid #2980b9;
+            margin-top: 10px;
+        }
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #e74c3c;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        .download-btn {
+            display: block;
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px 20px;
+            background: #27ae60;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .download-btn:hover {
+            background: #219653;
+        }
+        .toggle-btn {
+            cursor: pointer;
+            color: #2980b9;
+            text-decoration: underline;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        code {
+            font-family: Consolas, monospace;
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="timer" id="timer">30:00</div>
+    <div class="container">
+        <h1>Data Science & Generative AI by SATISH @ Sathya Technologies</h1>
+        <h2>Python OpenCV Programming Exam (30 Minutes)</h2>
+        
+        <div class="question">
+            <p>1. What does the <code>cv2.imread()</code> function do in OpenCV?</p>
+            <div class="options">
+                <p>a) Saves an image to a file</p>
+                <p>b) Reads an image from a file</p>
+                <p>c) Displays an image</p>
+                <p>d) Converts an image to grayscale</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(1)">Show Answer</span>
+            <div class="answer" id="answer1">
+                <p><strong>Answer:</strong> b) Reads an image from a file</p>
+                <p><strong>Explanation:</strong> The <code>cv2.imread()</code> function loads an image from a specified file path into memory as a NumPy array.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>2. Which module must be imported to use OpenCV in Python?</p>
+            <div class="options">
+                <p>a) opencv</p>
+                <p>b) cv2</p>
+                <p>c) image</p>
+                <p>d) cv</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(2)">Show Answer</span>
+            <div class="answer" id="answer2">
+                <p><strong>Answer:</strong> b) cv2</p>
+                <p><strong>Explanation:</strong> The <code>cv2</code> module is the primary Python interface for OpenCV, providing access to its functions.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>3. What does the <code>cv2.imshow()</code> function do?</p>
+            <div class="options">
+                <p>a) Reads an image</p>
+                <p>b) Saves an image</p>
+                <p>c) Displays an image in a window</p>
+                <p>d) Applies a filter to an image</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(3)">Show Answer</span>
+            <div class="answer" id="answer3">
+                <p><strong>Answer:</strong> c) Displays an image in a window</p>
+                <p><strong>Explanation:</strong> The <code>cv2.imshow()</code> function displays an image in a named window on the screen.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>4. How do you convert an image to grayscale in OpenCV?</p>
+            <div class="options">
+                <p>a) <code>cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)</code></p>
+                <p>b) <code>cv2.convert(img, cv2.GRAYSCALE)</code></p>
+                <p>c) <code>cv2.gray(img)</code></p>
+                <p>d) <code>cv2.toGray(img)</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(4)">Show Answer</span>
+            <div class="answer" id="answer4">
+                <p><strong>Answer:</strong> a) <code>cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)</code></p>
+                <p><strong>Explanation:</strong> The <code>cv2.cvtColor()</code> function with <code>cv2.COLOR_BGR2GRAY</code> converts a BGR image to grayscale.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>5. What does the <code>cv2.imwrite()</code> function do?</p>
+            <div class="options">
+                <p>a) Displays an image</p>
+                <p>b) Saves an image to a file</p>
+                <p>c) Reads an image</p>
+                <p>d) Resizes an image</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(5)">Show Answer</span>
+            <div class="answer" id="answer5">
+                <p><strong>Answer:</strong> b) Saves an image to a file</p>
+                <p><strong>Explanation:</strong> The <code>cv2.imwrite()</code> function saves an image to a specified file path.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>6. Which OpenCV function applies Gaussian blur to an image?</p>
+            <div class="options">
+                <p>a) <code>cv2.blur()</code></p>
+                <p>b) <code>cv2.GaussianBlur()</code></p>
+                <p>c) <code>cv2.medianBlur()</code></p>
+                <p>d) <code>cv2.bilateralFilter()</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(6)">Show Answer</span>
+            <div class="answer" id="answer6">
+                <p><strong>Answer:</strong> b) <code>cv2.GaussianBlur()</code></p>
+                <p><strong>Explanation:</strong> <code>cv2.GaussianBlur()</code> applies a Gaussian filter to smooth an image, reducing noise.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>7. What is the purpose of <code>cv2.threshold()</code>?</p>
+            <div class="options">
+                <p>a) To resize an image</p>
+                <p>b) To apply a binary threshold to an image</p>
+                <p>c) To detect edges</p>
+                <p>d) To rotate an image</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(7)">Show Answer</span>
+            <div class="answer" id="answer7">
+                <p><strong>Answer:</strong> b) To apply a binary threshold to an image</p>
+                <p><strong>Explanation:</strong> <code>cv2.threshold()</code> segments an image by converting pixel values to binary based on a threshold.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>8. Which function is used to resize an image in OpenCV?</p>
+            <div class="options">
+                <p>a) <code>cv2.resize()</code></p>
+                <p>b) <code>cv2.scale()</code></p>
+                <p>c) <code>cv2.transform()</code></p>
+                <p>d) <code>cv2.warp()</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(8)">Show Answer</span>
+            <div class="answer" id="answer8">
+                <p><strong>Answer:</strong> a) <code>cv2.resize()</code></p>
+                <p><strong>Explanation:</strong> <code>cv2.resize()</code> changes the dimensions of an image to a specified size.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>9. What does the <code>cv2.Canny()</code> function do?</p>
+            <div class="options">
+                <p>a) Blurs an image</p>
+                <p>b) Detects edges in an image</p>
+                <p>c) Converts image color</p>
+                <p>d) Draws shapes</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(9)">Show Answer</span>
+            <div class="answer" id="answer9">
+                <p><strong>Answer:</strong> b) Detects edges in an image</p>
+                <p><strong>Explanation:</strong> <code>cv2.Canny()</code> is used for edge detection using the Canny algorithm.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>10. Which color space does OpenCV use by default when reading images?</p>
+            <div class="options">
+                <p>a) RGB</p>
+                <p>b) BGR</p>
+                <p>c) HSV</p>
+                <p>d) Grayscale</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(10)">Show Answer</span>
+            <div class="answer" id="answer10">
+                <p><strong>Answer:</strong> b) BGR</p>
+                <p><strong>Explanation:</strong> OpenCV reads images in BGR (Blue, Green, Red) color format by default, unlike the common RGB format.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>11. What does the <code>cv2.VideoCapture()</code> function do?</p>
+            <div class="options">
+                <p>a) Records a video</p>
+                <p>b) Opens a video file or camera stream</p>
+                <p>c) Saves a video</p>
+                <p>d) Converts video frames</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(11)">Show Answer</span>
+            <div class="answer" id="answer11">
+                <p><strong>Answer:</strong> b) Opens a video file or camera stream</p>
+                <p><strong>Explanation:</strong> <code>cv2.VideoCapture()</code> opens a video file or captures live video from a camera for processing.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>12. How do you draw a rectangle on an image using OpenCV?</p>
+            <div class="options">
+                <p>a) <code>cv2.rectangle()</code></p>
+                <p>b) <code>cv2.drawRectangle()</code></p>
+                <p>c) <code>cv2.box()</code></p>
+                <p>d) <code>cv2.shape()</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(12)">Show Answer</span>
+            <div class="answer" id="answer12">
+                <p><strong>Answer:</strong> a) <code>cv2.rectangle()</code></p>
+                <p><strong>Explanation:</strong> <code>cv2.rectangle()</code> draws a rectangle on an image with specified coordinates, color, and thickness.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>13. What is the purpose of <code>cv2.waitKey()</code>?</p>
+            <div class="options">
+                <p>a) Waits for a keyboard input</p>
+                <p>b) Pauses the program</p>
+                <p>c) Closes a window</p>
+                <p>d) Saves an image</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(13)">Show Answer</span>
+            <div class="answer" id="answer13">
+                <p><strong>Answer:</strong> a) Waits for a keyboard input</p>
+                <p><strong>Explanation:</strong> <code>cv2.waitKey()</code> pauses execution until a key is pressed, often used with <code>cv2.imshow()</code>.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>14. Which function applies a median blur to an image?</p>
+            <div class="options">
+                <p>a) <code>cv2.blur()</code></p>
+                <p>b) <code>cv2.GaussianBlur()</code></p>
+                <p>c) <code>cv2.medianBlur()</code></p>
+                <p>d) <code>cv2.bilateralFilter()</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(14)">Show Answer</span>
+            <div class="answer" id="answer14">
+                <p><strong>Answer:</strong> c) <code>cv2.medianBlur()</code></p>
+                <p><strong>Explanation:</strong> <code>cv2.medianBlur()</code> applies a median filter, effective for removing salt-and-pepper noise.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>15. What does the <code>cv2.cvtColor(img, cv2.COLOR_BGR2RGB)</code> do?</p>
+            <div class="options">
+                <p>a) Converts BGR to grayscale</p>
+                <p>b) Converts BGR to RGB</p>
+                <p>c) Converts RGB to HSV</p>
+                <p>d) Converts grayscale to BGR</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(15)">Show Answer</span>
+            <div class="answer" id="answer15">
+                <p><strong>Answer:</strong> b) Converts BGR to RGB</p>
+                <p><strong>Explanation:</strong> This function converts an image from BGR (OpenCV default) to RGB color space.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>16. Which OpenCV function detects corners in an image?</p>
+            <div class="options">
+                <p>a) <code>cv2.HoughLines()</code></p>
+                <p>b) <code>cv2.goodFeaturesToTrack()</code></p>
+                <p>c) <code>cv2.findContours()</code></p>
+                <p>d) <code>cv2.Canny()</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(16)">Show Answer</span>
+            <div class="answer" id="answer16">
+                <p><strong>Answer:</strong> b) <code>cv2.goodFeaturesToTrack()</code></p>
+                <p><strong>Explanation:</strong> <code>cv2.goodFeaturesToTrack()</code> detects corners in an image using the Shi-Tomasi corner detector.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>17. What does the <code>cv2.findContours()</code> function do?</p>
+            <div class="options">
+                <p>a) Detects edges</p>
+                <p>b) Finds contours in a binary image</p>
+                <p>c) Applies a blur</p>
+                <p>d) Draws shapes</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(17)">Show Answer</span>
+            <div class="answer" id="answer17">
+                <p><strong>Answer:</strong> b) Finds contours in a binary image</p>
+                <p><strong>Explanation:</strong> <code>cv2.findContours()</code> identifies contours (boundaries) in a binary image, often used after thresholding.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>18. Which function is used to draw a circle on an image?</p>
+            <div class="options">
+                <p>a) <code>cv2.circle()</code></p>
+                <p>b) <code>cv2.drawCircle()</code></p>
+                <p>c) <code>cv2.ellipse()</code></p>
+                <p>d) <code>cv2.shape()</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(18)">Show Answer</span>
+            <div class="answer" id="answer18">
+                <p><strong>Answer:</strong> a) <code>cv2.circle()</code></p>
+                <p><strong>Explanation:</strong> <code>cv2.circle()</code> draws a circle on an image with specified center, radius, and color.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>19. What is the purpose of <code>cv2.HoughLines()</code>?</p>
+            <div class="options">
+                <p>a) Detects circles</p>
+                <p>b) Detects straight lines</p>
+                <p>c) Detects corners</p>
+                <p>d) Applies thresholding</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(19)">Show Answer</span>
+            <div class="answer" id="answer19">
+                <p><strong>Answer:</strong> b) Detects straight lines</p>
+                <p><strong>Explanation:</strong> <code>cv2.HoughLines()</code> uses the Hough Transform to detect straight lines in an image.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>20. Which function applies a bilateral filter to an image?</p>
+            <div class="options">
+                <p>a) <code>cv2.blur()</code></p>
+                <p>b) <code>cv2.GaussianBlur()</code></p>
+                <p>c) <code>cv2.bilateralFilter()</code></p>
+                <p>d) <code>cv2.medianBlur()</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(20)">Show Answer</span>
+            <div class="answer" id="answer20">
+                <p><strong>Answer:</strong> c) <code>cv2.bilateralFilter()</code></p>
+                <p><strong>Explanation:</strong> <code>cv2.bilateralFilter()</code> smooths an image while preserving edges, unlike other blurring methods.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>21. What does the <code>cv2.VideoWriter()</code> function do?</p>
+            <div class="options">
+                <p>a) Opens a video file</p>
+                <p>b) Saves a video to a file</p>
+                <p>c) Captures a camera stream</p>
+                <p>d) Converts video frames</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(21)">Show Answer</span>
+            <div class="answer" id="answer21">
+                <p><strong>Answer:</strong> b) Saves a video to a file</p>
+                <p><strong>Explanation:</strong> <code>cv2.VideoWriter()</code> creates a video file by writing frames to a specified path.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>22. Which OpenCV function detects circles in an image?</p>
+            <div class="options">
+                <p>a) <code>cv2.HoughCircles()</code></p>
+                <p>b) <code>cv2.HoughLines()</code></p>
+                <p>c) <code>cv2.findContours()</code></p>
+                <p>d) <code>cv2.Canny()</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(22)">Show Answer</span>
+            <div class="answer" id="answer22">
+                <p><strong>Answer:</strong> a) <code>cv2.HoughCircles()</code></p>
+                <p><strong>Explanation:</strong> <code>cv2.HoughCircles()</code> uses the Hough Transform to detect circles in an image.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>23. What is the purpose of <code>cv2.getRotationMatrix2D()</code>?</p>
+            <div class="options">
+                <p>a) Resizes an image</p>
+                <p>b) Rotates an image</p>
+                <p>c) Creates a transformation matrix for rotation</p>
+                <p>d) Applies a filter</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(23)">Show Answer</span>
+            <div class="answer" id="answer23">
+                <p><strong>Answer:</strong> c) Creates a transformation matrix for rotation</p>
+                <p><strong>Explanation:</strong> <code>cv2.getRotationMatrix2D()</code> generates a matrix used with <code>cv2.warpAffine()</code> to rotate an image.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>24. Which function is used to flip an image in OpenCV?</p>
+            <div class="options">
+                <p>a) <code>cv2.flip()</code></p>
+                <p>b) <code>cv2.rotate()</code></p>
+                <p>c) <code>cv2.warpAffine()</code></p>
+                <p>d) <code>cv2.transform()</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(24)">Show Answer</span>
+            <div class="answer" id="answer24">
+                <p><strong>Answer:</strong> a) <code>cv2.flip()</code></p>
+                <p><strong>Explanation:</strong> <code>cv2.flip()</code> flips an image horizontally, vertically, or both based on a specified code.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>25. What does the <code>cv2.Sobel()</code> function do?</p>
+            <div class="options">
+                <p>a) Detects corners</p>
+                <p>b) Computes image gradients</p>
+                <p>c) Applies a blur</p>
+                <p>d) Detects lines</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(25)">Show Answer</span>
+            <div class="answer" id="answer25">
+                <p><strong>Answer:</strong> b) Computes image gradients</p>
+                <p><strong>Explanation:</strong> <code>cv2.Sobel()</code> calculates the gradient of an image, often used for edge detection.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>26. Which function converts an image to the HSV color space?</p>
+            <div class="options">
+                <p>a) <code>cv2.cvtColor(img, cv2.COLOR_BGR2HSV)</code></p>
+                <p>b) <code>cv2.cvtColor(img, cv2.COLOR_RGB2HSV)</code></p>
+                <p>c) <code>cv2.convert(img, cv2.HSV)</code></p>
+                <p>d) <code>cv2.toHSV(img)</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(26)">Show Answer</span>
+            <div class="answer" id="answer26">
+                <p><strong>Answer:</strong> a) <code>cv2.cvtColor(img, cv2.COLOR_BGR2HSV)</code></p>
+                <p><strong>Explanation:</strong> <code>cv2.cvtColor()</code> with <code>cv2.COLOR_BGR2HSV</code> converts a BGR image to HSV color space.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>27. What is the purpose of <code>cv2.warpAffine()</code>?</p>
+            <div class="options">
+                <p>a) Applies a geometric transformation</p>
+                <p>b) Detects edges</p>
+                <p>c) Blurs an image</p>
+                <p>d) Saves an image</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(27)">Show Answer</span>
+            <div class="answer" id="answer27">
+                <p><strong>Answer:</strong> a) Applies a geometric transformation</p>
+                <p><strong>Explanation:</strong> <code>cv2.warpAffine()</code> applies transformations like rotation, scaling, or translation using a matrix.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>28. Which function detects keypoints and descriptors in an image?</p>
+            <div class="options">
+                <p>a) <code>cv2.SIFT_create()</code></p>
+                <p>b) <code>cv2.findContours()</code></p>
+                <p>c) <code>cv2.HoughLines()</code></p>
+                <p>d) <code>cv2.Canny()</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(28)">Show Answer</span>
+            <div class="answer" id="answer28">
+                <p><strong>Answer:</strong> a) <code>cv2.SIFT_create()</code></p>
+                <p><strong>Explanation:</strong> <code>cv2.SIFT_create()</code> creates a SIFT detector to find keypoints and compute descriptors.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>29. What does the <code>cv2.matchTemplate()</code> function do?</p>
+            <div class="options">
+                <p>a) Matches keypoints</p>
+                <p>b) Performs template matching</p>
+                <p>c) Detects edges</p>
+                <p>d) Applies a filter</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(29)">Show Answer</span>
+            <div class="answer" id="answer29">
+                <p><strong>Answer:</strong> b) Performs template matching</p>
+                <p><strong>Explanation:</strong> <code>cv2.matchTemplate()</code> searches for a template image within a larger image.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>30. Which function is used to access a webcam in OpenCV?</p>
+            <div class="options">
+                <p>a) <code>cv2.VideoCapture(0)</code></p>
+                <p>b) <code>cv2.VideoWriter()</code></p>
+                <p>c) <code>cv2.Webcam()</code></p>
+                <p>d) <code>cv2.Camera()</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(30)">Show Answer</span>
+            <div class="answer" id="answer30">
+                <p><strong>Answer:</strong> a) <code>cv2.VideoCapture(0)</code></p>
+                <p><strong>Explanation:</strong> <code>cv2.VideoCapture(0)</code> opens the default webcam (index 0) for capturing video.</p>
+            </div>
+        </div>
+
+        <a href="#" class="download-btn" onclick="downloadTest()">Download Exam (TXT)</a>
+    </div>
+
+    <script>
+        // Timer functionality
+        let timeLeft = 30 * 60; // 30 minutes in seconds
+        const timerDisplay = document.getElementById('timer');
+        
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                timerDisplay.textContent = "Time's Up!";
+                alert("Time is up!");
+            } else {
+                timeLeft--;
+            }
+        }
+        const timerInterval = setInterval(updateTimer, 1000);
+
+        // Toggle answer visibility
+        function toggleAnswer(id) {
+            const answer = document.getElementById(`answer${id}`);
+            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Download exam as a text file
+        function downloadTest() {
+            const content = `
+Data Science & Generative AI by SATISH @ Sathya Technologies
+Python OpenCV Programming Exam (30 Minutes)
+
+1. What does the cv2.imread() function do in OpenCV?
+a) Saves an image to a file
+b) Reads an image from a file
+c) Displays an image
+d) Converts an image to grayscale
+Answer: b) Reads an image from a file
+Explanation: The cv2.imread() function loads an image from a specified file path into memory as a NumPy array.
+
+2. Which module must be imported to use OpenCV in Python?
+a) opencv
+b) cv2
+c) image
+d) cv
+Answer: b) cv2
+Explanation: The cv2 module is the primary Python interface for OpenCV, providing access to its functions.
+
+3. What does the cv2.imshow() function do?
+a) Reads an image
+b) Saves an image
+c) Displays an image in a window
+d) Applies a filter to an image
+Answer: c) Displays an image in a window
+Explanation: The cv2.imshow() function displays an image in a named window on the screen.
+
+4. How do you convert an image to grayscale in OpenCV?
+a) cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+b) cv2.convert(img, cv2.GRAYSCALE)
+c) cv2.gray(img)
+d) cv2.toGray(img)
+Answer: a) cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+Explanation: The cv2.cvtColor() function with cv2.COLOR_BGR2GRAY converts a BGR image to grayscale.
+
+5. What does the cv2.imwrite() function do?
+a) Displays an image
+b) Saves an image to a file
+c) Reads an image
+d) Resizes an image
+Answer: b) Saves an image to a file
+Explanation: The cv2.imwrite() function saves an image to a specified file path.
+
+6. Which OpenCV function applies Gaussian blur to an image?
+a) cv2.blur()
+b) cv2.GaussianBlur()
+c) cv2.medianBlur()
+d) cv2.bilateralFilter()
+Answer: b) cv2.GaussianBlur()
+Explanation: cv2.GaussianBlur() applies a Gaussian filter to smooth an image, reducing noise.
+
+7. What is the purpose of cv2.threshold()?
+a) To resize an image
+b) To apply a binary threshold to an image
+c) To detect edges
+d) To rotate an image
+Answer: b) To apply a binary threshold to an image
+Explanation: cv2.threshold() segments an image by converting pixel values to binary based on a threshold.
+
+8. Which function is used to resize an image in OpenCV?
+a) cv2.resize()
+b) cv2.scale()
+c) cv2.transform()
+d) cv2.warp()
+Answer: a) cv2.resize()
+Explanation: cv2.resize() changes the dimensions of an image to a specified size.
+
+9. What does the cv2.Canny() function do?
+a) Blurs an image
+b) Detects edges in an image
+c) Converts image color
+d) Draws shapes
+Answer: b) Detects edges in an image
+Explanation: cv2.Canny() is used for edge detection using the Canny algorithm.
+
+10. Which color space does OpenCV use by default when reading images?
+a) RGB
+b) BGR
+c) HSV
+d) Grayscale
+Answer: b) BGR
+Explanation: OpenCV reads images in BGR (Blue, Green, Red) color format by default, unlike the common RGB format.
+
+11. What does the cv2.VideoCapture() function do?
+a) Records a video
+b) Opens a video file or camera stream
+c) Saves a video
+d) Converts video frames
+Answer: b) Opens a video file or camera stream
+Explanation: cv2.VideoCapture() opens a video file or captures live video from a camera for processing.
+
+12. How do you draw a rectangle on an image using OpenCV?
+a) cv2.rectangle()
+b) cv2.drawRectangle()
+c) cv2.box()
+d) cv2.shape()
+Answer: a) cv2.rectangle()
+Explanation: cv2.rectangle() draws a rectangle on an image with specified coordinates, color, and thickness.
+
+13. What is the purpose of cv2.waitKey()?
+a) Waits for a keyboard input
+b) Pauses the program
+c) Closes a window
+d) Saves an image
+Answer: a) Waits for a keyboard input
+Explanation: cv2.waitKey() pauses execution until a key is pressed, often used with cv2.imshow().
+
+14. Which function applies a median blur to an image?
+a) cv2.blur()
+b) cv2.GaussianBlur()
+c) cv2.medianBlur()
+d) cv2.bilateralFilter()
+Answer: c) cv2.medianBlur()
+Explanation: cv2.medianBlur() applies a median filter, effective for removing salt-and-pepper noise.
+
+15. What does the cv2.cvtColor(img, cv2.COLOR_BGR2RGB) do?
+a) Converts BGR to grayscale
+b) Converts BGR to RGB
+c) Converts RGB to HSV
+d) Converts grayscale to BGR
+Answer: b) Converts BGR to RGB
+Explanation: This function converts an image from BGR (OpenCV default) to RGB color space.
+
+16. Which OpenCV function detects corners in an image?
+a) cv2.HoughLines()
+b) cv2.goodFeaturesToTrack()
+c) cv2.findContours()
+d) cv2.Canny()
+Answer: b) cv2.goodFeaturesToTrack()
+Explanation: cv2.goodFeaturesToTrack() detects corners in an image using the Shi-Tomasi corner detector.
+
+17. What does the cv2.findContours() function do?
+a) Detects edges
+b) Finds contours in a binary image
+c) Applies a blur
+d) Draws shapes
+Answer: b) Finds contours in a binary image
+Explanation: cv2.findContours() identifies contours (boundaries) in a binary image, often used after thresholding.
+
+18. Which function is used to draw a circle on an image?
+a) cv2.circle()
+b) cv2.drawCircle()
+c) cv2.ellipse()
+d) cv2.shape()
+Answer: a) cv2.circle()
+Explanation: cv2.circle() draws a circle on an image with specified center, radius, and color.
+
+19. What is the purpose of cv2.HoughLines()?
+a) Detects circles
+b) Detects straight lines
+c) Detects corners
+d) Applies thresholding
+Answer: b) Detects straight lines
+Explanation: cv2.HoughLines() uses the Hough Transform to detect straight lines in an image.
+
+20. Which function applies a bilateral filter to an image?
+a) cv2.blur()
+b) cv2.GaussianBlur()
+c) cv2.bilateralFilter()
+d) cv2.medianBlur()
+Answer: c) cv2.bilateralFilter()
+Explanation: cv2.bilateralFilter() smooths an image while preserving edges, unlike other blurring methods.
+
+21. What does the cv2.VideoWriter() function do?
+a) Opens a video file
+b) Saves a video to a file
+c) Captures a camera stream
+d) Converts video frames
+Answer: b) Saves a video to a file
+Explanation: cv2.VideoWriter() creates a video file by writing frames to a specified path.
+
+22. Which OpenCV function detects circles in an image?
+a) cv2.HoughCircles()
+b) cv2.HoughLines()
+c) cv2.findContours()
+d) cv2.Canny()
+Answer: a) cv2.HoughCircles()
+Explanation: cv2.HoughCircles() uses the Hough Transform to detect circles in an image.
+
+23. What is the purpose of cv2.getRotationMatrix2D()?
+a) Resizes an image
+b) Rotates an image
+c) Creates a transformation matrix for rotation
+d) Applies a filter
+Answer: c) Creates a transformation matrix for rotation
+Explanation: cv2.getRotationMatrix2D() generates a matrix used with cv2.warpAffine() to rotate an image.
+
+24. Which function is used to flip an image in OpenCV?
+a) cv2.flip()
+b) cv2.rotate()
+c) cv2.warpAffine()
+d) cv2.transform()
+Answer: a) cv2.flip()
+Explanation: cv2.flip() flips an image horizontally, vertically, or both based on a specified code.
+
+25. What does the cv2.Sobel() function do?
+a) Detects corners
+b) Computes image gradients
+c) Applies a blur
+d) Detects lines
+Answer: b) Computes image gradients
+Explanation: cv2.Sobel() calculates the gradient of an image, often used for edge detection.
+
+26. Which function converts an image to the HSV color space?
+a) cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+b) cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
+c) cv2.convert(img, cv2.HSV)
+d) cv2.toHSV(img)
+Answer: a) cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+Explanation: cv2.cvtColor() with cv2.COLOR_BGR2HSV converts a BGR image to HSV color space.
+
+27. What is the purpose of cv2.warpAffine()?
+a) Applies a geometric transformation
+b) Detects edges
+c) Blurs an image
+d) Saves an image
+Answer: a) Applies a geometric transformation
+Explanation: cv2.warpAffine() applies transformations like rotation, scaling, or translation using a matrix.
+
+28. Which function detects keypoints and descriptors in an image?
+a) cv2.SIFT_create()
+b) cv2.findContours()
+c) cv2.HoughLines()
+d) cv2.Canny()
+Answer: a) cv2.SIFT_create()
+Explanation: cv2.SIFT_create() creates a SIFT detector to find keypoints and compute descriptors.
+
+29. What does the cv2.matchTemplate() function do?
+a) Matches keypoints
+b) Performs template matching
+c) Detects edges
+d) Applies a filter
+Answer: b) Performs template matching
+Explanation: cv2.matchTemplate() searches for a template image within a larger image.
+
+30. Which function is used to access a webcam in OpenCV?
+a) cv2.VideoCapture(0)
+b) cv2.VideoWriter()
+c) cv2.Webcam()
+d) cv2.Camera()
+Answer: a) cv2.VideoCapture(0)
+Explanation: cv2.VideoCapture(0) opens the default webcam (index 0) for capturing video.
+            `;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'python_opencv_exam_30q.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>

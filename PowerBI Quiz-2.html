@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power BI Exam - Data Science & Generative AI</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #f05f40;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        .timer-container {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .timer {
+            display: inline-block;
+            font-size: 28px;
+            font-weight: bold;
+            padding: 10px 25px;
+            background-color: #f05f40;
+            color: white;
+            border-radius: 50px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-left: 5px solid #f05f40;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .question:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .options {
+            margin-left: 20px;
+            margin-top: 15px;
+        }
+        .option {
+            margin-bottom: 10px;
+            padding: 8px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+        }
+        .answer {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e8f4f8;
+            border-radius: 5px;
+            border-left: 3px solid #17a2b8;
+        }
+        .show-answer {
+            background-color: #f05f40;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .show-answer:hover {
+            background-color: #e04b30;
+        }
+        .download-btn {
+            display: block;
+            width: 250px;
+            text-align: center;
+            margin: 30px auto;
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .download-btn:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Data Science & Generative AI by SATISH @ Sathya Technologies</h1>
+        
+        <div class="timer-container">
+            <div class="timer" id="timer">30:00</div>
+        </div>
+
+        <div class="question">
+            <p><strong>1. What is the primary purpose of Power BI?</strong></p>
+            <div class="options">
+                <div class="option">A) To create and share interactive data visualizations</div>
+                <div class="option">B) To write complex programming algorithms</div>
+                <div class="option">C) To design websites</div>
+                <div class="option">D) To manage databases</div>
+            </div>
+            <button class="show-answer" onclick="showAnswer(1)">Show Answer</button>
+            <div class="answer" id="answer1">
+                <p><strong>Answer:</strong> A) To create and share interactive data visualizations</p>
+                <p><strong>Explanation:</strong> Power BI is a business analytics service by Microsoft that provides interactive visualizations with self-service business intelligence capabilities, where end users can create reports and dashboards by themselves without having to depend on information technology staff or database administrators.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p><strong>2. Which of the following is NOT a component of Power BI?</strong></p>
+            <div class="options">
+                <div class="option">A) Power BI Desktop</div>
+                <div class="option">B) Power BI Service</div>
+                <div class="option">C) Power BI Mobile</div>
+                <div class="option">D) Power BI Terminal</div>
+            </div>
+            <button class="show-answer" onclick="showAnswer(2)">Show Answer</button>
+            <div class="answer" id="answer2">
+                <p><strong>Answer:</strong> D) Power BI Terminal</p>
+                <p><strong>Explanation:</strong> The main components of Power BI are Power BI Desktop (for report creation), Power BI Service (cloud-based for sharing and collaboration), and Power BI Mobile (for viewing reports on mobile devices). There is no component called "Power BI Terminal."</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p><strong>3. What is DAX in Power BI?</strong></p>
+            <div class="options">
+                <div class="option">A) A data visualization technique</div>
+                <div class="option">B) A formula expression language</div>
+                <div class="option">C) A type of chart</div>
+                <div class="option">D) A data source connector</div>
+            </div>
+            <button class="show-answer" onclick="showAnswer(3)">Show Answer</button>
+            <div class="answer" id="answer3">
+                <p><strong>Answer:</strong> B) A formula expression language</p>
+                <p><strong>Explanation:</strong> DAX (Data Analysis Expressions) is a formula language used in Power BI, Power Pivot, and SSAS Tabular models. It's used to create custom calculations and aggregations in your data model.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p><strong>4. Which Power BI feature allows you to ask questions about your data in natural language?</strong></p>
+            <div class="options">
+                <div class="option">A) Quick Insights</div>
+                <div class="option">B) Q&A</div>
+                <div class="option">C) Power Query</div>
+                <div class="option">D) DAX Studio</div>
+            </div>
+            <button class="show-answer" onclick="showAnswer(4)">Show Answer</button>
+            <div class="answer" id="answer4">
+                <p><strong>Answer:</strong> B) Q&A</p>
+                <p><strong>Explanation:</strong> The Q&A feature in Power BI allows users to ask questions about their data using natural language and get answers in the form of visualizations. For example, you can type "show sales by region as a bar chart" and Power BI will create that visualization.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p><strong>5. What is the purpose of Power Query in Power BI?</strong></p>
+            <div class="options">
+                <div class="option">A) To create visualizations</div>
+                <div class="option">B) To connect to and transform data</div>
+                <div class="option">C) To write DAX formulas</div>
+                <div class="option">D) To publish reports</div>
+            </div>
+            <button class="show-answer" onclick="showAnswer(5)">Show Answer</button>
+            <div class="answer" id="answer5">
+                <p><strong>Answer:</strong> B) To connect to and transform data</p>
+                <p><strong>Explanation:</strong> Power Query is the data connection and transformation component of Power BI. It allows you to connect to various data sources, clean and transform the data, and load it into the Power BI data model.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p><strong>6. Which of the following file formats can Power BI Desktop directly import?</strong></p>
+            <div class="options">
+                <div class="option">A) .xlsx</div>
+                <div class="option">B) .csv</div>
+                <div class="option">C) .json</div>
+                <div class="option">D) All of the above</div>
+            </div>
+            <button class="show-answer" onclick="showAnswer(6)">Show Answer</button>
+            <div class="answer" id="answer6">
+                <p><strong>Answer:</strong> D) All of the above</p>
+                <p><strong>Explanation:</strong> Power BI Desktop can directly import all these file formats: Excel files (.xlsx), comma-separated values files (.csv), and JavaScript Object Notation files (.json), along with many other data source types.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p><strong>7. What is a measure in Power BI?</strong></p>
+            <div class="options">
+                <div class="option">A) A visual element on a report</div>
+                <div class="option">B) A dynamic calculation based on user interaction</div>
+                <div class="option">C) A static column in a table</div>
+                <div class="option">D) A type of data connection</div>
+            </div>
+            <button class="show-answer" onclick="showAnswer(7)">Show Answer</button>
+            <div class="answer" id="answer7">
+                <p><strong>Answer:</strong> B) A dynamic calculation based on user interaction</p>
+                <p><strong>Explanation:</strong> A measure is a DAX formula that calculates a value dynamically based on the current context (like filters or slicers applied by the user). Measures are recalculated as users interact with reports.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p><strong>8. Which of these is NOT a valid Power BI visualization type?</strong></p>
+            <div class="options">
+                <div class="option">A) Matrix</div>
+                <div class="option">B) Gauge</div>
+                <div class="option">C) Scatter chart</div>
+                <div class="option">D) Hexagon map</div>
+            </div>
+            <button class="show-answer" onclick="showAnswer(8)">Show Answer</button>
+            <div class="answer" id="answer8">
+                <p><strong>Answer:</strong> D) Hexagon map</p>
+                <p><strong>Explanation:</strong> While Power BI offers many visualization types including Matrix, Gauge, and Scatter chart, there is no built-in "Hexagon map" visualization. There are standard map visualizations and possibly custom visuals that might resemble this.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p><strong>9. What is the purpose of bookmarks in Power BI?</strong></p>
+            <div class="options">
+                <div class="option">A) To save specific views of a report</div>
+                <div class="option">B) To mark important data points</div>
+                <div class="option">C) To create relationships between tables</div>
+                <div class="option">D) To optimize query performance</div>
+            </div>
+            <button class="show-answer" onclick="showAnswer(9)">Show Answer</button>
+            <div class="answer" id="answer9">
+                <p><strong>Answer:</strong> A) To save specific views of a report</p>
+                <p><strong>Explanation:</strong> Bookmarks in Power BI capture the current state of a report page, including filters, slicers, and the visibility of objects. You can use bookmarks to create guided narratives or interactive report experiences.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p><strong>10. Which DAX function calculates the sum of values in a column?</strong></p>
+            <div class="options">
+                <div class="option">A) SUM()</div>
+                <div class="option">B) TOTAL()</div>
+                <div class="option">C) ADD()</div>
+                <div class="option">D) CALCULATE()</div>
+            </div>
+            <button class="show-answer" onclick="showAnswer(10)">Show Answer</button>
+            <div class="answer" id="answer10">
+                <p><strong>Answer:</strong> A) SUM()</p>
+                <p><strong>Explanation:</strong> The SUM() function in DAX adds all the numbers in a column. For example, <span class="highlight">SUM(Sales[Amount])</span> would calculate the total of all values in the Amount column of the Sales table.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p><strong>11. What is the difference between a calculated column and a measure in Power BI?</strong></p>
+            <div class="options">
+                <div class="option">A) Calculated columns are static, measures are dynamic</div>
+                <div class="option">B) Measures are static, calculated columns are dynamic</div>
+                <div class="option">C) There is no difference</div>
+                <div class="option">D) Calculated columns can't use DAX</div>
+            </div>
+            <button class="show-answer" onclick="showAnswer(11)">Show Answer</button>
+            <div class="answer" id="answer11">
+                <p><strong>Answer:</strong> A) Calculated columns are static, measures are dynamic</p>
+                <p><strong>Explanation:</strong> Calculated columns are computed during data refresh and stored in the model, while measures are calculated at query time based on the current context. Measures respond to user interactions like filters and slicers.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p><strong>12. Which Power BI feature allows you to create a single visual that updates based on a selected field?</strong></p>
+            <div class="options">
+                <div class="option">A) Hierarchies</div>
+                <div class="option">B) Drillthrough</div>
+                <div class="option">C) Field parameters</div>
+                <div class="option">D) Conditional formatting</div>
+            </div>
+            <button class="show-answer" onclick="showAnswer(12)">Show Answer</button>
+            <div class="answer" id="answer12">
+                <p><strong>Answer:</strong> C) Field parameters</p>
+                <p><strong>Explanation:</strong> Field parameters allow you to create dynamic visuals where the fields displayed can be changed by the report user through a slicer. This creates more interactive and flexible reports.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p><strong>13. What is the purpose of the "Analyze in Excel" feature in Power BI?</strong></p>
+            <div class="options">
+                <div class="option">A) To export Power BI data to Excel</div>
+                <div class="option">B) To connect Excel to a Power BI dataset for pivot table analysis</div>
+                <div class="option">C) To replace Power BI with Excel</div>
+                <div class="option">D) To import Excel formulas into Power BI</div>
+            </div>
+            <button class="show-answer" onclick="showAnswer(13)">Show Answer</button>
+            <div class="answer" id="answer13">
+                <p><strong>Answer:</strong> B) To connect Excel to a Power BI dataset for pivot table analysis</p>
+                <p><strong>Explanation:</strong> "Analyze in Excel" allows Excel users to connect to a Power BI dataset and create PivotTables, PivotCharts, and Excel formulas using the data model in Power BI, without needing to export data.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p><strong>14. Which of the following is NOT a valid data modeling relationship in Power BI?</strong></p>
+            <div class="options">
+                <div class="option">A) One-to-one</div>
+                <div class="option">B) One-to-many</div>
+                <div class="option">C) Many-to-many</div>
+                <div class="option">D) All-to-all</div>
+            </div>
+            <button class="show-answer" onclick="showAnswer(14)">Show Answer</button>
+            <div class="answer" id="answer14">
+                <p><strong>Answer:</strong> D) All-to-all</p>
+                <p><strong>Explanation:</strong> Power BI supports one-to-one, one-to-many, and many-to-many relationships, but there is no such thing as an "all-to-all" relationship in data modeling.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p><strong>15. What does the "Performance Analyzer" in Power BI help you do?</strong></p>
+            <div class="options">
+                <div class="option">A) Identify slow-performing visuals in a report</div>
+                <div class="option">B) Analyze data quality</div>
+                <div class="option">C) Optimize DAX formulas</div>
+                <div class="option">D) Clean data sources</div>
+            </div>
+            <button class="show-answer" onclick="showAnswer(15)">Show Answer</button>
+            <div class="answer" id="answer15">
+                <p><strong>Answer:</strong> A) Identify slow-performing visuals in a report</p>
+                <p><strong>Explanation:</strong> The Performance Analyzer in Power BI Desktop records and displays the time taken to perform different operations (like visual rendering or DAX queries) helping you identify and troubleshoot performance bottlenecks.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p><strong>16. Which DAX function is used to create a filter context in a calculation?</strong></p>
+            <div class="options">
+                <div class="option">A) FILTER()</div>
+                <div class="option">B) CALCULATE()</div>
+                <div class="option">C) SUMX()</div>
+                <div class="option">D) RELATED()</div>
+            </div>
+            <button class="show-answer" onclick="showAnswer(16)">Show Answer</button>
+            <div class="answer" id="answer16">
+                <p><strong>Answer:</strong> B) CALCULATE()</p>
+                <p><strong>Explanation:</strong> CALCULATE() is the most important function in DAX as it allows you to modify the filter context of a calculation. It evaluates an expression in a modified filter context.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p><strong>17. What is the purpose of the "Drillthrough" feature in Power BI?</strong></p>
+            <div class="options">
+                <div class="option">A) To navigate between report pages</div>
+                <div class="option">B) To see detailed data for a specific data point</div>
+                <div class="option">C) To export data to Excel</div>
+                <div class="option">D) To create hierarchies</div>
+            </div>
+            <button class="show-answer" onclick="showAnswer(17)">Show Answer</button>
+            <div class="answer" id="answer17">
+                <p><strong>Answer:</strong> B) To see detailed data for a specific data point</p>
+                <p><strong>Explanation:</strong> Drillthrough allows users to right-click on a data point and "drill through" to a dedicated page that shows details about that specific item, with the context passed from the original selection.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p><strong>18. Which Power BI feature allows you to create a custom navigation experience in your reports?</strong></p>
+            <div class="options">
+                <div class="option">A) Buttons</div>
+                <div class="option">B) Bookmarks</div>
+                <div class="option">C) Selection pane</div>
+                <div class="option">D) All of the above</div>
+            </div>
+            <button class="show-answer" onclick="showAnswer(18)">Show Answer</button>
+            <div class="answer" id="answer18">
+                <p><strong>Answer:</strong> D) All of the above</p>
+                <p><strong>Explanation:</strong> You can create sophisticated navigation experiences in Power BI using a combination of buttons (to trigger actions), bookmarks (to save specific views), and the selection pane (to control visibility of objects).</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p><strong>19. What is the purpose of the "Enter Data" feature in Power BI Desktop?</strong></p>
+            <div class="options">
+                <div class="option">A) To manually input small datasets</div>
+                <div class="option">B) To edit existing data tables</div>
+                <div class="option">C) To create calculated columns</div>
+                <div class="option">D) To import data from APIs</div>
+            </div>
+            <button class="show-answer" onclick="showAnswer(19)">Show Answer</button>
+            <div class="answer" id="answer19">
+                <p><strong>Answer:</strong> A) To manually input small datasets</p>
+                <p><strong>Explanation:</strong> The "Enter Data" feature allows you to manually create a new table by typing or pasting data directly into Power BI Desktop, which is useful for small reference tables or configuration data.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p><strong>20. Which of these is NOT a valid data transformation in Power Query?</strong></p>
+            <div class="options">
+                <div class="option">A) Pivot columns</div>
+                <div class="option">B) Unpivot columns</div>
+                <div class="option">C) Transpose table</div>
+                <div class="option">D) Rotate table 45 degrees</div>
+            </div>
+            <button class="show-answer" onclick="showAnswer(20)">Show Answer</button>
+            <div class="answer" id="answer20">
+                <p><strong>Answer:</strong> D) Rotate table 45 degrees</p>
+                <p><strong>Explanation:</strong> While Power Query can pivot, unpivot, and transpose tables (switch rows and columns), it cannot rotate a table at an angle like 45 degrees - that would be a visual transformation, not a data transformation.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p><strong>21. What is the difference between "Import" and "DirectQuery" storage modes in Power BI?</strong></p>
+            <div class="options">
+                <div class="option">A) Import loads data into Power BI, DirectQuery queries the source directly</div>
+                <div class="option">B) Import is faster but uses more memory</div>
+                <div class="option">C) DirectQuery shows real-time data but may be slower</div>
+                <div class="option">D) All of the above</div>
+            </div>
+            <button class="show-answer" onclick="showAnswer(21)">Show Answer</button>
+            <div class="answer" id="answer21">
+                <p><strong>Answer:</strong> D) All of the above</p>
+                <p><strong>Explanation:</strong> All statements are correct. Import mode loads data into Power BI's in-memory engine (fast but requires refresh). DirectQuery leaves data in the source and queries it live (real-time but potentially slower).</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p><strong>22. Which DAX function would you use to find the average sales for the last 3 months?</strong></p>
+            <div class="options">
+                <div class="option">A) LASTDATE()</div>
+                <div class="option">B) DATESINPERIOD() with AVERAGE()</div>
+                <div class="option">C) SUM()/COUNT()</div>
+                <div class="option">D) TOPN()</div>
+            </div>
+            <button class="show-answer" onclick="showAnswer(22)">Show Answer</button>
+            <div class="answer" id="answer22">
+                <p><strong>Answer:</strong> B) DATESINPERIOD() with AVERAGE()</p>
+                <p><strong>Explanation:</strong> You would use a time intelligence function like DATESINPERIOD() to define the 3-month period, combined with AVERAGE(). For example: <span class="highlight">AVERAGEX(DATESINPERIOD(Sales[Date], LASTDATE(Sales[Date]), -3, MONTH), Sales[Amount])</span>.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p><strong>23. What is the purpose of the "Selection Pane" in Power BI Desktop?</strong></p>
+            <div class="options">
+                <div class="option">A) To select data sources</div>
+                <div class="option">B) To manage the visibility and layering of visuals on a page</div>
+                <div class="option">C) To choose which columns to import</div>
+                <div class="option">D) To select DAX functions</div>
+            </div>
+            <button class="show-answer" onclick="showAnswer(23)">Show Answer</button>
+            <div class="answer" id="answer23">
+                <p><strong>Answer:</strong> B) To manage the visibility and layering of visuals on a page</p>
+                <p><strong>Explanation:</strong> The Selection Pane shows all objects on the current report page and allows you to control their visibility (eye icon) and z-order (up/down arrows), which is especially useful when working with bookmarks.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p><strong>24. Which Power BI feature allows you to define how visuals on a page respond to different screen sizes?</strong></p>
+            <div class="options">
+                <div class="option">A) Themes</div>
+                <div class="option">B) Responsiveness settings</div>
+                <div class="option">C) View mode</div>
+                <div class="option">D) Mobile layout</div>
+            </div>
+            <button class="show-answer" onclick="showAnswer(24)">Show Answer</button>
+            <div class="answer" id="answer24">
+                <p><strong>Answer:</strong> B) Responsiveness settings</p>
+                <p><strong>Explanation:</strong> The responsiveness settings (available in the Visualizations pane) allow you to define how visuals should behave when the report page is resized, including options to move, resize, or hide visuals based on available space.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p><strong>25. What is the purpose of the "Field Parameters" feature in Power BI?</strong></p>
+            <div class="options">
+                <div class="option">A) To create dynamic measures</div>
+                <div class="option">B) To make visuals interactive based on user selection</div>
+                <div class="option">C) To optimize query performance</div>
+                <div class="option">D) To define relationships between tables</div>
+            </div>
+            <button class="show-answer" onclick="showAnswer(25)">Show Answer</button>
+            <div class="answer" id="answer25">
+                <p><strong>Answer:</strong> B) To make visuals interactive based on user selection</p>
+                <p><strong>Explanation:</strong> Field parameters allow you to create dynamic reports where users can select which fields to display in visuals through slicers. This creates more flexible and interactive reports without needing to create multiple similar visuals.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p><strong>26. Which of the following is NOT a valid way to share a Power BI report?</strong></p>
+            <div class="options">
+                <div class="option">A) Publish to Power BI service</div>
+                <div class="option">B) Share via Microsoft Teams</div>
+                <div class="option">C) Export to PowerPoint</div>
+                <div class="option">D) Save as executable (.exe) file</div>
+            </div>
+            <button class="show-answer" onclick="showAnswer(26)">Show Answer</button>
+            <div class="answer" id="answer26">
+                <p><strong>Answer:</strong> D) Save as executable (.exe) file</p>
+                <p><strong>Explanation:</strong> Power BI cannot export reports as executable files. You can publish to the Power BI service, share via Teams, or export to PowerPoint (as static slides), among other sharing options.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p><strong>27. What is the purpose of the "Performance Analyzer" in Power BI?</strong></p>
+            <div class="options">
+                <div class="option">A) To analyze data distribution</div>
+                <div class="option">B) To identify slow-performing visuals and queries</div>
+                <div class="option">C) To optimize DAX formulas</div>
+                <div class="option">D) To clean data sources</div>
+            </div>
+            <button class="show-answer" onclick="showAnswer(27)">Show Answer</button>
+            <div class="answer" id="answer27">
+                <p><strong>Answer:</strong> B) To identify slow-performing visuals and queries</p>
+                <p><strong>Explanation:</strong> The Performance Analyzer records and displays detailed timing information about operations in your report, helping you identify which visuals or queries are causing performance issues.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p><strong>28. Which DAX function would you use to calculate year-to-date sales?</strong></p>
+            <div class="options">
+                <div class="option">A) TOTALYTD()</div>
+                <div class="option">B) YEAR()</div>
+                <div class="option">C) SUM()</div>
+                <div class="option">D) CALENDAR()</div>
+            </div>
+            <button class="show-answer" onclick="showAnswer(28)">Show Answer</button>
+            <div class="answer" id="answer28">
+                <p><strong>Answer:</strong> A) TOTALYTD()</p>
+                <p><strong>Explanation:</strong> TOTALYTD() is a time intelligence function that calculates the year-to-date total of an expression. For example: <span class="highlight">TOTALYTD(SUM(Sales[Amount]), 'Date'[Date])</span>.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p><strong>29. What is the purpose of the "Decomposition Tree" visual in Power BI?</strong></p>
+            <div class="options">
+                <div class="option">A) To show hierarchical data</div>
+                <div class="option">B) To analyze the drivers behind a metric</div>
+                <div class="option">C) To display geographic data</div>
+                <div class="option">D) To create organizational charts</div>
+            </div>
+            <button class="show-answer" onclick="showAnswer(29)">Show Answer</button>
+            <div class="answer" id="answer29">
+                <p><strong>Answer:</strong> B) To analyze the drivers behind a metric</p>
+                <p><strong>Explanation:</strong> The Decomposition Tree is an AI-powered visual that allows users to explore data across multiple dimensions to understand what factors are contributing to a specific metric value.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p><strong>30. Which Power BI feature allows you to create custom visuals beyond the built-in options?</strong></p>
+            <div class="options">
+                <div class="option">A) Power BI Custom Visuals SDK</div>
+                <div class="option">B) Power Apps</div>
+                <div class="option">C) Power Automate</div>
+                <div class="option">D) Power Query Editor</div>
+            </div>
+            <button class="show-answer" onclick="showAnswer(30)">Show Answer</button>
+            <div class="answer" id="answer30">
+                <p><strong>Answer:</strong> A) Power BI Custom Visuals SDK</p>
+                <p><strong>Explanation:</strong> The Power BI Custom Visuals SDK (Software Development Kit) allows developers to create custom visualizations using TypeScript and D3.js, which can then be imported into Power BI reports.</p>
+            </div>
+        </div>
+
+        <a href="#" class="download-btn" onclick="downloadExam()">Download Exam as PDF</a>
+    </div>
+
+    <script>
+        // Timer functionality
+        let timeLeft = 30 * 60; // 30 minutes in seconds
+        const timerElement = document.getElementById('timer');
+        
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                alert("Time's up! Please submit your answers.");
+            } else {
+                timeLeft--;
+            }
+        }
+        
+        const timerInterval = setInterval(updateTimer, 1000);
+        
+        // Function to show/hide answers
+        function showAnswer(questionNumber) {
+            const answerElement = document.getElementById(`answer${questionNumber}`);
+            if (answerElement.style.display === 'block') {
+                answerElement.style.display = 'none';
+            } else {
+                answerElement.style.display = 'block';
+            }
+        }
+        
+        // Function to simulate PDF download
+        function downloadExam() {
+            alert("Exam downloaded as PDF (simulated for this demo). In a real implementation, this would generate and download a PDF file.");
+            // In a real implementation, you would use a library like jsPDF or html2pdf to generate a PDF
+        }
+    </script>
+</body>
+</html>

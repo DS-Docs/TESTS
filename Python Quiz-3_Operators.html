@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Operators Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .timer {
+            text-align: center;
+            font-size: 24px;
+            margin: 20px 0;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 4px solid #3498db;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .options label {
+            display: block;
+            margin: 5px 0;
+            cursor: pointer;
+        }
+        button {
+            display: block;
+            width: 200px;
+            padding: 10px;
+            margin: 20px auto;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        .results {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        .download-btn {
+            background: #27ae60;
+            margin-top: 10px;
+        }
+        .download-btn:hover {
+            background: #219653;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Data Science & Generative AI by SATISH @ Sathya Technologies</h1>
+        <h2>Python Operators Quiz</h2>
+        
+        <div class="timer" id="timer">10:00</div>
+        
+        <form id="quizForm">
+            <div class="question">
+                <p>1. What is the output of: 5 + 3 * 2</p>
+                <div class="options">
+                    <label><input type="radio" name="q1" value="a"> a) 16</label>
+                    <label><input type="radio" name="q1" value="b"> b) 11</label>
+                    <label><input type="radio" name="q1" value="c"> c) 13</label>
+                    <label><input type="radio" name="q1" value="d"> d) 10</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>2. Which operator is used for exponentiation in Python?</p>
+                <div class="options">
+                    <label><input type="radio" name="q2" value="a"> a) ^</label>
+                    <label><input type="radio" name="q2" value="b"> b) **</label>
+                    <label><input type="radio" name="q2" value="c"> c) //</label>
+                    <label><input type="radio" name="q2" value="d"> d) %%</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>3. What does the '//' operator do in Python?</p>
+                <div class="options">
+                    <label><input type="radio" name="q3" value="a"> a) Regular division</label>
+                    <label><input type="radio" name="q3" value="b"> b) Floor division</label>
+                    <label><input type="radio" name="q3" value="c"> c) Modulus operation</label>
+                    <label><input type="radio" name="q3" value="d"> d) Bitwise OR</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>4. What is the output of: 10 % 3</p>
+                <div class="options">
+                    <label><input type="radio" name="q4" value="a"> a) 3</label>
+                    <label><input type="radio" name="q4" value="b"> b) 1</label>
+                    <label><input type="radio" name="q4" value="c"> c) 0.333</label>
+                    <label><input type="radio" name="q4" value="d"> d) 3.333</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>5. Which operator has higher precedence: * or + ?</p>
+                <div class="options">
+                    <label><input type="radio" name="q5" value="a"> a) +</label>
+                    <label><input type="radio" name="q5" value="b"> b) *</label>
+                    <label><input type="radio" name="q5" value="c"> c) They have the same precedence</label>
+                    <label><input type="radio" name="q5" value="d"> d) It depends on the context</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>6. What is the output of: 'Hello' * 3</p>
+                <div class="options">
+                    <label><input type="radio" name="q6" value="a"> a) HelloHelloHello</label>
+                    <label><input type="radio" name="q6" value="b"> b) Hello3</label>
+                    <label><input type="radio" name="q6" value="c"> c) Error</label>
+                    <label><input type="radio" name="q6" value="d"> d) Hello Hello Hello</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>7. Which operator is used for identity comparison?</p>
+                <div class="options">
+                    <label><input type="radio" name="q7" value="a"> a) ==</label>
+                    <label><input type="radio" name="q7" value="b"> b) =</label>
+                    <label><input type="radio" name="q7" value="c"> c) is</label>
+                    <label><input type="radio" name="q7" value="d"> d) ===</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>8. What is the output of: not(5 > 3 and 10 < 8)</p>
+                <div class="options">
+                    <label><input type="radio" name="q8" value="a"> a) True</label>
+                    <label><input type="radio" name="q8" value="b"> b) False</label>
+                    <label><input type="radio" name="q8" value="c"> c) Error</label>
+                    <label><input type="radio" name="q8" value="d"> d) None</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>9. What does the 'in' operator do?</p>
+                <div class="options">
+                    <label><input type="radio" name="q9" value="a"> a) Checks if a value exists in a sequence</label>
+                    <label><input type="radio" name="q9" value="b"> b) Performs multiplication</label>
+                    <label><input type="radio" name="q9" value="c"> c) Checks if two values are equal</label>
+                    <label><input type="radio" name="q9" value="d"> d) Performs division</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>10. What is the output of: 2 ** 3 ** 2</p>
+                <div class="options">
+                    <label><input type="radio" name="q10" value="a"> a) 64</label>
+                    <label><input type="radio" name="q10" value="b"> b) 512</label>
+                    <label><input type="radio" name="q10" value="c"> c) 36</label>
+                    <label><input type="radio" name="q10" value="d"> d) 12</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>11. Which operator would you use to check if two values are not equal?</p>
+                <div class="options">
+                    <label><input type="radio" name="q11" value="a"> a) !=</label>
+                    <label><input type="radio" name="q11" value="b"> b) <></label>
+                    <label><input type="radio" name="q11" value="c"> c) not=</label>
+                    <label><input type="radio" name="q11" value="d"> d) Both a and b</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>12. What is the output of: 10 & 6 (bitwise AND)</p>
+                <div class="options">
+                    <label><input type="radio" name="q12" value="a"> a) 16</label>
+                    <label><input type="radio" name="q12" value="b"> b) 2</label>
+                    <label><input type="radio" name="q12" value="c"> c) 4</label>
+                    <label><input type="radio" name="q12" value="d"> d) 12</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>13. What does the '~' operator do?</p>
+                <div class="options">
+                    <label><input type="radio" name="q13" value="a"> a) Performs bitwise NOT</label>
+                    <label><input type="radio" name="q13" value="b"> b) Performs logical NOT</label>
+                    <label><input type="radio" name="q13" value="c"> c) Performs multiplication</label>
+                    <label><input type="radio" name="q13" value="d"> d) Performs division</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>14. What is the output of: 15 >> 2</p>
+                <div class="options">
+                    <label><input type="radio" name="q14" value="a"> a) 60</label>
+                    <label><input type="radio" name="q14" value="b"> b) 3</label>
+                    <label><input type="radio" name="q14" value="c"> c) 7</label>
+                    <label><input type="radio" name="q14" value="d"> d) 30</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>15. Which operator has the highest precedence among these?</p>
+                <div class="options">
+                    <label><input type="radio" name="q15" value="a"> a) +</label>
+                    <label><input type="radio" name="q15" value="b"> b) *</label>
+                    <label><input type="radio" name="q15" value="c"> c) **</label>
+                    <label><input type="radio" name="q15" value="d"> d) /</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>16. What is the output of: 3 == 3.0</p>
+                <div class="options">
+                    <label><input type="radio" name="q16" value="a"> a) True</label>
+                    <label><input type="radio" name="q16" value="b"> b) False</label>
+                    <label><input type="radio" name="q16" value="c"> c) Error</label>
+                    <label><input type="radio" name="q16" value="d"> d) None</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>17. What does the '^' operator do in Python?</p>
+                <div class="options">
+                    <label><input type="radio" name="q17" value="a"> a) Exponentiation</label>
+                    <label><input type="radio" name="q17" value="b"> b) Bitwise XOR</label>
+                    <label><input type="radio" name="q17" value="c"> c) Logical OR</label>
+                    <label><input type="radio" name="q17" value="d"> d) Multiplication</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>18. What is the output of: 10 if 5 > 3 else 20</p>
+                <div class="options">
+                    <label><input type="radio" name="q18" value="a"> a) 10</label>
+                    <label><input type="radio" name="q18" value="b"> b) 20</label>
+                    <label><input type="radio" name="q18" value="c"> c) True</label>
+                    <label><input type="radio" name="q18" value="d"> d) False</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>19. Which operator is used for string concatenation?</p>
+                <div class="options">
+                    <label><input type="radio" name="q19" value="a"> a) +</label>
+                    <label><input type="radio" name="q19" value="b"> b) &</label>
+                    <label><input type="radio" name="q19" value="c"> c) concat()</label>
+                    <label><input type="radio" name="q19" value="d"> d) join()</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>20. What is the output of: 7 // -2</p>
+                <div class="options">
+                    <label><input type="radio" name="q20" value="a"> a) -3</label>
+                    <label><input type="radio" name="q20" value="b"> b) -4</label>
+                    <label><input type="radio" name="q20" value="c"> c) 3</label>
+                    <label><input type="radio" name="q20" value="d"> d) -3.5</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>21. What is the output of: (1, 2, 3) + (4, 5, 6)</p>
+                <div class="options">
+                    <label><input type="radio" name="q21" value="a"> a) (5, 7, 9)</label>
+                    <label><input type="radio" name="q21" value="b"> b) (1, 2, 3, 4, 5, 6)</label>
+                    <label><input type="radio" name="q21" value="c"> c) Error</label>
+                    <label><input type="radio" name="q21" value="d"> d) [1, 2, 3, 4, 5, 6]</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>22. What does the 'is not' operator do?</p>
+                <div class="options">
+                    <label><input type="radio" name="q22" value="a"> a) Checks if two objects are not the same</label>
+                    <label><input type="radio" name="q22" value="b"> b) Checks if two values are not equal</label>
+                    <label><input type="radio" name="q22" value="c"> c) Both a and b</label>
+                    <label><input type="radio" name="q22" value="d"> d) Neither a nor b</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>23. What is the output of: 10 << 1</p>
+                <div class="options">
+                    <label><input type="radio" name="q23" value="a"> a) 10</label>
+                    <label><input type="radio" name="q23" value="b"> b) 5</label>
+                    <label><input type="radio" name="q23" value="c"> c) 20</label>
+                    <label><input type="radio" name="q23" value="d"> d) 11</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>24. Which operator would you use to check if a value is greater than or equal to another?</p>
+                <div class="options">
+                    <label><input type="radio" name="q24" value="a"> a) ></label>
+                    <label><input type="radio" name="q24" value="b"> b) >=</label>
+                    <label><input type="radio" name="q24" value="c"> c) =></label>
+                    <label><input type="radio" name="q24" value="d"> d) !=</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>25. What is the output of: 'a' in 'banana'</p>
+                <div class="options">
+                    <label><input type="radio" name="q25" value="a"> a) True</label>
+                    <label><input type="radio" name="q25" value="b"> b) False</label>
+                    <label><input type="radio" name="q25" value="c"> c) Error</label>
+                    <label><input type="radio" name="q25" value="d"> d) None</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>26. What does the '|' operator do when used with integers?</p>
+                <div class="options">
+                    <label><input type="radio" name="q26" value="a"> a) Performs bitwise OR</label>
+                    <label><input type="radio" name="q26" value="b"> b) Performs logical OR</label>
+                    <label><input type="radio" name="q26" value="c"> c) Performs division</label>
+                    <label><input type="radio" name="q26" value="d"> d) Performs multiplication</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>27. What is the output of: not True or False</p>
+                <div class="options">
+                    <label><input type="radio" name="q27" value="a"> a) True</label>
+                    <label><input type="radio" name="q27" value="b"> b) False</label>
+                    <label><input type="radio" name="q27" value="c"> c) Error</label>
+                    <label><input type="radio" name="q27" value="d"> d) None</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>28. Which operator has the lowest precedence among these?</p>
+                <div class="options">
+                    <label><input type="radio" name="q28" value="a"> a) and</label>
+                    <label><input type="radio" name="q28" value="b"> b) or</label>
+                    <label><input type="radio" name="q28" value="c"> c) not</label>
+                    <label><input type="radio" name="q28" value="d"> d) They have the same precedence</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>29. What is the output of: 5 < 10 > 7</p>
+                <div class="options">
+                    <label><input type="radio" name="q29" value="a"> a) True</label>
+                    <label><input type="radio" name="q29" value="b"> b) False</label>
+                    <label><input type="radio" name="q29" value="c"> c) Error</label>
+                    <label><input type="radio" name="q29" value="d"> d) None</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>30. What does the '&=' operator do?</p>
+                <div class="options">
+                    <label><input type="radio" name="q30" value="a"> a) Bitwise AND assignment</label>
+                    <label><input type="radio" name="q30" value="b"> b) Logical AND assignment</label>
+                    <label><input type="radio" name="q30" value="c"> c) Addition assignment</label>
+                    <label><input type="radio" name="q30" value="d"> d) Multiplication assignment</label>
+                </div>
+            </div>
+            
+            <button type="button" id="submitBtn">Submit Quiz</button>
+        </form>
+        
+        <div class="results" id="results">
+            <h2>Quiz Results</h2>
+            <p id="score"></p>
+            <p id="answers"></p>
+            <button class="download-btn" onclick="downloadAnswers()">Download Answers</button>
+        </div>
+    </div>
+
+    <script>
+        // Timer functionality
+        let timeLeft = 600; // 10 minutes in seconds
+        const timer = document.getElementById('timer');
+        
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            timer.textContent = `${minutes}:${seconds}`;
+            
+            if (timeLeft === 0) {
+                clearInterval(timerInterval);
+                submitQuiz();
+            } else {
+                timeLeft--;
+            }
+        }
+        
+        const timerInterval = setInterval(updateTimer, 1000);
+        
+        // Quiz submission and scoring
+        document.getElementById('submitBtn').addEventListener('click', submitQuiz);
+        
+        function submitQuiz() {
+            clearInterval(timerInterval);
+            
+            const answers = {
+                q1: "b", q2: "b", q3: "b", q4: "b", q5: "b", 
+                q6: "a", q7: "c", q8: "a", q9: "a", q10: "b",
+                q11: "d", q12: "b", q13: "a", q14: "b", q15: "c",
+                q16: "a", q17: "b", q18: "a", q19: "a", q20: "b",
+                q21: "b", q22: "a", q23: "c", q24: "b", q25: "a",
+                q26: "a", q27: "b", q28: "b", q29: "a", q30: "a"
+            };
+            
+            let score = 0;
+            const form = document.getElementById('quizForm');
+            const formData = new FormData(form);
+            
+            for (let [question, userAnswer] of formData.entries()) {
+                if (answers[question] === userAnswer) {
+                    score++;
+                }
+            }
+            
+            const percentage = (score / 30) * 100;
+            document.getElementById('score').textContent = `You scored ${score} out of 30 (${percentage.toFixed(1)}%)`;
+            
+            // Show correct answers
+            let answersHtml = "<h3>Correct Answers:</h3><ol>";
+            for (let i = 1; i <= 30; i++) {
+                const q = 'q' + i;
+                answersHtml += `<li>${answers[q].toUpperCase()}</li>`;
+            }
+            answersHtml += "</ol>";
+            document.getElementById('answers').innerHTML = answersHtml;
+            
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('quizForm').style.display = 'none';
+        }
+        
+        function downloadAnswers() {
+            const answers = {
+                q1: "b", q2: "b", q3: "b", q4: "b", q5: "b", 
+                q6: "a", q7: "c", q8: "a", q9: "a", q10: "b",
+                q11: "d", q12: "b", q13: "a", q14: "b", q15: "c",
+                q16: "a", q17: "b", q18: "a", q19: "a", q20: "b",
+                q21: "b", q22: "a", q23: "c", q24: "b", q25: "a",
+                q26: "a", q27: "b", q28: "b", q29: "a", q30: "a"
+            };
+            
+            let content = "Python Operators Quiz Answers\n";
+            content += "Data Science & Generative AI by SATISH @ Sathya Technologies\n\n";
+            
+            for (let i = 1; i <= 30; i++) {
+                const q = 'q' + i;
+                content += `${i}. ${answers[q].toUpperCase()}\n`;
+            }
+            
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'python_operators_quiz_answers.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>

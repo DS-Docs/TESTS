@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Science & Generative AI Exam</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .timer {
+            text-align: center;
+            font-size: 24px;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 5px;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-left: 4px solid #3498db;
+            border-radius: 4px;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .answer {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e8f4fc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .download-btn {
+            display: block;
+            text-align: center;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #27ae60;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .download-btn:hover {
+            background-color: #219653;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Data Science & Generative AI by SATISH @ Sathya Technologies</h1>
+        <div class="timer" id="timer">30:00</div>
+        
+        <div class="question">
+            <p>1. Which of the following libraries is primarily used for deep learning in Python?</p>
+            <div class="options">
+                <p>A) NumPy</p>
+                <p>B) Pandas</p>
+                <p>C) TensorFlow</p>
+                <p>D) Matplotlib</p>
+            </div>
+            <button onclick="showAnswer(1)">Show Answer</button>
+            <div class="answer" id="answer1">
+                <p><strong>Answer:</strong> C) TensorFlow</p>
+                <p><strong>Explanation:</strong> TensorFlow is a popular open-source library developed by Google for deep learning applications. While NumPy and Pandas are used for numerical computing and data manipulation respectively, TensorFlow is specifically designed for building and training neural networks.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>2. What is the purpose of the activation function in a neural network?</p>
+            <div class="options">
+                <p>A) To compute the loss function</p>
+                <p>B) To introduce non-linearity into the network</p>
+                <p>C) To initialize the weights</p>
+                <p>D) To normalize the input data</p>
+            </div>
+            <button onclick="showAnswer(2)">Show Answer</button>
+            <div class="answer" id="answer2">
+                <p><strong>Answer:</strong> B) To introduce non-linearity into the network</p>
+                <p><strong>Explanation:</strong> Activation functions like ReLU, sigmoid, or tanh introduce non-linearity to the network, allowing it to learn complex patterns. Without activation functions, the neural network would essentially be just a linear regression model regardless of how many layers it had.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>3. Which of the following is NOT a type of neural network architecture?</p>
+            <div class="options">
+                <p>A) Convolutional Neural Network (CNN)</p>
+                <p>B) Recurrent Neural Network (RNN)</p>
+                <p>C) Random Forest Network (RFN)</p>
+                <p>D) Generative Adversarial Network (GAN)</p>
+            </div>
+            <button onclick="showAnswer(3)">Show Answer</button>
+            <div class="answer" id="answer3">
+                <p><strong>Answer:</strong> C) Random Forest Network (RFN)</p>
+                <p><strong>Explanation:</strong> Random Forest is a machine learning algorithm but not a neural network architecture. CNN is used for image processing, RNN for sequential data, and GAN for generative tasks.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>4. What does the term "epoch" mean in deep learning?</p>
+            <div class="options">
+                <p>A) The number of layers in a neural network</p>
+                <p>B) One complete pass through the entire training dataset</p>
+                <p>C) The learning rate of the optimizer</p>
+                <p>D) The batch size used during training</p>
+            </div>
+            <button onclick="showAnswer(4)">Show Answer</button>
+            <div class="answer" id="answer4">
+                <p><strong>Answer:</strong> B) One complete pass through the entire training dataset</p>
+                <p><strong>Explanation:</strong> An epoch refers to one complete cycle through the full training dataset. Multiple epochs are typically needed for the model to learn effectively. For example, if you have 1000 training examples and use batches of 100, it would take 10 iterations to complete 1 epoch.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>5. Which optimizer is commonly used for training deep neural networks?</p>
+            <div class="options">
+                <p>A) Adam</p>
+                <p>B) K-Means</p>
+                <p>C) Principal Component Analysis</p>
+                <p>D) Support Vector Machine</p>
+            </div>
+            <button onclick="showAnswer(5)">Show Answer</button>
+            <div class="answer" id="answer5">
+                <p><strong>Answer:</strong> A) Adam</p>
+                <p><strong>Explanation:</strong> Adam (Adaptive Moment Estimation) is a popular optimization algorithm for deep learning that combines the advantages of two other extensions of stochastic gradient descent: AdaGrad and RMSProp. The other options are machine learning algorithms, not optimizers.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>6. What is the purpose of dropout in a neural network?</p>
+            <div class="options">
+                <p>A) To increase the learning rate</p>
+                <p>B) To reduce overfitting</p>
+                <p>C) To initialize weights</p>
+                <p>D) To normalize input data</p>
+            </div>
+            <button onclick="showAnswer(6)">Show Answer</button>
+            <div class="answer" id="answer6">
+                <p><strong>Answer:</strong> B) To reduce overfitting</p>
+                <p><strong>Explanation:</strong> Dropout is a regularization technique where randomly selected neurons are ignored during training. This prevents the network from becoming too dependent on any particular neuron and helps reduce overfitting by making the network more robust.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>7. Which Python library provides high-level neural networks API that runs on top of TensorFlow, CNTK, or Theano?</p>
+            <div class="options">
+                <p>A) Scikit-learn</p>
+                <p>B) PyTorch</p>
+                <p>C) Keras</p>
+                <p>D) OpenCV</p>
+            </div>
+            <button onclick="showAnswer(7)">Show Answer</button>
+            <div class="answer" id="answer7">
+                <p><strong>Answer:</strong> C) Keras</p>
+                <p><strong>Explanation:</strong> Keras is a high-level neural networks API that provides a more user-friendly interface for building and training deep learning models. It can use TensorFlow, CNTK, or Theano as its backend. While PyTorch is another deep learning library, it's not built on top of these other frameworks.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>8. What is the purpose of a loss function in deep learning?</p>
+            <div class="options">
+                <p>A) To measure how well the model is performing</p>
+                <p>B) To initialize the weights of the network</p>
+                <p>C) To normalize the input data</p>
+                <p>D) To visualize the model architecture</p>
+            </div>
+            <button onclick="showAnswer(8)">Show Answer</button>
+            <div class="answer" id="answer8">
+                <p><strong>Answer:</strong> A) To measure how well the model is performing</p>
+                <p><strong>Explanation:</strong> The loss function (also called cost function) quantifies how far the model's predictions are from the actual values. During training, the optimizer tries to minimize this loss function. Common loss functions include mean squared error for regression and cross-entropy for classification.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>9. Which activation function is commonly used in the output layer for binary classification problems?</p>
+            <div class="options">
+                <p>A) ReLU</p>
+                <p>B) Sigmoid</p>
+                <p>C) Tanh</p>
+                <p>D) Leaky ReLU</p>
+            </div>
+            <button onclick="showAnswer(9)">Show Answer</button>
+            <div class="answer" id="answer9">
+                <p><strong>Answer:</strong> B) Sigmoid</p>
+                <p><strong>Explanation:</strong> The sigmoid function is often used in the output layer for binary classification because it squashes the output between 0 and 1, which can be interpreted as a probability. ReLU and its variants are more commonly used in hidden layers, while softmax is used for multi-class classification.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>10. What is the main advantage of using convolutional layers in a neural network for image processing?</p>
+            <div class="options">
+                <p>A) They reduce the number of parameters through weight sharing</p>
+                <p>B) They increase the learning rate</p>
+                <p>C) They eliminate the need for activation functions</p>
+                <p>D) They work better with text data</p>
+            </div>
+            <button onclick="showAnswer(10)">Show Answer</button>
+            <div class="answer" id="answer10">
+                <p><strong>Answer:</strong> A) They reduce the number of parameters through weight sharing</p>
+                <p><strong>Explanation:</strong> Convolutional layers use filters/kernels that are slid across the input image, sharing weights across different spatial locations. This makes them much more efficient than fully connected layers for image data and allows them to detect features regardless of their position in the image.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>11. Which of the following is a common technique for handling vanishing gradients in deep neural networks?</p>
+            <div class="options">
+                <p>A) Using ReLU activation functions</p>
+                <p>B) Increasing the learning rate</p>
+                <p>C) Decreasing the batch size</p>
+                <p>D) Using more dropout</p>
+            </div>
+            <button onclick="showAnswer(11)">Show Answer</button>
+            <div class="answer" id="answer11">
+                <p><strong>Answer:</strong> A) Using ReLU activation functions</p>
+                <p><strong>Explanation:</strong> ReLU (Rectified Linear Unit) activation functions help mitigate the vanishing gradient problem because their derivative is either 0 (for negative inputs) or 1 (for positive inputs), unlike sigmoid or tanh functions whose derivatives can become very small. Other techniques include proper weight initialization and residual connections.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>12. What is the purpose of batch normalization in deep learning?</p>
+            <div class="options">
+                <p>A) To reduce the internal covariate shift by normalizing layer inputs</p>
+                <p>B) To increase the batch size during training</p>
+                <p>C) To normalize the output predictions</p>
+                <p>D) To initialize weights to zero</p>
+            </div>
+            <button onclick="showAnswer(12)">Show Answer</button>
+            <div class="answer" id="answer12">
+                <p><strong>Answer:</strong> A) To reduce the internal covariate shift by normalizing layer inputs</p>
+                <p><strong>Explanation:</strong> Batch normalization normalizes the inputs to a layer for each mini-batch, which helps stabilize and accelerate the training of deep neural networks. It reduces internal covariate shift (the change in the distribution of layer inputs) and allows for higher learning rates.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>13. In a Generative Adversarial Network (GAN), what is the role of the generator?</p>
+            <div class="options">
+                <p>A) To distinguish between real and fake samples</p>
+                <p>B) To create realistic-looking fake samples</p>
+                <p>C) To calculate the loss function</p>
+                <p>D) To preprocess the input data</p>
+            </div>
+            <button onclick="showAnswer(13)">Show Answer</button>
+            <div class="answer" id="answer13">
+                <p><strong>Answer:</strong> B) To create realistic-looking fake samples</p>
+                <p><strong>Explanation:</strong> In a GAN, the generator creates synthetic data samples, while the discriminator tries to distinguish between real and generated samples. Through this adversarial process, the generator learns to produce increasingly realistic samples.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>14. Which of the following is a common metric for evaluating classification models?</p>
+            <div class="options">
+                <p>A) Mean Squared Error</p>
+                <p>B) Accuracy</p>
+                <p>C) R-squared</p>
+                <p>D) Mean Absolute Error</p>
+            </div>
+            <button onclick="showAnswer(14)">Show Answer</button>
+            <div class="answer" id="answer14">
+                <p><strong>Answer:</strong> B) Accuracy</p>
+                <p><strong>Explanation:</strong> Accuracy is a common metric for classification problems, measuring the proportion of correct predictions. The other options (Mean Squared Error, R-squared, Mean Absolute Error) are typically used for regression problems.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>15. What is transfer learning in deep learning?</p>
+            <div class="options">
+                <p>A) Using a pre-trained model as a starting point for a new task</p>
+                <p>B) Transferring data from one database to another</p>
+                <p>C) Changing the optimizer during training</p>
+                <p>D) Using multiple GPUs for training</p>
+            </div>
+            <button onclick="showAnswer(15)">Show Answer</button>
+            <div class="answer" id="answer15">
+                <p><strong>Answer:</strong> A) Using a pre-trained model as a starting point for a new task</p>
+                <p><strong>Explanation:</strong> Transfer learning involves taking a model trained on one task and repurposing it for a second related task. This is particularly common in computer vision where models pre-trained on large datasets like ImageNet are fine-tuned for specific applications with smaller datasets.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>16. Which of the following is NOT a common deep learning framework?</p>
+            <div class="options">
+                <p>A) TensorFlow</p>
+                <p>B) PyTorch</p>
+                <p>C) MXNet</p>
+                <p>D) Scrapy</p>
+            </div>
+            <button onclick="showAnswer(16)">Show Answer</button>
+            <div class="answer" id="answer16">
+                <p><strong>Answer:</strong> D) Scrapy</p>
+                <p><strong>Explanation:</strong> Scrapy is a web scraping framework, not a deep learning framework. TensorFlow, PyTorch, and MXNet are all popular deep learning frameworks.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>17. What does LSTM stand for in the context of neural networks?</p>
+            <div class="options">
+                <p>A) Long Short-Term Memory</p>
+                <p>B) Linear Sequential Training Model</p>
+                <p>C) Layer-wise Stochastic Training Method</p>
+                <p>D) Latent Semantic Topic Model</p>
+            </div>
+            <button onclick="showAnswer(17)">Show Answer</button>
+            <div class="answer" id="answer17">
+                <p><strong>Answer:</strong> A) Long Short-Term Memory</p>
+                <p><strong>Explanation:</strong> LSTM stands for Long Short-Term Memory, which is a type of recurrent neural network (RNN) architecture that is capable of learning long-term dependencies. LSTMs are particularly useful for sequential data like time series or natural language.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>18. What is the purpose of the embedding layer in natural language processing?</p>
+            <div class="options">
+                <p>A) To convert words into numerical vectors</p>
+                <p>B) To remove stop words from the text</p>
+                <p>C) To tokenize the input text</p>
+                <p>D) To calculate word frequencies</p>
+            </div>
+            <button onclick="showAnswer(18)">Show Answer</button>
+            <div class="answer" id="answer18">
+                <p><strong>Answer:</strong> A) To convert words into numerical vectors</p>
+                <p><strong>Explanation:</strong> An embedding layer maps discrete words (represented as integers) to dense vectors of fixed size. These embeddings capture semantic relationships between words, where similar words have similar vector representations.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>19. Which of the following is a common technique for text generation with deep learning?</p>
+            <div class="options">
+                <p>A) Autoencoder</p>
+                <p>B) Transformer</p>
+                <p>C) k-Nearest Neighbors</p>
+                <p>D) Support Vector Machine</p>
+            </div>
+            <button onclick="showAnswer(19)">Show Answer</button>
+            <div class="answer" id="answer19">
+                <p><strong>Answer:</strong> B) Transformer</p>
+                <p><strong>Explanation:</strong> Transformer architectures, particularly models like GPT (Generative Pre-trained Transformer), are commonly used for text generation tasks. They use self-attention mechanisms to process sequential data and have shown remarkable success in natural language processing.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>20. What is the purpose of data augmentation in deep learning?</p>
+            <div class="options">
+                <p>A) To increase the size of the training set by creating modified versions of existing data</p>
+                <p>B) To reduce the dimensionality of the data</p>
+                <p>C) To normalize the input data</p>
+                <p>D) To initialize the weights of the network</p>
+            </div>
+            <button onclick="showAnswer(20)">Show Answer</button>
+            <div class="answer" id="answer20">
+                <p><strong>Answer:</strong> A) To increase the size of the training set by creating modified versions of existing data</p>
+                <p><strong>Explanation:</strong> Data augmentation creates additional training data by applying random but realistic transformations to the existing data (like rotations, flips, or color changes for images). This helps prevent overfitting and improves model generalization.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>21. What is the role of the learning rate in training a neural network?</p>
+            <div class="options">
+                <p>A) It determines the size of the steps taken during optimization</p>
+                <p>B) It initializes the weights of the network</p>
+                <p>C) It determines the number of layers in the network</p>
+                <p>D) It normalizes the input data</p>
+            </div>
+            <button onclick="showAnswer(21)">Show Answer</button>
+            <div class="answer" id="answer21">
+                <p><strong>Answer:</strong> A) It determines the size of the steps taken during optimization</p>
+                <p><strong>Explanation:</strong> The learning rate controls how much we adjust the weights of our network with respect to the loss gradient. A too high learning rate might cause the model to overshoot the minimum, while a too low learning rate might make training very slow or get stuck in local minima.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>22. Which of the following is a common activation function for hidden layers in modern neural networks?</p>
+            <div class="options">
+                <p>A) Sigmoid</p>
+                <p>B) Tanh</p>
+                <p>C) ReLU</p>
+                <p>D) All of the above</p>
+            </div>
+            <button onclick="showAnswer(22)">Show Answer</button>
+            <div class="answer" id="answer22">
+                <p><strong>Answer:</strong> C) ReLU</p>
+                <p><strong>Explanation:</strong> While all are activation functions, ReLU (Rectified Linear Unit) is most commonly used in hidden layers of modern neural networks due to its simplicity and effectiveness in mitigating the vanishing gradient problem. Sigmoid and tanh are more commonly used in output layers for specific tasks.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>23. What is the purpose of early stopping during neural network training?</p>
+            <div class="options">
+                <p>A) To stop training when performance on a validation set starts to degrade</p>
+                <p>B) To pause training and resume later</p>
+                <p>C) To skip certain layers during forward propagation</p>
+                <p>D) To reduce the learning rate gradually</p>
+            </div>
+            <button onclick="showAnswer(23)">Show Answer</button>
+            <div class="answer" id="answer23">
+                <p><strong>Answer:</strong> A) To stop training when performance on a validation set starts to degrade</p>
+                <p><strong>Explanation:</strong> Early stopping is a form of regularization that stops training when the model's performance on a validation set starts to worsen, indicating that further training might lead to overfitting. This helps find the optimal point where the model has learned enough without memorizing the training data.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>24. In a neural network, what does backpropagation refer to?</p>
+            <div class="options">
+                <p>A) The process of calculating gradients and updating weights</p>
+                <p>B) The forward pass of data through the network</p>
+                <p>C) The initialization of weights</p>
+                <p>D) The normalization of input data</p>
+            </div>
+            <button onclick="showAnswer(24)">Show Answer</button>
+            <div class="answer" id="answer24">
+                <p><strong>Answer:</strong> A) The process of calculating gradients and updating weights</p>
+                <p><strong>Explanation:</strong> Backpropagation is the algorithm used to train neural networks. It involves calculating the gradient of the loss function with respect to each weight by the chain rule, propagating these gradients backward through the network, and then using them to update the weights.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>25. What is the main advantage of using a GPU for deep learning compared to a CPU?</p>
+            <div class="options">
+                <p>A) GPUs are better at parallel processing of matrix operations</p>
+                <p>B) GPUs have higher clock speeds</p>
+                <p>C) GPUs have more cache memory</p>
+                <p>D) GPUs are better at sequential processing</p>
+            </div>
+            <button onclick="showAnswer(25)">Show Answer</button>
+            <div class="answer" id="answer25">
+                <p><strong>Answer:</strong> A) GPUs are better at parallel processing of matrix operations</p>
+                <p><strong>Explanation:</strong> GPUs are optimized for parallel processing and can perform many matrix operations simultaneously, which is perfect for the computations required in neural networks. While CPUs might have higher clock speeds for sequential tasks, GPUs excel at the parallelizable operations common in deep learning.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>26. What is the purpose of the softmax function in a neural network?</p>
+            <div class="options">
+                <p>A) To convert a vector of numbers into a probability distribution</p>
+                <p>B) To introduce non-linearity in hidden layers</p>
+                <p>C) To normalize input data</p>
+                <p>D) To initialize weights</p>
+            </div>
+            <button onclick="showAnswer(26)">Show Answer</button>
+            <div class="answer" id="answer26">
+                <p><strong>Answer:</strong> A) To convert a vector of numbers into a probability distribution</p>
+                <p><strong>Explanation:</strong> The softmax function is typically used in the output layer of a neural network for multi-class classification problems. It converts the output scores (logits) into probabilities that sum to 1, making it easier to interpret the results as class probabilities.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>27. Which of the following is a common technique for handling overfitting in deep learning?</p>
+            <div class="options">
+                <p>A) Increasing model complexity</p>
+                <p>B) Adding more layers to the network</p>
+                <p>C) Using dropout</p>
+                <p>D) Decreasing the size of the training set</p>
+            </div>
+            <button onclick="showAnswer(27)">Show Answer</button>
+            <div class="answer" id="answer27">
+                <p><strong>Answer:</strong> C) Using dropout</p>
+                <p><strong>Explanation:</strong> Dropout is a regularization technique that randomly ignores (drops out) some neurons during training, which helps prevent overfitting. The other options would typically increase overfitting rather than reduce it.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>28. What is the purpose of pooling layers in a convolutional neural network?</p>
+            <div class="options">
+                <p>A) To reduce spatial dimensions (downsample)</p>
+                <p>B) To increase the number of channels</p>
+                <p>C) To introduce non-linearity</p>
+                <p>D) To normalize the input</p>
+            </div>
+            <button onclick="showAnswer(28)">Show Answer</button>
+            <div class="answer" id="answer28">
+                <p><strong>Answer:</strong> A) To reduce spatial dimensions (downsample)</p>
+                <p><strong>Explanation:</strong> Pooling layers (like max pooling) reduce the spatial dimensions of the feature maps, making the network more computationally efficient and helping to make the detected features more invariant to small translations in the input.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>29. In the context of deep learning, what is a "hyperparameter"?</p>
+            <div class="options">
+                <p>A) A parameter that is learned during training</p>
+                <p>B) A parameter that is set before training begins</p>
+                <p>C) The output of the neural network</p>
+                <p>D) The input data to the neural network</p>
+            </div>
+            <button onclick="showAnswer(29)">Show Answer</button>
+            <div class="answer" id="answer29">
+                <p><strong>Answer:</strong> B) A parameter that is set before training begins</p>
+                <p><strong>Explanation:</strong> Hyperparameters are configuration variables that are set before training and control the learning process. Examples include learning rate, number of layers, number of units per layer, dropout rate, etc. They are not learned from the data but significantly affect model performance.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>30. Which of the following is a common loss function for binary classification problems?</p>
+            <div class="options">
+                <p>A) Mean Squared Error</p>
+                <p>B) Binary Cross-Entropy</p>
+                <p>C) Categorical Cross-Entropy</p>
+                <p>D) Mean Absolute Error</p>
+            </div>
+            <button onclick="showAnswer(30)">Show Answer</button>
+            <div class="answer" id="answer30">
+                <p><strong>Answer:</strong> B) Binary Cross-Entropy</p>
+                <p><strong>Explanation:</strong> Binary cross-entropy is the standard loss function for binary classification problems. It measures the performance of a classification model whose output is a probability between 0 and 1. Categorical cross-entropy is used for multi-class classification, while the other options are typically used for regression.</p>
+            </div>
+        </div>
+
+        <a href="#" class="download-btn" onclick="downloadExam()">Download Exam as PDF</a>
+    </div>
+
+    <script>
+        // Timer functionality
+        let timeLeft = 30 * 60; // 30 minutes in seconds
+        const timerElement = document.getElementById('timer');
+        
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                alert("Time's up! Please submit your answers.");
+            } else {
+                timeLeft--;
+            }
+        }
+        
+        const timerInterval = setInterval(updateTimer, 1000);
+        
+        // Function to show/hide answers
+        function showAnswer(questionNumber) {
+            const answerElement = document.getElementById(`answer${questionNumber}`);
+            if (answerElement.style.display === 'block') {
+                answerElement.style.display = 'none';
+            } else {
+                answerElement.style.display = 'block';
+            }
+        }
+        
+        // Function to simulate PDF download
+        function downloadExam() {
+            alert("Exam downloaded as PDF (simulated for this demo). In a real implementation, this would generate and download a PDF file.");
+        }
+    </script>
+</body>
+</html>

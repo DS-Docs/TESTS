@@ -1,0 +1,861 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Science & Generative AI Exam</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        h2 {
+            color: #2980b9;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question p {
+            font-weight: bold;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .answer {
+            display: none;
+            background-color: #e8f4f9;
+            padding: 10px;
+            border-left: 4px solid #2980b9;
+            margin-top: 10px;
+        }
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #e74c3c;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        .download-btn {
+            display: block;
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px 20px;
+            background: #27ae60;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .download-btn:hover {
+            background: #219653;
+        }
+        .toggle-btn {
+            cursor: pointer;
+            color: #2980b9;
+            text-decoration: underline;
+            margin-top: 10px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="timer" id="timer">30:00</div>
+    <div class="container">
+        <h1>Data Science & Generative AI by SATISH @ Sathya Technologies</h1>
+        <h2>Power BI Programming Exam (30 Minutes)</h2>
+        
+        <div class="question">
+            <p>1. What is Power BI primarily used for?</p>
+            <div class="options">
+                <p>a) Data storage</p>
+                <p>b) Data visualization and analytics</p>
+                <p>c) Machine learning model training</p>
+                <p>d) Database management</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(1)">Show Answer</span>
+            <div class="answer" id="answer1">
+                <p><strong>Answer:</strong> b) Data visualization and analytics</p>
+                <p><strong>Explanation:</strong> Power BI is a business intelligence tool used for creating interactive visualizations and reports from data.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>2. What is DAX in Power BI?</p>
+            <div class="options">
+                <p>a) A data import tool</p>
+                <p>b) A query language for data modeling</p>
+                <p>c) A visualization library</p>
+                <p>d) A database connector</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(2)">Show Answer</span>
+            <div class="answer" id="answer2">
+                <p><strong>Answer:</strong> b) A query language for data modeling</p>
+                <p><strong>Explanation:</strong> DAX (Data Analysis Expressions) is used to create calculated columns, measures, and custom tables in Power BI.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>3. Which component of Power BI is used to create reports?</p>
+            <div class="options">
+                <p>a) Power Query</p>
+                <p>b) Power Pivot</p>
+                <p>c) Power BI Desktop</p>
+                <p>d) Power View</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(3)">Show Answer</span>
+            <div class="answer" id="answer3">
+                <p><strong>Answer:</strong> c) Power BI Desktop</p>
+                <p><strong>Explanation:</strong> Power BI Desktop is the primary tool for designing and publishing reports and dashboards.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>4. What is the purpose of Power Query in Power BI?</p>
+            <div class="options">
+                <p>a) To create visualizations</p>
+                <p>b) To transform and clean data</p>
+                <p>c) To write DAX formulas</p>
+                <p>d) To publish reports</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(4)">Show Answer</span>
+            <div class="answer" id="answer4">
+                <p><strong>Answer:</strong> b) To transform and clean data</p>
+                <p><strong>Explanation:</strong> Power Query is used for data transformation, cleaning, and shaping before loading into Power BI.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>5. Which DAX function calculates the sum of a column?</p>
+            <div class="options">
+                <p>a) COUNT</p>
+                <p>b) SUM</p>
+                <p>c) AVERAGE</p>
+                <p>d) MAX</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(5)">Show Answer</span>
+            <div class="answer" id="answer5">
+                <p><strong>Answer:</strong> b) SUM</p>
+                <p><strong>Explanation:</strong> The SUM function in DAX calculates the total of values in a specified column.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>6. What is a measure in Power BI?</p>
+            <div class="options">
+                <p>a) A static value in a dataset</p>
+                <p>b) A calculated field using DAX</p>
+                <p>c) A data transformation step</p>
+                <p>d) A type of visualization</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(6)">Show Answer</span>
+            <div class="answer" id="answer6">
+                <p><strong>Answer:</strong> b) A calculated field using DAX</p>
+                <p><strong>Explanation:</strong> Measures are dynamic calculations created using DAX, often used in visualizations.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>7. How can you create a relationship between two tables in Power BI?</p>
+            <div class="options">
+                <p>a) Using Power Query</p>
+                <p>b) Using the Model view</p>
+                <p>c) Using DAX formulas</p>
+                <p>d) Using the Report view</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(7)">Show Answer</span>
+            <div class="answer" id="answer7">
+                <p><strong>Answer:</strong> b) Using the Model view</p>
+                <p><strong>Explanation:</strong> The Model view in Power BI allows users to create and manage relationships between tables.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>8. What is the purpose of a slicer in Power BI?</p>
+            <div class="options">
+                <p>a) To filter data interactively</p>
+                <p>b) To create calculated columns</p>
+                <p>c) To import data</p>
+                <p>d) To publish reports</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(8)">Show Answer</span>
+            <div class="answer" id="answer8">
+                <p><strong>Answer:</strong> a) To filter data interactively</p>
+                <p><strong>Explanation:</strong> Slicers are visual filters that allow users to interact with and filter report data.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>9. Which DAX function is used to count rows in a table?</p>
+            <div class="options">
+                <p>a) SUM</p>
+                <p>b) COUNTROWS</p>
+                <p>c) AVERAGE</p>
+                <p>d) MIN</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(9)">Show Answer</span>
+            <div class="answer" id="answer9">
+                <p><strong>Answer:</strong> b) COUNTROWS</p>
+                <p><strong>Explanation:</strong> The COUNTROWS function counts the number of rows in a specified table.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>10. What is the role of the Power BI Service?</p>
+            <div class="options">
+                <p>a) Data modeling</p>
+                <p>b) Creating visualizations</p>
+                <p>c) Sharing and collaborating on reports</p>
+                <p>d) Data transformation</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(10)">Show Answer</span>
+            <div class="answer" id="answer10">
+                <p><strong>Answer:</strong> c) Sharing and collaborating on reports</p>
+                <p><strong>Explanation:</strong> The Power BI Service is a cloud-based platform for sharing, publishing, and collaborating on reports.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>11. What does the CALCULATE function do in DAX?</p>
+            <div class="options">
+                <p>a) Filters data in Power Query</p>
+                <p>b) Modifies filter context for calculations</p>
+                <p>c) Creates visualizations</p>
+                <p>d) Imports data</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(11)">Show Answer</span>
+            <div class="answer" id="answer11">
+                <p><strong>Answer:</strong> b) Modifies filter context for calculations</p>
+                <p><strong>Explanation:</strong> CALCULATE evaluates an expression in a modified filter context, often used with filters.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>12. Which visual in Power BI is best for showing trends over time?</p>
+            <div class="options">
+                <p>a) Pie Chart</p>
+                <p>b) Line Chart</p>
+                <p>c) Bar Chart</p>
+                <p>d) Table</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(12)">Show Answer</span>
+            <div class="answer" id="answer12">
+                <p><strong>Answer:</strong> b) Line Chart</p>
+                <p><strong>Explanation:</strong> Line Charts are ideal for visualizing trends and changes over time.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>13. What is a calculated column in Power BI?</p>
+            <div class="options">
+                <p>a) A column created in Power Query</p>
+                <p>b) A column computed using DAX</p>
+                <p>c) A column from an external database</p>
+                <p>d) A filtered dataset</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(13)">Show Answer</span>
+            <div class="answer" id="answer13">
+                <p><strong>Answer:</strong> b) A column computed using DAX</p>
+                <p><strong>Explanation:</strong> Calculated columns are created using DAX formulas and stored in the data model.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>14. Which feature in Power BI allows real-time data updates?</p>
+            <div class="options">
+                <p>a) Dashboards</p>
+                <p>b) Dataflows</p>
+                <p>c) Streaming Datasets</p>
+                <p>d) Reports</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(14)">Show Answer</span>
+            <div class="answer" id="answer14">
+                <p><strong>Answer:</strong> c) Streaming Datasets</p>
+                <p><strong>Explanation:</strong> Streaming Datasets enable real-time data updates in Power BI dashboards.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>15. What is the purpose of the RELATED function in DAX?</p>
+            <div class="options">
+                <p>a) To filter data</p>
+                <p>b) To retrieve data from a related table</p>
+                <p>c) To calculate averages</p>
+                <p>d) To create measures</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(15)">Show Answer</span>
+            <div class="answer" id="answer15">
+                <p><strong>Answer:</strong> b) To retrieve data from a related table</p>
+                <p><strong>Explanation:</strong> The RELATED function fetches values from a related table based on defined relationships.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>16. Which Power BI component is used for data modeling?</p>
+            <div class="options">
+                <p>a) Power Query</p>
+                <p>b) Power Pivot</p>
+                <p>c) Power View</p>
+                <p>d) Power BI Service</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(16)">Show Answer</span>
+            <div class="answer" id="answer16">
+                <p><strong>Answer:</strong> b) Power Pivot</p>
+                <p><strong>Explanation:</strong> Power Pivot is used for creating data models, relationships, and calculations in Power BI.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>17. What is the purpose of a dashboard in Power BI?</p>
+            <div class="options">
+                <p>a) To transform data</p>
+                <p>b) To combine visuals from multiple reports</p>
+                <p>c) To write DAX formulas</p>
+                <p>d) To import data</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(17)">Show Answer</span>
+            <div class="answer" id="answer17">
+                <p><strong>Answer:</strong> b) To combine visuals from multiple reports</p>
+                <p><strong>Explanation:</strong> Dashboards in Power BI aggregate visuals from multiple reports for a unified view.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>18. Which DAX function calculates the average of a column?</p>
+            <div class="options">
+                <p>a) SUM</p>
+                <p>b) AVERAGE</p>
+                <p>c) COUNT</p>
+                <p>d) MAX</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(18)">Show Answer</span>
+            <div class="answer" id="answer18">
+                <p><strong>Answer:</strong> b) AVERAGE</p>
+                <p><strong>Explanation:</strong> The AVERAGE function computes the arithmetic mean of values in a column.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>19. How can you share a Power BI report with others?</p>
+            <div class="options">
+                <p>a) Using Power Query</p>
+                <p>b) Using the Power BI Service</p>
+                <p>c) Using Power Pivot</p>
+                <p>d) Using DAX</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(19)">Show Answer</span>
+            <div class="answer" id="answer19">
+                <p><strong>Answer:</strong> b) Using the Power BI Service</p>
+                <p><strong>Explanation:</strong> The Power BI Service allows users to publish and share reports with others.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>20. What is the purpose of the FILTER function in DAX?</p>
+            <div class="options">
+                <p>a) To create relationships</p>
+                <p>b) To apply filters to a table</p>
+                <p>c) To calculate sums</p>
+                <p>d) To import data</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(20)">Show Answer</span>
+            <div class="answer" id="answer20">
+                <p><strong>Answer:</strong> b) To apply filters to a table</p>
+                <p><strong>Explanation:</strong> The FILTER function returns a table filtered based on a specified condition.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>21. Which visual is best for comparing categorical data?</p>
+            <div class="options">
+                <p>a) Line Chart</p>
+                <p>b) Bar Chart</p>
+                <p>c) Scatter Plot</p>
+                <p>d) Area Chart</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(21)">Show Answer</span>
+            <div class="answer" id="answer21">
+                <p><strong>Answer:</strong> b) Bar Chart</p>
+                <p><strong>Explanation:</strong> Bar Charts are effective for comparing values across different categories.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>22. What is a dataflow in Power BI?</p>
+            <div class="options">
+                <p>a) A visualization type</p>
+                <p>b) A data transformation pipeline</p>
+                <p>c) A DAX function</p>
+                <p>d) A report template</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(22)">Show Answer</span>
+            <div class="answer" id="answer22">
+                <p><strong>Answer:</strong> b) A data transformation pipeline</p>
+                <p><strong>Explanation:</strong> Dataflows are used to prepare and transform data in the Power BI Service for reuse.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>23. Which DAX function is used to combine data from multiple tables?</p>
+            <div class="options">
+                <p>a) SUMMARIZE</p>
+                <p>b) UNION</p>
+                <p>c) CALCULATE</p>
+                <p>d) FILTER</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(23)">Show Answer</span>
+            <div class="answer" id="answer23">
+                <p><strong>Answer:</strong> b) UNION</p>
+                <p><strong>Explanation:</strong> The UNION function combines rows from multiple tables into a single table.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>24. What is the purpose of bookmarks in Power BI?</p>
+            <div class="options">
+                <p>a) To save data sources</p>
+                <p>b) To save report states for navigation</p>
+                <p>c) To create DAX measures</p>
+                <p>d) To filter datasets</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(24)">Show Answer</span>
+            <div class="answer" id="answer24">
+                <p><strong>Answer:</strong> b) To save report states for navigation</p>
+                <p><strong>Explanation:</strong> Bookmarks capture the state of a report page, including filters and visuals, for navigation.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>25. What does the ALL function do in DAX?</p>
+            <div class="options">
+                <p>a) Aggregates all data</p>
+                <p>b) Removes filters from a table or column</p>
+                <p>c) Creates relationships</p>
+                <p>d) Calculates averages</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(25)">Show Answer</span>
+            <div class="answer" id="answer25">
+                <p><strong>Answer:</strong> b) Removes filters from a table or column</p>
+                <p><strong>Explanation:</strong> The ALL function removes filters from a table or column, often used with CALCULATE.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>26. Which Power BI feature allows users to drill down into data?</p>
+            <div class="options">
+                <p>a) Slicers</p>
+                <p>b) Drillthrough</p>
+                <p>c) Bookmarks</p>
+                <p>d) Dataflows</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(26)">Show Answer</span>
+            <div class="answer" id="answer26">
+                <p><strong>Answer:</strong> b) Drillthrough</p>
+                <p><strong>Explanation:</strong> Drillthrough allows users to navigate to a detailed report page based on a selected data point.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>27. What is the purpose of the Power BI Gateway?</p>
+            <div class="options">
+                <p>a) To create visualizations</p>
+                <p>b) To connect on-premises data to Power BI</p>
+                <p>c) To write DAX formulas</p>
+                <p>d) To transform data</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(27)">Show Answer</span>
+            <div class="answer" id="answer27">
+                <p><strong>Answer:</strong> b) To connect on-premises data to Power BI</p>
+                <p><strong>Explanation:</strong> The Power BI Gateway enables secure connections to on-premises data sources for cloud-based reports.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>28. Which DAX function returns the maximum value in a column?</p>
+            <div class="options">
+                <p>a) SUM</p>
+                <p>b) MAX</p>
+                <p>c) AVERAGE</p>
+                <p>d) COUNT</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(28)">Show Answer</span>
+            <div class="answer" id="answer28">
+                <p><strong>Answer:</strong> b) MAX</p>
+                <p><strong>Explanation:</strong> The MAX function returns the highest value in a specified column.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>29. What is the purpose of the Card visual in Power BI?</p>
+            <div class="options">
+                <p>a) To display trends over time</p>
+                <p>b) To show a single value or KPI</p>
+                <p>c) To compare categories</p>
+                <p>d) To show hierarchical data</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(29)">Show Answer</span>
+            <div class="answer" id="answer29">
+                <p><strong>Answer:</strong> b) To show a single value or KPI</p>
+                <p><strong>Explanation:</strong> The Card visual displays a single value, such as a key performance indicator (KPI).</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>30. What does the CONCATENATE function do in DAX?</p>
+            <div class="options">
+                <p>a) Combines two text strings</p>
+                <p>b) Filters data</p>
+                <p>c) Calculates sums</p>
+                <p>d) Creates relationships</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(30)">Show Answer</span>
+            <div class="answer" id="answer30">
+                <p><strong>Answer:</strong> a) Combines two text strings</p>
+                <p><strong>Explanation:</strong> The CONCATENATE function joins two text strings into one in DAX.</p>
+            </div>
+        </div>
+
+        <a href="#" class="download-btn" onclick="downloadTest()">Download Exam (TXT)</a>
+    </div>
+
+    <script>
+        // Timer functionality
+        let timeLeft = 30 * 60; // 30 minutes in seconds
+        const timerDisplay = document.getElementById('timer');
+        
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                timerDisplay.textContent = "Time's Up!";
+                alert("Time is up!");
+            } else {
+                timeLeft--;
+            }
+        }
+        const timerInterval = setInterval(updateTimer, 1000);
+
+        // Toggle answer visibility
+        function toggleAnswer(id) {
+            const answer = document.getElementById(`answer${id}`);
+            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Download exam as a text file
+        function downloadTest() {
+            const content = `
+Data Science & Generative AI by SATISH @ Sathya Technologies
+Power BI Programming Exam (30 Minutes)
+
+1. What is Power BI primarily used for?
+a) Data storage
+b) Data visualization and analytics
+c) Machine learning model training
+d) Database management
+Answer: b) Data visualization and analytics
+Explanation: Power BI is a business intelligence tool used for creating interactive visualizations and reports from data.
+
+2. What is DAX in Power BI?
+a) A data import tool
+b) A query language for data modeling
+c) A visualization library
+d) A database connector
+Answer: b) A query language for data modeling
+Explanation: DAX (Data Analysis Expressions) is used to create calculated columns, measures, and custom tables in Power BI.
+
+3. Which component of Power BI is used to create reports?
+a) Power Query
+b) Power Pivot
+c) Power BI Desktop
+d) Power View
+Answer: c) Power BI Desktop
+Explanation: Power BI Desktop is the primary tool for designing and publishing reports and dashboards.
+
+4. What is the purpose of Power Query in Power BI?
+a) To create visualizations
+b) To transform and clean data
+c) To write DAX formulas
+d) To publish reports
+Answer: b) To transform and clean data
+Explanation: Power Query is used for data transformation, cleaning, and shaping before loading into Power BI.
+
+5. Which DAX function calculates the sum of a column?
+a) COUNT
+b) SUM
+c) AVERAGE
+d) MAX
+Answer: b) SUM
+Explanation: The SUM function in DAX calculates the total of values in a specified column.
+
+6. What is a measure in Power BI?
+a) A static value in a dataset
+b) A calculated field using DAX
+c) A data transformation step
+d) A type of visualization
+Answer: b) A calculated field using DAX
+Explanation: Measures are dynamic calculations created using DAX, often used in visualizations.
+
+7. How can you create a relationship between two tables in Power BI?
+a) Using Power Query
+b) Using the Model view
+c) Using DAX formulas
+d) Using the Report view
+Answer: b) Using the Model view
+Explanation: The Model view in Power BI allows users to create and manage relationships between tables.
+
+8. What is the purpose of a slicer in Power BI?
+a) To filter data interactively
+b) To create calculated columns
+c) To import data
+d) To publish reports
+Answer: a) To filter data interactively
+Explanation: Slicers are visual filters that allow users to interact with and filter report data.
+
+9. Which DAX function is used to count rows in a table?
+a) SUM
+b) COUNTROWS
+c) AVERAGE
+d) MIN
+Answer: b) COUNTROWS
+Explanation: The COUNTROWS function counts the number of rows in a specified table.
+
+10. What is the role of the Power BI Service?
+a) Data modeling
+b) Creating visualizations
+c) Sharing and collaborating on reports
+d) Data transformation
+Answer: c) Sharing and collaborating on reports
+Explanation: The Power BI Service is a cloud-based platform for sharing, publishing, and collaborating on reports.
+
+11. What does the CALCULATE function do in DAX?
+a) Filters data in Power Query
+b) Modifies filter context for calculations
+c) Creates visualizations
+d) Imports data
+Answer: b) Modifies filter context for calculations
+Explanation: CALCULATE evaluates an expression in a modified filter context, often used with filters.
+
+12. Which visual in Power BI is best for showing trends over time?
+a) Pie Chart
+b) Line Chart
+c) Bar Chart
+d) Table
+Answer: b) Line Chart
+Explanation: Line Charts are ideal for visualizing trends and changes over time.
+
+13. What is a calculated column in Power BI?
+a) A column created in Power Query
+b) A column computed using DAX
+c) A column from an external database
+d) A filtered dataset
+Answer: b) A column computed using DAX
+Explanation: Calculated columns are created using DAX formulas and stored in the data model.
+
+14. Which feature in Power BI allows real-time data updates?
+a) Dashboards
+b) Dataflows
+c) Streaming Datasets
+d) Reports
+Answer: c) Streaming Datasets
+Explanation: Streaming Datasets enable real-time data updates in Power BI dashboards.
+
+15. What is the purpose of the RELATED function in DAX?
+a) To filter data
+b) To retrieve data from a related table
+c) To calculate averages
+d) To create measures
+Answer: b) To retrieve data from a related table
+Explanation: The RELATED function fetches values from a related table based on defined relationships.
+
+16. Which Power BI component is used for data modeling?
+a) Power Query
+b) Power Pivot
+c) Power View
+d) Power BI Service
+Answer: b) Power Pivot
+Explanation: Power Pivot is used for creating data models, relationships, and calculations in Power BI.
+
+17. What is the purpose of a dashboard in Power BI?
+a) To transform data
+b) To combine visuals from multiple reports
+c) To write DAX formulas
+d) To import data
+Answer: b) To combine visuals from multiple reports
+Explanation: Dashboards in Power BI aggregate visuals from multiple reports for a unified view.
+
+18. Which DAX function calculates the average of a column?
+a) SUM
+b) AVERAGE
+c) COUNT
+d) MAX
+Answer: b) AVERAGE
+Explanation: The AVERAGE function computes the arithmetic mean of values in a column.
+
+19. How can you share a Power BI report with others?
+a) Using Power Query
+b) Using the Power BI Service
+c) Using Power Pivot
+d) Using DAX
+Answer: b) Using the Power BI Service
+Explanation: The Power BI Service allows users to publish and share reports with others.
+
+20. What is the purpose of the FILTER function in DAX?
+a) To create relationships
+b) To apply filters to a table
+c) To calculate sums
+d) To import data
+Answer: b) To apply filters to a table
+Explanation: The FILTER function returns a table filtered based on a specified condition.
+
+21. Which visual is best for comparing categorical data?
+a) Line Chart
+b) Bar Chart
+c) Scatter Plot
+d) Area Chart
+Answer: b) Bar Chart
+Explanation: Bar Charts are effective for comparing values across different categories.
+
+22. What is a dataflow in Power BI?
+a) A visualization type
+b) A data transformation pipeline
+c) A DAX function
+d) A report template
+Answer: b) A data transformation pipeline
+Explanation: Dataflows are used to prepare and transform data in the Power BI Service for reuse.
+
+23. Which DAX function is used to combine data from multiple tables?
+a) SUMMARIZE
+b) UNION
+c) CALCULATE
+d) FILTER
+Answer: b) UNION
+Explanation: The UNION function combines rows from multiple tables into a single table.
+
+24. What is the purpose of bookmarks in Power BI?
+a) To save data sources
+b) To save report states for navigation
+c) To create DAX measures
+d) To filter datasets
+Answer: b) To save report states for navigation
+Explanation: Bookmarks capture the state of a report page, including filters and visuals, for navigation.
+
+25. What does the ALL function do in DAX?
+a) Aggregates all data
+b) Removes filters from a table or column
+c) Creates relationships
+d) Calculates averages
+Answer: b) Removes filters from a table or column
+Explanation: The ALL function removes filters from a table or column, often used with CALCULATE.
+
+26. Which Power BI feature allows users to drill down into data?
+a) Slicers
+b) Drillthrough
+c) Bookmarks
+d) Dataflows
+Answer: b) Drillthrough
+Explanation: Drillthrough allows users to navigate to a detailed report page based on a selected data point.
+
+27. What is the purpose of the Power BI Gateway?
+a) To create visualizations
+b) To connect on-premises data to Power BI
+c) To write DAX formulas
+d) To transform data
+Answer: b) To connect on-premises data to Power BI
+Explanation: The Power BI Gateway enables secure connections to on-premises data sources for cloud-based reports.
+
+28. Which DAX function returns the maximum value in a column?
+a) SUM
+b) MAX
+c) AVERAGE
+d) COUNT
+Answer: b) MAX
+Explanation: The MAX function returns the highest value in a specified column.
+
+29. What is the purpose of the Card visual in Power BI?
+a) To display trends over time
+b) To show a single value or KPI
+c) To compare categories
+d) To show hierarchical data
+Answer: b) To show a single value or KPI
+Explanation: The Card visual displays a single value, such as a key performance indicator (KPI).
+
+30. What does the CONCATENATE function do in DAX?
+a) Combines two text strings
+b) Filters data
+c) Calculates sums
+d) Creates relationships
+Answer: a) Combines two text strings
+Explanation: The CONCATENATE function joins two text strings into one in DAX.
+            `;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'power_bi_exam_30q.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>

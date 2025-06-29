@@ -1,0 +1,867 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Science & Generative AI Exam</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        h2 {
+            color: #2980b9;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question p {
+            font-weight: bold;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .answer {
+            display: none;
+            background-color: #e8f4f9;
+            padding: 10px;
+            border-left: 4px solid #2980b9;
+            margin-top: 10px;
+        }
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #e74c3c;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        .download-btn {
+            display: block;
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px 20px;
+            background: #27ae60;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .download-btn:hover {
+            background: #219653;
+        }
+        .toggle-btn {
+            cursor: pointer;
+            color: #2980b9;
+            text-decoration: underline;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        code {
+            font-family: Consolas, monospace;
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="timer" id="timer">30:00</div>
+    <div class="container">
+        <h1>Data Science & Generative AI by SATISH @ Sathya Technologies</h1>
+        <h2>Neural Network Programming Exam (30 Minutes)</h2>
+        
+        <div class="question">
+            <p>1. What is the primary function of a neural network?</p>
+            <div class="options">
+                <p>a) To cluster data</p>
+                <p>b) To model complex patterns</p>
+                <p>c) To reduce dimensionality</p>
+                <p>d) To preprocess data</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(1)">Show Answer</span>
+            <div class="answer" id="answer1">
+                <p><strong>Answer:</strong> b) To model complex patterns</p>
+                <p><strong>Explanation:</strong> Neural networks learn complex patterns in data through layers of interconnected nodes for tasks like classification and regression.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>2. Which Python library is widely used for building neural networks?</p>
+            <div class="options">
+                <p>a) NumPy</p>
+                <p>b) TensorFlow</p>
+                <p>c) Pandas</p>
+                <p>d) Matplotlib</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(2)">Show Answer</span>
+            <div class="answer" id="answer2">
+                <p><strong>Answer:</strong> b) TensorFlow</p>
+                <p><strong>Explanation:</strong> TensorFlow is a popular framework for constructing and training neural networks.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>3. What is the role of an activation function in a neural network?</p>
+            <div class="options">
+                <p>a) To normalize inputs</p>
+                <p>b) To introduce non-linearity</p>
+                <p>c) To optimize weights</p>
+                <p>d) To split data</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(3)">Show Answer</span>
+            <div class="answer" id="answer3">
+                <p><strong>Answer:</strong> b) To introduce non-linearity</p>
+                <p><strong>Explanation:</strong> Activation functions enable neural networks to model non-linear relationships by transforming weighted inputs.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>4. Which activation function is commonly used in hidden layers?</p>
+            <div class="options">
+                <p>a) Sigmoid</p>
+                <p>b) ReLU</p>
+                <p>c) Softmax</p>
+                <p>d) Linear</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(4)">Show Answer</span>
+            <div class="answer" id="answer4">
+                <p><strong>Answer:</strong> b) ReLU</p>
+                <p><strong>Explanation:</strong> ReLU (Rectified Linear Unit) is preferred in hidden layers due to its simplicity and ability to mitigate vanishing gradients.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>5. What does the <code>Sequential</code> class do in Keras?</p>
+            <div class="options">
+                <p>a) Trains the model</p>
+                <p>b) Defines a stack of layers</p>
+                <p>c) Evaluates the model</p>
+                <p>d) Preprocesses data</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(5)">Show Answer</span>
+            <div class="answer" id="answer5">
+                <p><strong>Answer:</strong> b) Defines a stack of layers</p>
+                <p><strong>Explanation:</strong> The <code>Sequential</code> class in Keras creates a model by stacking layers in a linear sequence.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>6. Which Keras function compiles a neural network model?</p>
+            <div class="options">
+                <p>a) <code>model.fit()</code></p>
+                <p>b) <code>model.compile()</code></p>
+                <p>c) <code>model.predict()</code></p>
+                <p>d) <code>model.evaluate()</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(6)">Show Answer</span>
+            <div class="answer" id="answer6">
+                <p><strong>Answer:</strong> b) <code>model.compile()</code></p>
+                <p><strong>Explanation:</strong> <code>model.compile()</code> configures the model with a loss function, optimizer, and metrics for training.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>7. What is the purpose of a loss function in neural networks?</p>
+            <div class="options">
+                <p>a) To define model architecture</p>
+                <p>b) To measure prediction error</p>
+                <p>c) To normalize data</p>
+                <p>d) To split data</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(7)">Show Answer</span>
+            <div class="answer" id="answer7">
+                <p><strong>Answer:</strong> b) To measure prediction error</p>
+                <p><strong>Explanation:</strong> A loss function quantifies the difference between predicted and actual outputs, guiding optimization.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>8. Which loss function is used for binary classification?</p>
+            <div class="options">
+                <p>a) Mean Squared Error</p>
+                <p>b) Binary Crossentropy</p>
+                <p>c) Categorical Crossentropy</p>
+                <p>d) Mean Absolute Error</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(8)">Show Answer</span>
+            <div class="answer" id="answer8">
+                <p><strong>Answer:</strong> b) Binary Crossentropy</p>
+                <p><strong>Explanation:</strong> Binary Crossentropy measures the error for binary classification tasks, comparing predicted probabilities to true labels.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>9. What does the <code>model.fit()</code> method do in Keras?</p>
+            <div class="options">
+                <p>a) Makes predictions</p>
+                <p>b) Trains the model</p>
+                <p>c) Evaluates the model</p>
+                <p>d) Compiles the model</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(9)">Show Answer</span>
+            <div class="answer" id="answer9">
+                <p><strong>Answer:</strong> b) Trains the model</p>
+                <p><strong>Explanation:</strong> <code>model.fit()</code> trains the neural network on input data for a specified number of epochs.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>10. Which optimizer is commonly used in neural networks?</p>
+            <div class="options">
+                <p>a) KMeans</p>
+                <p>b) Adam</p>
+                <p>c) PCA</p>
+                <p>d) SVC</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(10)">Show Answer</span>
+            <div class="answer" id="answer10">
+                <p><strong>Answer:</strong> b) Adam</p>
+                <p><strong>Explanation:</strong> Adam (Adaptive Moment Estimation) is a popular optimizer that adapts learning rates for efficient training.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>11. What is the purpose of the <code>Dense</code> layer in Keras?</p>
+            <div class="options">
+                <p>a) To perform convolution</p>
+                <p>b) To connect all neurons to the next layer</p>
+                <p>c) To reduce dimensions</p>
+                <p>d) To pool features</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(11)">Show Answer</span>
+            <div class="answer" id="answer11">
+                <p><strong>Answer:</strong> b) To connect all neurons to the next layer</p>
+                <p><strong>Explanation:</strong> A <code>Dense</code> layer is fully connected, linking every neuron in the current layer to the next.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>12. What is backpropagation in neural networks?</p>
+            <div class="options">
+                <p>a) Forward pass of data</p>
+                <p>b) Computing gradients to update weights</p>
+                <p>c) Normalizing inputs</p>
+                <p>d) Splitting data</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(12)">Show Answer</span>
+            <div class="answer" id="answer12">
+                <p><strong>Answer:</strong> b) Computing gradients to update weights</p>
+                <p><strong>Explanation:</strong> Backpropagation calculates gradients of the loss function to update weights and optimize the network.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>13. What does the <code>model.predict()</code> method do in Keras?</p>
+            <div class="options">
+                <p>a) Trains the model</p>
+                <p>b) Makes predictions</p>
+                <p>c) Evaluates the model</p>
+                <p>d) Compiles the model</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(13)">Show Answer</span>
+            <div class="answer" id="answer13">
+                <p><strong>Answer:</strong> b) Makes predictions</p>
+                <p><strong>Explanation:</strong> <code>model.predict()</code> generates predictions for input data using a trained neural network.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>14. What is the purpose of dropout in neural networks?</p>
+            <div class="options">
+                <p>a) To increase model complexity</p>
+                <p>b) To prevent overfitting</p>
+                <p>c) To normalize data</p>
+                <p>d) To split data</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(14)">Show Answer</span>
+            <div class="answer" id="answer14">
+                <p><strong>Answer:</strong> b) To prevent overfitting</p>
+                <p><strong>Explanation:</strong> Dropout randomly deactivates neurons during training to reduce overfitting and improve generalization.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>15. Which Keras layer applies dropout?</p>
+            <div class="options">
+                <p>a) <code>Dense</code></p>
+                <p>b) <code>Dropout</code></p>
+                <p>c) <code>Flatten</code></p>
+                <p>d) <code>Conv2D</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(15)">Show Answer</span>
+            <div class="answer" id="answer15">
+                <p><strong>Answer:</strong> b) <code>Dropout</code></p>
+                <p><strong>Explanation:</strong> The <code>Dropout</code> layer randomly sets a fraction of input units to 0 during training to prevent overfitting.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>16. What is the vanishing gradient problem?</p>
+            <div class="options">
+                <p>a) Gradients become too large</p>
+                <p>b) Gradients become too small</p>
+                <p>c) Model cannot converge</p>
+                <p>d) Data cannot be normalized</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(16)">Show Answer</span>
+            <div class="answer" id="answer16">
+                <p><strong>Answer:</strong> b) Gradients become too small</p>
+                <p><strong>Explanation:</strong> The vanishing gradient problem occurs when gradients shrink during backpropagation, slowing or halting training.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>17. Which activation function is used for multiclass classification?</p>
+            <div class="options">
+                <p>a) ReLU</p>
+                <p>b) Sigmoid</p>
+                <p>c) Softmax</p>
+                <p>d) Tanh</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(17)">Show Answer</span>
+            <div class="answer" id="answer17">
+                <p><strong>Answer:</strong> c) Softmax</p>
+                <p><strong>Explanation:</strong> Softmax is used in the output layer for multiclass classification, producing probabilities that sum to 1.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>18. What does the <code>model.evaluate()</code> method do in Keras?</p>
+            <div class="options">
+                <p>a) Trains the model</p>
+                <p>b) Makes predictions</p>
+                <p>c) Evaluates the model</p>
+                <p>d) Compiles the model</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(18)">Show Answer</span>
+            <div class="answer" id="answer18">
+                <p><strong>Answer:</strong> c) Evaluates the model</p>
+                <p><strong>Explanation:</strong> <code>model.evaluate()</code> computes the loss and metrics on test data to assess model performance.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>19. What is batch normalization used for?</p>
+            <div class="options">
+                <p>a) To reduce model size</p>
+                <p>b) To stabilize training</p>
+                <p>c) To add non-linearity</p>
+                <p>d) To split data</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(19)">Show Answer</span>
+            <div class="answer" id="answer19">
+                <p><strong>Answer:</strong> b) To stabilize training</p>
+                <p><strong>Explanation:</strong> Batch normalization normalizes layer inputs, reducing internal covariate shift and improving training stability.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>20. Which Keras layer performs batch normalization?</p>
+            <div class="options">
+                <p>a) <code>Dense</code></p>
+                <p>b) <code>BatchNormalization</code></p>
+                <p>c) <code>Flatten</code></p>
+                <p>d) <code>Dropout</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(20)">Show Answer</span>
+            <div class="answer" id="answer20">
+                <p><strong>Answer:</strong> b) <code>BatchNormalization</code></p>
+                <p><strong>Explanation:</strong> The <code>BatchNormalization</code> layer normalizes activations to stabilize and accelerate training.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>21. What is an epoch in neural network training?</p>
+            <div class="options">
+                <p>a) A single prediction</p>
+                <p>b) One pass through the entire dataset</p>
+                <p>c) A single neuron update</p>
+                <p>d) A data split</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(21)">Show Answer</span>
+            <div class="answer" id="answer21">
+                <p><strong>Answer:</strong> b) One pass through the entire dataset</p>
+                <p><strong>Explanation:</strong> An epoch is one complete iteration through the training dataset during model training.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>22. Which layer flattens a multi-dimensional input into a vector?</p>
+            <div class="options">
+                <p>a) <code>Dense</code></p>
+                <p>b) <code>Flatten</code></p>
+                <p>c) <code>Conv2D</code></p>
+                <p>d) <code>MaxPooling2D</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(22)">Show Answer</span>
+            <div class="answer" id="answer22">
+                <p><strong>Answer:</strong> b) <code>Flatten</code></p>
+                <p><strong>Explanation:</strong> The <code>Flatten</code> layer converts multi-dimensional inputs (e.g., 2D feature maps) into a 1D vector.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>23. What is the purpose of a Convolutional Neural Network (CNN)?</p>
+            <div class="options">
+                <p>a) Sequential data processing</p>
+                <p>b) Image feature extraction</p>
+                <p>c) Text generation</p>
+                <p>d) Clustering</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(23)">Show Answer</span>
+            <div class="answer" id="answer23">
+                <p><strong>Answer:</strong> b) Image feature extraction</p>
+                <p><strong>Explanation:</strong> CNNs use convolutional layers to extract spatial features from images for tasks like classification.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>24. Which Keras layer is used for convolution in CNNs?</p>
+            <div class="options">
+                <p>a) <code>Dense</code></p>
+                <p>b) <code>Conv2D</code></p>
+                <p>c) <code>Flatten</code></p>
+                <p>d) <code>Dropout</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(24)">Show Answer</span>
+            <div class="answer" id="answer24">
+                <p><strong>Answer:</strong> b) <code>Conv2D</code></p>
+                <p><strong>Explanation:</strong> <code>Conv2D</code> applies convolutional filters to extract features from 2D inputs like images.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>25. What is the purpose of a pooling layer in a CNN?</p>
+            <div class="options">
+                <p>a) To increase image size</p>
+                <p>b) To reduce spatial dimensions</p>
+                <p>c) To add non-linearity</p>
+                <p>d) To optimize weights</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(25)">Show Answer</span>
+            <div class="answer" id="answer25">
+                <p><strong>Answer:</strong> b) To reduce spatial dimensions</p>
+                <p><strong>Explanation:</strong> Pooling layers (e.g., MaxPooling) reduce the spatial size of feature maps, lowering computational load.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>26. Which Keras layer performs max pooling?</p>
+            <div class="options">
+                <p>a) <code>MaxPooling2D</code></p>
+                <p>b) <code>AveragePooling2D</code></p>
+                <p>c) <code>GlobalPooling</code></p>
+                <p>d) <code>Conv2D</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(26)">Show Answer</span>
+            <div class="answer" id="answer26">
+                <p><strong>Answer:</strong> a) <code>MaxPooling2D</code></p>
+                <p><strong>Explanation:</strong> <code>MaxPooling2D</code> selects the maximum value in each region of a feature map to downsample it.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>27. What is a Recurrent Neural Network (RNN) used for?</p>
+            <div class="options">
+                <p>a) Image processing</p>
+                <p>b) Sequential data processing</p>
+                <p>c) Dimensionality reduction</p>
+                <p>d) Clustering</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(27)">Show Answer</span>
+            <div class="answer" id="answer27">
+                <p><strong>Answer:</strong> b) Sequential data processing</p>
+                <p><strong>Explanation:</strong> RNNs are designed for sequential data, such as time series or text, by maintaining a memory of prior inputs.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>28. Which Keras layer is used for RNNs?</p>
+            <div class="options">
+                <p>a) <code>LSTM</code></p>
+                <p>b) <code>Conv2D</code></p>
+                <p>c) <code>MaxPooling2D</code></p>
+                <p>d) <code>Flatten</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(28)">Show Answer</span>
+            <div class="answer" id="answer28">
+                <p><strong>Answer:</strong> a) <code>LSTM</code></p>
+                <p><strong>Explanation:</strong> <code>LSTM</code> (Long Short-Term Memory) is an RNN layer for processing sequential data.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>29. What is early stopping in neural network training?</p>
+            <div class="options">
+                <p>a) Increasing training time</p>
+                <p>b) Halting training to prevent overfitting</p>
+                <p>c) Normalizing data</p>
+                <p>d) Splitting data</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(29)">Show Answer</span>
+            <div class="answer" id="answer29">
+                <p><strong>Answer:</strong> b) Halting training to prevent overfitting</p>
+                <p><strong>Explanation:</strong> Early stopping stops training when validation performance plateaus to avoid overfitting.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>30. What is transfer learning in neural networks?</p>
+            <div class="options">
+                <p>a) Training from scratch</p>
+                <p>b) Using a pre-trained model for a new task</p>
+                <p>c) Splitting data</p>
+                <p>d) Reducing model size</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(30)">Show Answer</span>
+            <div class="answer" id="answer30">
+                <p><strong>Answer:</strong> b) Using a pre-trained model for a new task</p>
+                <p><strong>Explanation:</strong> Transfer learning uses a pre-trained model (e.g., VGG, ResNet) and fine-tunes it for a specific task, saving training time.</p>
+            </div>
+        </div>
+
+        <a href="#" class="download-btn" onclick="downloadTest()">Download Exam (TXT)</a>
+    </div>
+
+    <script>
+        // Timer functionality
+        let timeLeft = 30 * 60; // 30 minutes in seconds
+        const timerDisplay = document.getElementById('timer');
+        
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                timerDisplay.textContent = "Time's Up!";
+                alert("Time is up!");
+            } else {
+                timeLeft--;
+            }
+        }
+        const timerInterval = setInterval(updateTimer, 1000);
+
+        // Toggle answer visibility
+        function toggleAnswer(id) {
+            const answer = document.getElementById(`answer${id}`);
+            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Download exam as a text file
+        function downloadTest() {
+            const content = `
+Data Science & Generative AI by SATISH @ Sathya Technologies
+Neural Network Programming Exam (30 Minutes)
+
+1. What is the primary function of a neural network?
+a) To cluster data
+b) To model complex patterns
+c) To reduce dimensionality
+d) To preprocess data
+Answer: b) To model complex patterns
+Explanation: Neural networks learn complex patterns in data through layers of interconnected nodes for tasks like classification and regression.
+
+2. Which Python library is widely used for building neural networks?
+a) NumPy
+b) TensorFlow
+c) Pandas
+d) Matplotlib
+Answer: b) TensorFlow
+Explanation: TensorFlow is a popular framework for constructing and training neural networks.
+
+3. What is the role of an activation function in a neural network?
+a) To normalize inputs
+b) To introduce non-linearity
+c) To optimize weights
+d) To split data
+Answer: b) To introduce non-linearity
+Explanation: Activation functions enable neural networks to model non-linear relationships by transforming weighted inputs.
+
+4. Which activation function is commonly used in hidden layers?
+a) Sigmoid
+b) ReLU
+c) Softmax
+d) Linear
+Answer: b) ReLU
+Explanation: ReLU (Rectified Linear Unit) is preferred in hidden layers due to its simplicity and ability to mitigate vanishing gradients.
+
+5. What does the Sequential class do in Keras?
+a) Trains the model
+b) Defines a stack of layers
+c) Evaluates the model
+d) Preprocesses data
+Answer: b) Defines a stack of layers
+Explanation: The Sequential class in Keras creates a model by stacking layers in a linear sequence.
+
+6. Which Keras function compiles a neural network model?
+a) model.fit()
+b) model.compile()
+c) model.predict()
+d) model.evaluate()
+Answer: b) model.compile()
+Explanation: model.compile() configures the model with a loss function, optimizer, and metrics for training.
+
+7. What is the purpose of a loss function in neural networks?
+a) To define model architecture
+b) To measure prediction error
+c) To normalize data
+d) To split data
+Answer: b) To measure prediction error
+Explanation: A loss function quantifies the difference between predicted and actual outputs, guiding optimization.
+
+8. Which loss function is used for binary classification?
+a) Mean Squared Error
+b) Binary Crossentropy
+c) Categorical Crossentropy
+d) Mean Absolute Error
+Answer: b) Binary Crossentropy
+Explanation: Binary Crossentropy measures the error for binary classification tasks, comparing predicted probabilities to true labels.
+
+9. What does the model.fit() method do in Keras?
+a) Makes predictions
+b) Trains the model
+c) Evaluates the model
+d) Compiles the model
+Answer: b) Trains the model
+Explanation: model.fit() trains the neural network on input data for a specified number of epochs.
+
+10. Which optimizer is commonly used in neural networks?
+a) KMeans
+b) Adam
+c) PCA
+d) SVC
+Answer: b) Adam
+Explanation: Adam (Adaptive Moment Estimation) is a popular optimizer that adapts learning rates for efficient training.
+
+11. What is the purpose of the Dense layer in Keras?
+a) To perform convolution
+b) To connect all neurons to the next layer
+c) To reduce dimensions
+d) To pool features
+Answer: b) To connect all neurons to the next layer
+Explanation: A Dense layer is fully connected, linking every neuron in the current layer to the next.
+
+12. What is backpropagation in neural networks?
+a) Forward pass of data
+b) Computing gradients to update weights
+c) Normalizing inputs
+d) Splitting data
+Answer: b) Computing gradients to update weights
+Explanation: Backpropagation calculates gradients of the loss function to update weights and optimize the network.
+
+13. What does the model.predict() method do in Keras?
+a) Trains the model
+b) Makes predictions
+c) Evaluates the model
+d) Compiles the model
+Answer: b) Makes predictions
+Explanation: model.predict() generates predictions for input data using a trained neural network.
+
+14. What is the purpose of dropout in neural networks?
+a) To increase model complexity
+b) To prevent overfitting
+c) To normalize data
+d) To split data
+Answer: b) To prevent overfitting
+Explanation: Dropout randomly deactivates neurons during training to reduce overfitting and improve generalization.
+
+15. Which Keras layer applies dropout?
+a) Dense
+b) Dropout
+c) Flatten
+d) Conv2D
+Answer: b) Dropout
+Explanation: The Dropout layer randomly sets a fraction of input units to 0 during training to prevent overfitting.
+
+16. What is the vanishing gradient problem?
+a) Gradients become too large
+b) Gradients become too small
+c) Model cannot converge
+d) Data cannot be normalized
+Answer: b) Gradients become too small
+Explanation: The vanishing gradient problem occurs when gradients shrink during backpropagation, slowing or halting training.
+
+17. Which activation function is used for multiclass classification?
+a) ReLU
+b) Sigmoid
+c) Softmax
+d) Tanh
+Answer: c) Softmax
+Explanation: Softmax is used in the output layer for multiclass classification, producing probabilities that sum to 1.
+
+18. What does the model.evaluate() method do in Keras?
+a) Trains the model
+b) Makes predictions
+c) Evaluates the model
+d) Compiles the model
+Answer: c) Evaluates the model
+Explanation: model.evaluate() computes the loss and metrics on test data to assess model performance.
+
+19. What is batch normalization used for?
+a) To reduce model size
+b) To stabilize training
+c) To add non-linearity
+d) To split data
+Answer: b) To stabilize training
+Explanation: Batch normalization normalizes layer inputs, reducing internal covariate shift and improving training stability.
+
+20. Which Keras layer performs batch normalization?
+a) Dense
+b) BatchNormalization
+c) Flatten
+d) Dropout
+Answer: b) BatchNormalization
+Explanation: The BatchNormalization layer normalizes activations to stabilize and accelerate training.
+
+21. What is an epoch in neural network training?
+a) A single prediction
+b) One pass through the entire dataset
+c) A single neuron update
+d) A data split
+Answer: b) One pass through the entire dataset
+Explanation: An epoch is one complete iteration through the training dataset during model training.
+
+22. Which layer flattens a multi-dimensional input into a vector?
+a) Dense
+b) Flatten
+c) Conv2D
+d) MaxPooling2D
+Answer: b) Flatten
+Explanation: The Flatten layer converts multi-dimensional inputs (e.g., 2D feature maps) into a 1D vector.
+
+23. What is the purpose of a Convolutional Neural Network (CNN)?
+a) Sequential data processing
+b) Image feature extraction
+c) Text generation
+d) Clustering
+Answer: b) Image feature extraction
+Explanation: CNNs use convolutional layers to extract spatial features from images for tasks like classification.
+
+24. Which Keras layer is used for convolution in CNNs?
+a) Dense
+b) Conv2D
+c) Flatten
+d) Dropout
+Answer: b) Conv2D
+Explanation: Conv2D applies convolutional filters to extract features from 2D inputs like images.
+
+25. What is the purpose of a pooling layer in a CNN?
+a) To increase image size
+b) To reduce spatial dimensions
+c) To add non-linearity
+d) To optimize weights
+Answer: b) To reduce spatial dimensions
+Explanation: Pooling layers (e.g., MaxPooling) reduce the spatial size of feature maps, lowering computational load.
+
+26. Which Keras layer performs max pooling?
+a) MaxPooling2D
+b) AveragePooling2D
+c) GlobalPooling
+d) Conv2D
+Answer: a) MaxPooling2D
+Explanation: MaxPooling2D selects the maximum value in each region of a feature map to downsample it.
+
+27. What is a Recurrent Neural Network (RNN) used for?
+a) Image processing
+b) Sequential data processing
+c) Dimensionality reduction
+d) Clustering
+Answer: b) Sequential data processing
+Explanation: RNNs are designed for sequential data, such as time series or text, by maintaining a memory of prior inputs.
+
+28. Which Keras layer is used for RNNs?
+a) LSTM
+b) Conv2D
+c) MaxPooling2D
+d) Flatten
+Answer: a) LSTM
+Explanation: LSTM (Long Short-Term Memory) is an RNN layer for processing sequential data.
+
+29. What is early stopping in neural network training?
+a) Increasing training time
+b) Halting training to prevent overfitting
+c) Normalizing data
+d) Splitting data
+Answer: b) Halting training to prevent overfitting
+Explanation: Early stopping stops training when validation performance plateaus to avoid overfitting.
+
+30. What is transfer learning in neural networks?
+a) Training from scratch
+b) Using a pre-trained model for a new task
+c) Splitting data
+d) Reducing model size
+Answer: b) Using a pre-trained model for a new task
+Explanation: Transfer learning uses a pre-trained model (e.g., VGG, ResNet) and fine-tunes it for a specific task, saving training time.
+            `;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'neural_network_exam_30q.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>

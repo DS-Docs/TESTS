@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generative AI Exam</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #2c3e50;
+            color: white;
+            border-radius: 5px;
+        }
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #e74c3c;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .exam-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .question {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .question-number {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .option {
+            margin-bottom: 8px;
+        }
+        .answers {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        .answers h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #2c3e50;
+            padding-bottom: 10px;
+        }
+        .answer {
+            margin-bottom: 10px;
+        }
+        .download-btn {
+            display: block;
+            text-align: center;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .download-btn:hover {
+            background-color: #2980b9;
+        }
+        code {
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Data Science & Generative AI by SATISH @ Sathya Technologies</h1>
+        <h2>Generative AI Programming Exam</h2>
+        <p>Time: 30 minutes | 30 Questions</p>
+    </div>
+
+    <div class="timer" id="timer">30:00</div>
+
+    <div class="exam-container">
+        <h3>Instructions:</h3>
+        <ul>
+            <li>This exam consists of 30 multiple-choice questions on Generative AI.</li>
+            <li>You have 30 minutes to complete the exam.</li>
+            <li>Select the correct answer for each question.</li>
+            <li>The timer will automatically submit your exam when time expires.</li>
+        </ul>
+
+        <div class="questions">
+            <div class="question">
+                <div class="question-number">1. What is the primary purpose of Generative AI?</div>
+                <div class="options">
+                    <div class="option">A) To classify existing data</div>
+                    <div class="option">B) To generate new content similar to training data</div>
+                    <div class="option">C) To optimize algorithms</div>
+                    <div class="option">D) To clean and preprocess data</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">2. Which architecture is most commonly used for text generation tasks?</div>
+                <div class="options">
+                    <div class="option">A) CNN (Convolutional Neural Network)</div>
+                    <div class="option">B) RNN (Recurrent Neural Network)</div>
+                    <div class="option">C) Transformer</div>
+                    <div class="option">D) SVM (Support Vector Machine)</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">3. What does GPT stand for in AI models like GPT-3?</div>
+                <div class="options">
+                    <div class="option">A) General Purpose Transformer</div>
+                    <div class="option">B) Generative Pre-trained Transformer</div>
+                    <div class="option">C) Global Processing Technology</div>
+                    <div class="option">D) Graphical Programming Tool</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">4. What is the key innovation in Transformer architectures?</div>
+                <div class="options">
+                    <div class="option">A) Convolutional layers</div>
+                    <div class="option">B) Attention mechanism</div>
+                    <div class="option">C) Backpropagation</div>
+                    <div class="option">D) Pooling layers</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">5. Which of these is NOT a type of Generative AI model?</div>
+                <div class="options">
+                    <div class="option">A) GAN (Generative Adversarial Network)</div>
+                    <div class="option">B) VAE (Variational Autoencoder)</div>
+                    <div class="option">C) CNN (Convolutional Neural Network)</div>
+                    <div class="option">D) Diffusion Model</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">6. What are the two main components of a GAN?</div>
+                <div class="options">
+                    <div class="option">A) Encoder and Decoder</div>
+                    <div class="option">B) Generator and Discriminator</div>
+                    <div class="option">C) Producer and Consumer</div>
+                    <div class="option">D) Teacher and Student</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">7. What is the purpose of the discriminator in a GAN?</div>
+                <div class="options">
+                    <div class="option">A) To generate new samples</div>
+                    <div class="option">B) To distinguish between real and generated samples</div>
+                    <div class="option">C) To encode input data</div>
+                    <div class="option">D) To optimize the loss function</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">8. What is "latent space" in the context of Generative AI?</div>
+                <div class="options">
+                    <div class="option">A) The input data space</div>
+                    <div class="option">B) A compressed representation of data where similar items are closer together</div>
+                    <div class="option">C) The output layer of a neural network</div>
+                    <div class="option">D) The memory used during training</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">9. Which technique is used to improve the diversity of outputs in GANs?</div>
+                <div class="options">
+                    <div class="option">A) Mode collapse</div>
+                    <div class="option">B) Mini-batch discrimination</div>
+                    <div class="option">C) Gradient clipping</div>
+                    <div class="option">D) Weight decay</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">10. What is the main challenge in training GANs?</div>
+                <div class="options">
+                    <div class="option">A) Finding the right learning rate</div>
+                    <div class="option">B) Achieving equilibrium between generator and discriminator</div>
+                    <div class="option">C) Selecting the proper activation function</div>
+                    <div class="option">D) Choosing the batch size</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">11. What does "fine-tuning" refer to in the context of large language models?</div>
+                <div class="options">
+                    <div class="option">A) Adjusting the model's parameters for a specific task</div>
+                    <div class="option">B) Reducing the model size</div>
+                    <div class="option">C) Changing the model architecture</div>
+                    <div class="option">D) Cleaning the training data</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">12. What is "prompt engineering"?</div>
+                <div class="options">
+                    <div class="option">A) Designing hardware for AI models</div>
+                    <div class="option">B) Crafting effective inputs to get desired outputs from AI systems</div>
+                    <div class="option">C) Building neural network architectures</div>
+                    <div class="option">D) Optimizing training algorithms</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">13. Which of these is an example of a diffusion model?</div>
+                <div class="options">
+                    <div class="option">A) GPT-3</div>
+                    <div class="option">B) Stable Diffusion</div>
+                    <div class="option">C) BERT</div>
+                    <div class="option">D) ResNet</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">14. What is the key idea behind diffusion models?</div>
+                <div class="options">
+                    <div class="option">A) Gradually adding noise to data then learning to reverse the process</div>
+                    <div class="option">B) Using adversarial training</div>
+                    <div class="option">C) Employing attention mechanisms</div>
+                    <div class="option">D) Implementing convolutional layers</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">15. What is "tokenization" in NLP models?</div>
+                <div class="options">
+                    <div class="option">A) Converting text to numerical representations</div>
+                    <div class="option">B) Breaking text into words or subwords</div>
+                    <div class="option">C) Encrypting text data</div>
+                    <div class="option">D) Compressing text files</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">16. What does "zero-shot learning" mean in Generative AI?</div>
+                <div class="options">
+                    <div class="option">A) Training without any data</div>
+                    <div class="option">B) Performing tasks without explicit training examples</div>
+                    <div class="option">C) Using only one training example</div>
+                    <div class="option">D) Training with unlabeled data</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">17. Which of these is a challenge specific to text generation models?</div>
+                <div class="options">
+                    <div class="option">A) Mode collapse</div>
+                    <div class="option">B) Hallucination</div>
+                    <div class="option">C) Vanishing gradients</div>
+                    <div class="option">D) Overfitting</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">18. What is "temperature" in the context of language model sampling?</div>
+                <div class="options">
+                    <div class="option">A) A parameter that controls the randomness of predictions</div>
+                    <div class="option">B) The processing speed of the model</div>
+                    <div class="option">C) The number of layers in the model</div>
+                    <div class="option">D) The size of the training dataset</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">19. What is the purpose of "top-k sampling" in language models?</div>
+                <div class="options">
+                    <div class="option">A) To limit predictions to the k most likely next tokens</div>
+                    <div class="option">B) To select the top k layers of the model</div>
+                    <div class="option">C) To choose k random tokens</div>
+                    <div class="option">D) To train on k different datasets</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">20. What does "multi-modal" mean in Generative AI?</div>
+                <div class="options">
+                    <div class="option">A) Models that can handle multiple types of data (text, images, etc.)</div>
+                    <div class="option">B) Models with multiple training modes</div>
+                    <div class="option">C) Models that run on multiple devices</div>
+                    <div class="option">D) Models with multiple output layers</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">21. Which technique helps prevent GANs from generating the same output repeatedly?</div>
+                <div class="options">
+                    <div class="option">A) Batch normalization</div>
+                    <div class="option">B) Label smoothing</div>
+                    <div class="option">C) Adding noise to inputs</div>
+                    <div class="option">D) All of the above</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">22. What is "style transfer" in the context of Generative AI?</div>
+                <div class="options">
+                    <div class="option">A) Applying the artistic style of one image to another</div>
+                    <div class="option">B) Changing the programming style of code</div>
+                    <div class="option">C) Transferring model weights between architectures</div>
+                    <div class="option">D) Converting between different data formats</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">23. What is the primary advantage of using transformers over RNNs for text generation?</div>
+                <div class="options">
+                    <div class="option">A) Better handling of long-range dependencies</div>
+                    <div class="option">B) Lower computational requirements</div>
+                    <div class="option">C) Easier to train</div>
+                    <div class="option">D) Smaller model size</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">24. What is "few-shot learning" in the context of large language models?</div>
+                <div class="options">
+                    <div class="option">A) Learning from a very small number of examples</div>
+                    <div class="option">B) Training with limited computational resources</div>
+                    <div class="option">C) Using only part of the available data</div>
+                    <div class="option">D) Learning from negative examples</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">25. What is the purpose of the "CLIP" model developed by OpenAI?</div>
+                <div class="options">
+                    <div class="option">A) To generate images from text descriptions</div>
+                    <div class="option">B) To understand the relationship between images and text</div>
+                    <div class="option">C) To compress large language models</div>
+                    <div class="option">D) To detect adversarial attacks</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">26. What does "RLHF" stand for in the context of improving language models?</div>
+                <div class="options">
+                    <div class="option">A) Reinforcement Learning from Human Feedback</div>
+                    <div class="option">B) Randomized Layer-wise Hyperparameter Finetuning</div>
+                    <div class="option">C) Recursive Linear Hierarchical Filtering</div>
+                    <div class="option">D) Relative Latent Human Feedback</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">27. What is "LoRA" in the context of fine-tuning large language models?</div>
+                <div class="options">
+                    <div class="option">A) Low-Rank Adaptation - a parameter-efficient fine-tuning method</div>
+                    <div class="option">B) A type of regularization</div>
+                    <div class="option">C) A loss function</div>
+                    <div class="option">D) A data augmentation technique</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">28. What is the primary purpose of the "DALL-E" model?</div>
+                <div class="options">
+                    <div class="option">A) To generate images from text descriptions</div>
+                    <div class="option">B) To classify images</div>
+                    <div class="option">C) To translate between languages</div>
+                    <div class="option">D) To summarize text documents</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">29. What is "chain-of-thought" prompting?</div>
+                <div class="options">
+                    <div class="option">A) Encouraging the model to show its reasoning steps</div>
+                    <div class="option">B) Linking multiple prompts together</div>
+                    <div class="option">C) A method for parallel processing</div>
+                    <div class="option">D) A technique for model compression</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">30. What is the main ethical concern with Generative AI?</div>
+                <div class="options">
+                    <div class="option">A) Potential for generating misleading or harmful content</div>
+                    <div class="option">B) High computational costs</div>
+                    <div class="option">C) Difficulty in interpreting results</div>
+                    <div class="option">D) Limited application areas</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="answers">
+            <h2>Answer Key</h2>
+            <div class="answer">1. B) To generate new content similar to training data</div>
+            <div class="answer">2. C) Transformer</div>
+            <div class="answer">3. B) Generative Pre-trained Transformer</div>
+            <div class="answer">4. B) Attention mechanism</div>
+            <div class="answer">5. C) CNN (Convolutional Neural Network)</div>
+            <div class="answer">6. B) Generator and Discriminator</div>
+            <div class="answer">7. B) To distinguish between real and generated samples</div>
+            <div class="answer">8. B) A compressed representation of data where similar items are closer together</div>
+            <div class="answer">9. B) Mini-batch discrimination</div>
+            <div class="answer">10. B) Achieving equilibrium between generator and discriminator</div>
+            <div class="answer">11. A) Adjusting the model's parameters for a specific task</div>
+            <div class="answer">12. B) Crafting effective inputs to get desired outputs from AI systems</div>
+            <div class="answer">13. B) Stable Diffusion</div>
+            <div class="answer">14. A) Gradually adding noise to data then learning to reverse the process</div>
+            <div class="answer">15. B) Breaking text into words or subwords</div>
+            <div class="answer">16. B) Performing tasks without explicit training examples</div>
+            <div class="answer">17. B) Hallucination</div>
+            <div class="answer">18. A) A parameter that controls the randomness of predictions</div>
+            <div class="answer">19. A) To limit predictions to the k most likely next tokens</div>
+            <div class="answer">20. A) Models that can handle multiple types of data (text, images, etc.)</div>
+            <div class="answer">21. D) All of the above</div>
+            <div class="answer">22. A) Applying the artistic style of one image to another</div>
+            <div class="answer">23. A) Better handling of long-range dependencies</div>
+            <div class="answer">24. A) Learning from a very small number of examples</div>
+            <div class="answer">25. B) To understand the relationship between images and text</div>
+            <div class="answer">26. A) Reinforcement Learning from Human Feedback</div>
+            <div class="answer">27. A) Low-Rank Adaptation - a parameter-efficient fine-tuning method</div>
+            <div class="answer">28. A) To generate images from text descriptions</div>
+            <div class="answer">29. A) Encouraging the model to show its reasoning steps</div>
+            <div class="answer">30. A) Potential for generating misleading or harmful content</div>
+        </div>
+
+        <a href="#" class="download-btn" onclick="downloadExam()">Download Exam as HTML File</a>
+    </div>
+
+    <script>
+        // Timer functionality
+        function startTimer(duration, display) {
+            let timer = duration, minutes, seconds;
+            const interval = setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    clearInterval(interval);
+                    alert("Time's up! The exam has ended.");
+                    // Here you could add code to auto-submit the exam
+                }
+            }, 1000);
+        }
+
+        window.onload = function () {
+            const thirtyMinutes = 60 * 30,
+                display = document.querySelector('#timer');
+            startTimer(thirtyMinutes, display);
+        };
+
+        // Download functionality
+        function downloadExam() {
+            const htmlContent = document.documentElement.outerHTML;
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Generative_AI_Exam_Sathya_Technologies.html';
+            document.body.appendChild(a);
+            a.click();
+            
+            setTimeout(() => {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 100);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python OpenCV Exam</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #2c3e50;
+            color: white;
+            border-radius: 5px;
+        }
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #e74c3c;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .exam-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .question {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .question-number {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .option {
+            margin-bottom: 8px;
+        }
+        .answers {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        .answers h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #2c3e50;
+            padding-bottom: 10px;
+        }
+        .answer {
+            margin-bottom: 10px;
+        }
+        .download-btn {
+            display: block;
+            text-align: center;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .download-btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Data Science & Generative AI by SATISH @ Sathya Technologies</h1>
+        <h2>Python OpenCV Programming Exam</h2>
+        <p>Time: 30 minutes | 30 Questions</p>
+    </div>
+
+    <div class="timer" id="timer">30:00</div>
+
+    <div class="exam-container">
+        <h3>Instructions:</h3>
+        <ul>
+            <li>This exam consists of 30 multiple-choice questions.</li>
+            <li>You have 30 minutes to complete the exam.</li>
+            <li>Select the correct answer for each question.</li>
+            <li>The timer will automatically submit your exam when time expires.</li>
+        </ul>
+
+        <div class="questions">
+            <div class="question">
+                <div class="question-number">1. Which OpenCV function is used to read an image from a file?</div>
+                <div class="options">
+                    <div class="option">A) cv2.open_image()</div>
+                    <div class="option">B) cv2.imread()</div>
+                    <div class="option">C) cv2.load_image()</div>
+                    <div class="option">D) cv2.read_image()</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">2. What does the following code do? <code>gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)</code></div>
+                <div class="options">
+                    <div class="option">A) Converts the image to HSV color space</div>
+                    <div class="option">B) Converts the image to grayscale</div>
+                    <div class="option">C) Applies a Gaussian blur to the image</div>
+                    <div class="option">D) Converts the image to binary format</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">3. Which OpenCV function is used to display an image in a window?</div>
+                <div class="options">
+                    <div class="option">A) cv2.show_image()</div>
+                    <div class="option">B) cv2.display()</div>
+                    <div class="option">C) cv2.imshow()</div>
+                    <div class="option">D) cv2.view_image()</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">4. What is the correct way to wait for a key press in OpenCV?</div>
+                <div class="options">
+                    <div class="option">A) cv2.waitKey(0)</div>
+                    <div class="option">B) cv2.keyPress(0)</div>
+                    <div class="option">C) cv2.wait_for_key()</div>
+                    <div class="option">D) cv2.holdKey(0)</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">5. How do you save an image to a file in OpenCV?</div>
+                <div class="options">
+                    <div class="option">A) cv2.store_image('filename.jpg', image)</div>
+                    <div class="option">B) cv2.write('filename.jpg', image)</div>
+                    <div class="option">C) cv2.imwrite('filename.jpg', image)</div>
+                    <div class="option">D) cv2.save_image('filename.jpg', image)</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">6. What does the second parameter in cv2.threshold() represent?</div>
+                <div class="options">
+                    <div class="option">A) The maximum pixel value</div>
+                    <div class="option">B) The threshold value</div>
+                    <div class="option">C) The kernel size</div>
+                    <div class="option">D) The image type</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">7. Which function is used to draw a rectangle on an image?</div>
+                <div class="options">
+                    <div class="option">A) cv2.draw_rectangle()</div>
+                    <div class="option">B) cv2.rectangle()</div>
+                    <div class="option">C) cv2.shape_rectangle()</div>
+                    <div class="option">D) cv2.add_rectangle()</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">8. What is the purpose of the cv2.Canny() function?</div>
+                <div class="options">
+                    <div class="option">A) To blur an image</div>
+                    <div class="option">B) To detect edges in an image</div>
+                    <div class="option">C) To convert an image to grayscale</div>
+                    <div class="option">D) To resize an image</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">9. How do you resize an image in OpenCV?</div>
+                <div class="options">
+                    <div class="option">A) cv2.scale()</div>
+                    <div class="option">B) cv2.resize()</div>
+                    <div class="option">C) cv2.change_size()</div>
+                    <div class="option">D) cv2.adjust_dimensions()</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">10. What does the cv2.findContours() function return?</div>
+                <div class="options">
+                    <div class="option">A) A list of edges</div>
+                    <div class="option">B) A list of contours and hierarchy</div>
+                    <div class="option">C) A binary image</div>
+                    <div class="option">D) A list of corner points</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">11. Which OpenCV function is used to apply a Gaussian blur to an image?</div>
+                <div class="options">
+                    <div class="option">A) cv2.blur()</div>
+                    <div class="option">B) cv2.gaussian()</div>
+                    <div class="option">C) cv2.GaussianBlur()</div>
+                    <div class="option">D) cv2.smooth()</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">12. What is the correct way to convert an image from BGR to RGB in OpenCV?</div>
+                <div class="options">
+                    <div class="option">A) cv2.cvtColor(image, cv2.BGR2RGB)</div>
+                    <div class="option">B) cv2.convert(image, cv2.BGR2RGB)</div>
+                    <div class="option">C) cv2.changeColor(image, cv2.BGR2RGB)</div>
+                    <div class="option">D) cv2.transform(image, cv2.BGR2RGB)</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">13. Which function is used to detect faces in an image using Haar cascades?</div>
+                <div class="options">
+                    <div class="option">A) cv2.findFaces()</div>
+                    <div class="option">B) cv2.detectMultiScale()</div>
+                    <div class="option">C) cv2.faceDetection()</div>
+                    <div class="option">D) cv2.haarDetect()</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">14. What does the cv2.HoughLines() function do?</div>
+                <div class="options">
+                    <div class="option">A) Detects circles in an image</div>
+                    <div class="option">B) Detects lines in an image</div>
+                    <div class="option">C) Detects corners in an image</div>
+                    <div class="option">D) Detects edges in an image</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">15. How do you create a black image with OpenCV?</div>
+                <div class="options">
+                    <div class="option">A) np.zeros((height, width, 3), np.uint8)</div>
+                    <div class="option">B) cv2.create_black_image(height, width)</div>
+                    <div class="option">C) np.ones((height, width, 3), np.uint8)</div>
+                    <div class="option">D) cv2.empty_image(height, width)</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">16. What is the purpose of the cv2.calcHist() function?</div>
+                <div class="options">
+                    <div class="option">A) To calculate the histogram of an image</div>
+                    <div class="option">B) To calculate the gradient of an image</div>
+                    <div class="option">C) To calculate the mean of pixel values</div>
+                    <div class="option">D) To calculate the edges in an image</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">17. Which function is used to draw a circle on an image?</div>
+                <div class="options">
+                    <div class="option">A) cv2.draw_circle()</div>
+                    <div class="option">B) cv2.circle()</div>
+                    <div class="option">C) cv2.add_circle()</div>
+                    <div class="option">D) cv2.shape_circle()</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">18. What does the cv2.bitwise_and() function do?</div>
+                <div class="options">
+                    <div class="option">A) Performs a bitwise AND operation on two images</div>
+                    <div class="option">B) Combines two images by averaging pixel values</div>
+                    <div class="option">C) Detects edges in an image</div>
+                    <div class="option">D) Converts an image to binary format</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">19. How do you flip an image vertically in OpenCV?</div>
+                <div class="options">
+                    <div class="option">A) cv2.flip(image, 0)</div>
+                    <div class="option">B) cv2.flip(image, 1)</div>
+                    <div class="option">C) cv2.flip(image, -1)</div>
+                    <div class="option">D) cv2.rotate(image, cv2.ROTATE_180)</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">20. What is the purpose of the cv2.Sobel() function?</div>
+                <div class="options">
+                    <div class="option">A) To detect edges using the Sobel operator</div>
+                    <div class="option">B) To smooth an image</div>
+                    <div class="option">C) To convert an image to grayscale</div>
+                    <div class="option">D) To detect corners in an image</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">21. Which function is used to find the contours in a binary image?</div>
+                <div class="options">
+                    <div class="option">A) cv2.findContours()</div>
+                    <div class="option">B) cv2.detectContours()</div>
+                    <div class="option">C) cv2.getContours()</div>
+                    <div class="option">D) cv2.contourDetection()</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">22. What does the cv2.approxPolyDP() function do?</div>
+                <div class="options">
+                    <div class="option">A) Approximates a contour shape to another shape with fewer vertices</div>
+                    <div class="option">B) Detects polygons in an image</div>
+                    <div class="option">C) Calculates the area of a polygon</div>
+                    <div class="option">D) Draws a polygon on an image</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">23. How do you convert an image to HSV color space in OpenCV?</div>
+                <div class="options">
+                    <div class="option">A) cv2.cvtColor(image, cv2.COLOR_BGR2HSV)</div>
+                    <div class="option">B) cv2.convertColor(image, cv2.BGR2HSV)</div>
+                    <div class="option">C) cv2.changeColorSpace(image, 'HSV')</div>
+                    <div class="option">D) cv2.toHSV(image)</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">24. What is the purpose of the cv2.dilate() function?</div>
+                <div class="options">
+                    <div class="option">A) To enlarge boundaries of foreground objects</div>
+                    <div class="option">B) To shrink boundaries of foreground objects</div>
+                    <div class="option">C) To smooth an image</div>
+                    <div class="option">D) To detect edges in an image</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">25. Which function is used to perform template matching in OpenCV?</div>
+                <div class="options">
+                    <div class="option">A) cv2.matchTemplate()</div>
+                    <div class="option">B) cv2.findTemplate()</div>
+                    <div class="option">C) cv2.templateMatching()</div>
+                    <div class="option">D) cv2.compareTemplates()</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">26. What does the cv2.minMaxLoc() function return?</div>
+                <div class="options">
+                    <div class="option">A) The minimum and maximum pixel values and their locations</div>
+                    <div class="option">B) The mean and standard deviation of pixel values</div>
+                    <div class="option">C) The histogram of pixel values</div>
+                    <div class="option">D) The edges in the image</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">27. How do you draw a line on an image in OpenCV?</div>
+                <div class="options">
+                    <div class="option">A) cv2.drawLine()</div>
+                    <div class="option">B) cv2.line()</div>
+                    <div class="option">C) cv2.addLine()</div>
+                    <div class="option">D) cv2.createLine()</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">28. What is the purpose of the cv2.erode() function?</div>
+                <div class="options">
+                    <div class="option">A) To shrink boundaries of foreground objects</div>
+                    <div class="option">B) To enlarge boundaries of foreground objects</div>
+                    <div class="option">C) To smooth an image</div>
+                    <div class="option">D) To detect edges in an image</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">29. Which function is used to detect corners in an image using the Harris corner detection method?</div>
+                <div class="options">
+                    <div class="option">A) cv2.findCorners()</div>
+                    <div class="option">B) cv2.cornerHarris()</div>
+                    <div class="option">C) cv2.detectCorners()</div>
+                    <div class="option">D) cv2.harrisCorner()</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">30. What does the cv2.warpPerspective() function do?</div>
+                <div class="options">
+                    <div class="option">A) Applies a perspective transformation to an image</div>
+                    <div class="option">B) Rotates an image by a specified angle</div>
+                    <div class="option">C) Flips an image horizontally</div>
+                    <div class="option">D) Resizes an image while maintaining aspect ratio</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="answers">
+            <h2>Answer Key</h2>
+            <div class="answer">1. B) cv2.imread()</div>
+            <div class="answer">2. B) Converts the image to grayscale</div>
+            <div class="answer">3. C) cv2.imshow()</div>
+            <div class="answer">4. A) cv2.waitKey(0)</div>
+            <div class="answer">5. C) cv2.imwrite('filename.jpg', image)</div>
+            <div class="answer">6. B) The threshold value</div>
+            <div class="answer">7. B) cv2.rectangle()</div>
+            <div class="answer">8. B) To detect edges in an image</div>
+            <div class="answer">9. B) cv2.resize()</div>
+            <div class="answer">10. B) A list of contours and hierarchy</div>
+            <div class="answer">11. C) cv2.GaussianBlur()</div>
+            <div class="answer">12. A) cv2.cvtColor(image, cv2.BGR2RGB)</div>
+            <div class="answer">13. B) cv2.detectMultiScale()</div>
+            <div class="answer">14. B) Detects lines in an image</div>
+            <div class="answer">15. A) np.zeros((height, width, 3), np.uint8)</div>
+            <div class="answer">16. A) To calculate the histogram of an image</div>
+            <div class="answer">17. B) cv2.circle()</div>
+            <div class="answer">18. A) Performs a bitwise AND operation on two images</div>
+            <div class="answer">19. A) cv2.flip(image, 0)</div>
+            <div class="answer">20. A) To detect edges using the Sobel operator</div>
+            <div class="answer">21. A) cv2.findContours()</div>
+            <div class="answer">22. A) Approximates a contour shape to another shape with fewer vertices</div>
+            <div class="answer">23. A) cv2.cvtColor(image, cv2.COLOR_BGR2HSV)</div>
+            <div class="answer">24. A) To enlarge boundaries of foreground objects</div>
+            <div class="answer">25. A) cv2.matchTemplate()</div>
+            <div class="answer">26. A) The minimum and maximum pixel values and their locations</div>
+            <div class="answer">27. B) cv2.line()</div>
+            <div class="answer">28. A) To shrink boundaries of foreground objects</div>
+            <div class="answer">29. B) cv2.cornerHarris()</div>
+            <div class="answer">30. A) Applies a perspective transformation to an image</div>
+        </div>
+
+        <a href="#" class="download-btn" onclick="downloadExam()">Download Exam as HTML File</a>
+    </div>
+
+    <script>
+        // Timer functionality
+        function startTimer(duration, display) {
+            let timer = duration, minutes, seconds;
+            const interval = setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    clearInterval(interval);
+                    alert("Time's up! The exam has ended.");
+                    // Here you could add code to auto-submit the exam
+                }
+            }, 1000);
+        }
+
+        window.onload = function () {
+            const thirtyMinutes = 60 * 30,
+                display = document.querySelector('#timer');
+            startTimer(thirtyMinutes, display);
+        };
+
+        // Download functionality
+        function downloadExam() {
+            const htmlContent = document.documentElement.outerHTML;
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Python_OpenCV_Exam_Sathya_Technologies.html';
+            document.body.appendChild(a);
+            a.click();
+            
+            setTimeout(() => {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 100);
+        }
+    </script>
+</body>
+</html>

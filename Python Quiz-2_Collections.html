@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Collections Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .timer {
+            text-align: center;
+            font-size: 24px;
+            margin: 20px 0;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .question {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f9f9f9;
+            border-left: 4px solid #3498db;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .submit-btn {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .submit-btn:hover {
+            background: #2980b9;
+        }
+        .answers {
+            margin-top: 30px;
+            display: none;
+        }
+        .answers h2 {
+            color: #27ae60;
+            border-bottom: 2px solid #27ae60;
+            padding-bottom: 5px;
+        }
+        .answer {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #eafaf1;
+            border-left: 4px solid #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Data Science & Generative AI by SATISH @ Sathya Technologies</h1>
+        <h2>Python Collections Quiz</h2>
+        
+        <div class="timer" id="timer">10:00</div>
+        
+        <form id="quizForm">
+            <div class="question">
+                <p>1. Which of the following is NOT a built-in collection data type in Python?</p>
+                <div class="options">
+                    <label><input type="radio" name="q1" value="a"> a) list</label><br>
+                    <label><input type="radio" name="q1" value="b"> b) tuple</label><br>
+                    <label><input type="radio" name="q1" value="c"> c) array</label><br>
+                    <label><input type="radio" name="q1" value="d"> d) set</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>2. What is the output of: <code>len([1, 2, 3, (4, 5)])</code></p>
+                <div class="options">
+                    <label><input type="radio" name="q2" value="a"> a) 2</label><br>
+                    <label><input type="radio" name="q2" value="b"> b) 3</label><br>
+                    <label><input type="radio" name="q2" value="c"> c) 4</label><br>
+                    <label><input type="radio" name="q2" value="d"> d) 5</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>3. Which collection type is ordered and mutable?</p>
+                <div class="options">
+                    <label><input type="radio" name="q3" value="a"> a) tuple</label><br>
+                    <label><input type="radio" name="q3" value="b"> b) set</label><br>
+                    <label><input type="radio" name="q3" value="c"> c) list</label><br>
+                    <label><input type="radio" name="q3" value="d"> d) frozenset</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>4. What method is used to add an element to a set?</p>
+                <div class="options">
+                    <label><input type="radio" name="q4" value="a"> a) append()</label><br>
+                    <label><input type="radio" name="q4" value="b"> b) add()</label><br>
+                    <label><input type="radio" name="q4" value="c"> c) insert()</label><br>
+                    <label><input type="radio" name="q4" value="d"> d) push()</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>5. Which of these creates a dictionary?</p>
+                <div class="options">
+                    <label><input type="radio" name="q5" value="a"> a) {1, 2, 3}</label><br>
+                    <label><input type="radio" name="q5" value="b"> b) [1: 'a', 2: 'b']</label><br>
+                    <label><input type="radio" name="q5" value="c"> c) {'a': 1, 'b': 2}</label><br>
+                    <label><input type="radio" name="q5" value="d"> d) (1, 2, 3)</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>6. What is the output of: <code>tuple([1, 2, 3])</code></p>
+                <div class="options">
+                    <label><input type="radio" name="q6" value="a"> a) [1, 2, 3]</label><br>
+                    <label><input type="radio" name="q6" value="b"> b) {1, 2, 3}</label><br>
+                    <label><input type="radio" name="q6" value="c"> c) (1, 2, 3)</label><br>
+                    <label><input type="radio" name="q6" value="d"> d) '1, 2, 3'</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>7. How do you access the value for key 'name' in dictionary d?</p>
+                <div class="options">
+                    <label><input type="radio" name="q7" value="a"> a) d['name']</label><br>
+                    <label><input type="radio" name="q7" value="b"> b) d.name</label><br>
+                    <label><input type="radio" name="q7" value="c"> c) d.get('name')</label><br>
+                    <label><input type="radio" name="q7" value="d"> d) All of the above</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>8. Which collection type does NOT allow duplicate elements?</p>
+                <div class="options">
+                    <label><input type="radio" name="q8" value="a"> a) list</label><br>
+                    <label><input type="radio" name="q8" value="b"> b) tuple</label><br>
+                    <label><input type="radio" name="q8" value="c"> c) set</label><br>
+                    <label><input type="radio" name="q8" value="d"> d) dictionary keys</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>9. What is the output of: <code>[x**2 for x in range(3)]</code></p>
+                <div class="options">
+                    <label><input type="radio" name="q9" value="a"> a) [0, 1, 4]</label><br>
+                    <label><input type="radio" name="q9" value="b"> b) [0, 1, 4, 9]</label><br>
+                    <label><input type="radio" name="q9" value="c"> c) [1, 4, 9]</label><br>
+                    <label><input type="radio" name="q9" value="d"> d) [0, 1, 2]</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>10. Which method removes and returns the last item in a list?</p>
+                <div class="options">
+                    <label><input type="radio" name="q10" value="a"> a) remove()</label><br>
+                    <label><input type="radio" name="q10" value="b"> b) pop()</label><br>
+                    <label><input type="radio" name="q10" value="c"> c) delete()</label><br>
+                    <label><input type="radio" name="q10" value="d"> d) discard()</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>11. What is the output of: <code>set([1, 2, 2, 3, 3, 3])</code></p>
+                <div class="options">
+                    <label><input type="radio" name="q11" value="a"> a) [1, 2, 3]</label><br>
+                    <label><input type="radio" name="q11" value="b"> b) {1, 2, 2, 3, 3, 3}</label><br>
+                    <label><input type="radio" name="q11" value="c"> c) {1, 2, 3}</label><br>
+                    <label><input type="radio" name="q11" value="d"> d) (1, 2, 3)</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>12. How do you create an empty dictionary?</p>
+                <div class="options">
+                    <label><input type="radio" name="q12" value="a"> a) {}</label><br>
+                    <label><input type="radio" name="q12" value="b"> b) dict()</label><br>
+                    <label><input type="radio" name="q12" value="c"> c) []</label><br>
+                    <label><input type="radio" name="q12" value="d"> d) Both a and b</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>13. Which operation is NOT valid for a tuple?</p>
+                <div class="options">
+                    <label><input type="radio" name="q13" value="a"> a) Indexing</label><br>
+                    <label><input type="radio" name="q13" value="b"> b) Slicing</label><br>
+                    <label><input type="radio" name="q13" value="c"> c) Appending</label><br>
+                    <label><input type="radio" name="q13" value="d"> d) Concatenation</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>14. What is the output of: <code>sorted({'b': 2, 'a': 1, 'c': 3})</code></p>
+                <div class="options">
+                    <label><input type="radio" name="q14" value="a"> a) ['a', 'b', 'c']</label><br>
+                    <label><input type="radio" name="q14" value="b"> b) [1, 2, 3]</label><br>
+                    <label><input type="radio" name="q14" value="c"> c) ['b', 'a', 'c']</label><br>
+                    <label><input type="radio" name="q14" value="d"> d) [2, 1, 3]</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>15. Which method updates a dictionary with another dictionary?</p>
+                <div class="options">
+                    <label><input type="radio" name="q15" value="a"> a) merge()</label><br>
+                    <label><input type="radio" name="q15" value="b"> b) update()</label><br>
+                    <label><input type="radio" name="q15" value="c"> c) append()</label><br>
+                    <label><input type="radio" name="q15" value="d"> d) insert()</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>16. What is the output of: <code>list(zip([1, 2], ['a', 'b']))</code></p>
+                <div class="options">
+                    <label><input type="radio" name="q16" value="a"> a) [(1, 'a'), (2, 'b')]</label><br>
+                    <label><input type="radio" name="q16" value="b"> b) [[1, 'a'], [2, 'b']]</label><br>
+                    <label><input type="radio" name="q16" value="c"> c) [1, 'a', 2, 'b']</label><br>
+                    <label><input type="radio" name="q16" value="d"> d) {1: 'a', 2: 'b'}</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>17. Which collection type is best for checking membership in O(1) time?</p>
+                <div class="options">
+                    <label><input type="radio" name="q17" value="a"> a) list</label><br>
+                    <label><input type="radio" name="q17" value="b"> b) tuple</label><br>
+                    <label><input type="radio" name="q17" value="c"> c) set</label><br>
+                    <label><input type="radio" name="q17" value="d"> d) All of the above</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>18. What is the output of: <code>{x: x**2 for x in range(3)}</code></p>
+                <div class="options">
+                    <label><input type="radio" name="q18" value="a"> a) {0: 0, 1: 1, 2: 4}</label><br>
+                    <label><input type="radio" name="q18" value="b"> b) [0, 1, 4]</label><br>
+                    <label><input type="radio" name="q18" value="c"> c) {0, 1, 4}</label><br>
+                    <label><input type="radio" name="q18" value="d"> d) (0, 1, 4)</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>19. How do you remove a key from a dictionary?</p>
+                <div class="options">
+                    <label><input type="radio" name="q19" value="a"> a) del d[key]</label><br>
+                    <label><input type="radio" name="q19" value="b"> b) d.pop(key)</label><br>
+                    <label><input type="radio" name="q19" value="c"> c) d.remove(key)</label><br>
+                    <label><input type="radio" name="q19" value="d"> d) Both a and b</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>20. What is the output of: <code>any([False, 0, '', None])</code></p>
+                <div class="options">
+                    <label><input type="radio" name="q20" value="a"> a) True</label><br>
+                    <label><input type="radio" name="q20" value="b"> b) False</label><br>
+                    <label><input type="radio" name="q20" value="c"> c) None</label><br>
+                    <label><input type="radio" name="q20" value="d"> d) Error</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>21. Which method returns a list of (key, value) pairs from a dictionary?</p>
+                <div class="options">
+                    <label><input type="radio" name="q21" value="a"> a) keys()</label><br>
+                    <label><input type="radio" name="q21" value="b"> b) values()</label><br>
+                    <label><input type="radio" name="q21" value="c"> c) items()</label><br>
+                    <label><input type="radio" name="q21" value="d"> d) pairs()</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>22. What is the output of: <code>sum({1, 2, 3, 4})</code></p>
+                <div class="options">
+                    <label><input type="radio" name="q22" value="a"> a) 10</label><br>
+                    <label><input type="radio" name="q22" value="b"> b) {1, 2, 3, 4}</label><br>
+                    <label><input type="radio" name="q22" value="c"> c) [1, 2, 3, 4]</label><br>
+                    <label><input type="radio" name="q22" value="d"> d) Error</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>23. Which collection type preserves insertion order (as of Python 3.7+)?</p>
+                <div class="options">
+                    <label><input type="radio" name="q23" value="a"> a) list</label><br>
+                    <label><input type="radio" name="q23" value="b"> b) tuple</label><br>
+                    <label><input type="radio" name="q23" value="c"> c) dictionary</label><br>
+                    <label><input type="radio" name="q23" value="d"> d) All of the above</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>24. What is the output of: <code>max({'a': 1, 'b': 2, 'c': 3})</code></p>
+                <div class="options">
+                    <label><input type="radio" name="q24" value="a"> a) 'c'</label><br>
+                    <label><input type="radio" name="q24" value="b"> b) 3</label><br>
+                    <label><input type="radio" name="q24" value="c"> c) ('c', 3)</label><br>
+                    <label><input type="radio" name="q24" value="d"> d) Error</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>25. Which operation removes all elements from a list?</p>
+                <div class="options">
+                    <label><input type="radio" name="q25" value="a"> a) list.remove()</label><br>
+                    <label><input type="radio" name="q25" value="b"> b) list.delete()</label><br>
+                    <label><input type="radio" name="q25" value="c"> c) list.clear()</label><br>
+                    <label><input type="radio" name="q25" value="d"> d) list.pop()</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>26. What is the output of: <code>bool(set())</code></p>
+                <div class="options">
+                    <label><input type="radio" name="q26" value="a"> a) True</label><br>
+                    <label><input type="radio" name="q26" value="b"> b) False</label><br>
+                    <label><input type="radio" name="q26" value="c"> c) None</label><br>
+                    <label><input type="radio" name="q26" value="d"> d) Error</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>27. Which method creates a shallow copy of a list?</p>
+                <div class="options">
+                    <label><input type="radio" name="q27" value="a"> a) list.copy()</label><br>
+                    <label><input type="radio" name="q27" value="b"> b) list[:]</label><br>
+                    <label><input type="radio" name="q27" value="c"> c) list(list)</label><br>
+                    <label><input type="radio" name="q27" value="d"> d) All of the above</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>28. What is the output of: <code>len({'a': [1, 2], 'b': [3, 4, 5]})</code></p>
+                <div class="options">
+                    <label><input type="radio" name="q28" value="a"> a) 2</label><br>
+                    <label><input type="radio" name="q28" value="b"> b) 5</label><br>
+                    <label><input type="radio" name="q28" value="c"> c) [2, 3]</label><br>
+                    <label><input type="radio" name="q28" value="d"> d) Error</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>29. Which collection type is immutable and hashable?</p>
+                <div class="options">
+                    <label><input type="radio" name="q29" value="a"> a) list</label><br>
+                    <label><input type="radio" name="q29" value="b"> b) set</label><br>
+                    <label><input type="radio" name="q29" value="c"> c) frozenset</label><br>
+                    <label><input type="radio" name="q29" value="d"> d) dictionary</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>30. What is the output of: <code>tuple((1,)) + (2,)</code></p>
+                <div class="options">
+                    <label><input type="radio" name="q30" value="a"> a) (1, 2)</label><br>
+                    <label><input type="radio" name="q30" value="b"> b) (1, (2))</label><br>
+                    <label><input type="radio" name="q30" value="c"> c) ((1,), 2)</label><br>
+                    <label><input type="radio" name="q30" value="d"> d) Error</label>
+                </div>
+            </div>
+            
+            <button type="button" class="submit-btn" onclick="showAnswers()">Show Answers</button>
+        </form>
+        
+        <div class="answers" id="answers">
+            <h2>Answers</h2>
+            <div class="answer">1. c) array</div>
+            <div class="answer">2. c) 4</div>
+            <div class="answer">3. c) list</div>
+            <div class="answer">4. b) add()</div>
+            <div class="answer">5. c) {'a': 1, 'b': 2}</div>
+            <div class="answer">6. c) (1, 2, 3)</div>
+            <div class="answer">7. d) All of the above</div>
+            <div class="answer">8. c) set and d) dictionary keys</div>
+            <div class="answer">9. a) [0, 1, 4]</div>
+            <div class="answer">10. b) pop()</div>
+            <div class="answer">11. c) {1, 2, 3}</div>
+            <div class="answer">12. d) Both a and b</div>
+            <div class="answer">13. c) Appending</div>
+            <div class="answer">14. a) ['a', 'b', 'c']</div>
+            <div class="answer">15. b) update()</div>
+            <div class="answer">16. a) [(1, 'a'), (2, 'b')]</div>
+            <div class="answer">17. c) set</div>
+            <div class="answer">18. a) {0: 0, 1: 1, 2: 4}</div>
+            <div class="answer">19. d) Both a and b</div>
+            <div class="answer">20. b) False</div>
+            <div class="answer">21. c) items()</div>
+            <div class="answer">22. a) 10</div>
+            <div class="answer">23. d) All of the above</div>
+            <div class="answer">24. a) 'c'</div>
+            <div class="answer">25. c) list.clear()</div>
+            <div class="answer">26. b) False</div>
+            <div class="answer">27. d) All of the above</div>
+            <div class="answer">28. a) 2</div>
+            <div class="answer">29. c) frozenset</div>
+            <div class="answer">30. a) (1, 2)</div>
+        </div>
+    </div>
+
+    <script>
+        // Timer functionality
+        let timeLeft = 600; // 10 minutes in seconds
+        const timer = document.getElementById('timer');
+        
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timer.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                alert("Time's up!");
+                showAnswers();
+            } else {
+                timeLeft--;
+            }
+        }
+        
+        const timerInterval = setInterval(updateTimer, 1000);
+        
+        // Show answers function
+        function showAnswers() {
+            clearInterval(timerInterval);
+            document.getElementById('answers').style.display = 'block';
+            document.querySelector('.submit-btn').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

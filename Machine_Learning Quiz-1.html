@@ -1,0 +1,862 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Science & Generative AI Exam</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        h2 {
+            color: #2980b9;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question p {
+            font-weight: bold;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .answer {
+            display: none;
+            background-color: #e8f4f9;
+            padding: 10px;
+            border-left: 4px solid #2980b9;
+            margin-top: 10px;
+        }
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #e74c3c;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        .download-btn {
+            display: block;
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px 20px;
+            background: #27ae60;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .download-btn:hover {
+            background: #219653;
+        }
+        .toggle-btn {
+            cursor: pointer;
+            color: #2980b9;
+            text-decoration: underline;
+            margin-top: 10px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="timer" id="timer">30:00</div>
+    <div class="container">
+        <h1>Data Science & Generative AI by SATISH @ Sathya Technologies</h1>
+        <h2>Python Machine Learning Programming Exam (30 Minutes)</h2>
+        
+        <div class="question">
+            <p>1. What is the purpose of the train_test_split function in scikit-learn?</p>
+            <div class="options">
+                <p>a) To normalize the dataset</p>
+                <p>b) To split data into training and testing sets</p>
+                <p>c) To perform cross-validation</p>
+                <p>d) To impute missing values</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(1)">Show Answer</span>
+            <div class="answer" id="answer1">
+                <p><strong>Answer:</strong> b) To split data into training and testing sets</p>
+                <p><strong>Explanation:</strong> The train_test_split function divides a dataset into training and testing subsets for model training and evaluation.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>2. Which Python library is primarily used for deep learning?</p>
+            <div class="options">
+                <p>a) Pandas</p>
+                <p>b) NumPy</p>
+                <p>c) TensorFlow</p>
+                <p>d) Scikit-learn</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(2)">Show Answer</span>
+            <div class="answer" id="answer2">
+                <p><strong>Answer:</strong> c) TensorFlow</p>
+                <p><strong>Explanation:</strong> TensorFlow is a popular library for building and training neural networks in deep learning.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>3. What does a False Positive represent in a confusion matrix?</p>
+            <div class="options">
+                <p>a) Correctly predicted positive cases</p>
+                <p>b) Incorrectly predicted negative cases</p>
+                <p>c) Incorrectly predicted positive cases</p>
+                <p>d) Correctly predicted negative cases</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(3)">Show Answer</span>
+            <div class="answer" id="answer3">
+                <p><strong>Answer:</strong> c) Incorrectly predicted positive cases</p>
+                <p><strong>Explanation:</strong> A False Positive occurs when the model predicts a positive class, but the actual class is negative.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>4. What is the role of StandardScaler in scikit-learn?</p>
+            <div class="options">
+                <p>a) To reduce dimensionality</p>
+                <p>b) To standardize features to mean 0 and variance 1</p>
+                <p>c) To encode categorical variables</p>
+                <p>d) To split the dataset</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(4)">Show Answer</span>
+            <div class="answer" id="answer4">
+                <p><strong>Answer:</strong> b) To standardize features to mean 0 and variance 1</p>
+                <p><strong>Explanation:</strong> StandardScaler transforms features to have a mean of 0 and a standard deviation of 1.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>5. Which algorithm is best for text classification like spam detection?</p>
+            <div class="options">
+                <p>a) K-Means Clustering</p>
+                <p>b) Linear Regression</p>
+                <p>c) Naive Bayes</p>
+                <p>d) Principal Component Analysis</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(5)">Show Answer</span>
+            <div class="answer" id="answer5">
+                <p><strong>Answer:</strong> c) Naive Bayes</p>
+                <p><strong>Explanation:</strong> Naive Bayes is effective for text classification due to its probabilistic approach and ability to handle high-dimensional data.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>6. What does overfitting mean in machine learning?</p>
+            <div class="options">
+                <p>a) Model performs well on both training and testing data</p>
+                <p>b) Model performs poorly on training data</p>
+                <p>c) Model learns noise, reducing generalization</p>
+                <p>d) Model is too simple to capture patterns</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(6)">Show Answer</span>
+            <div class="answer" id="answer6">
+                <p><strong>Answer:</strong> c) Model learns noise, reducing generalization</p>
+                <p><strong>Explanation:</strong> Overfitting occurs when a model captures noise in the training data, leading to poor performance on unseen data.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>7. What is the purpose of cross-validation in machine learning?</p>
+            <div class="options">
+                <p>a) To preprocess data</p>
+                <p>b) To evaluate model performance on multiple data splits</p>
+                <p>c) To impute missing values</p>
+                <p>d) To select features</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(7)">Show Answer</span>
+            <div class="answer" id="answer7">
+                <p><strong>Answer:</strong> b) To evaluate model performance on multiple data splits</p>
+                <p><strong>Explanation:</strong> Cross-validation assesses a model’s performance by splitting data into multiple folds for training and testing.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>8. Which metric measures the accuracy of a classification model?</p>
+            <div class="options">
+                <p>a) Mean Squared Error</p>
+                <p>b) R-squared</p>
+                <p>c) Accuracy Score</p>
+                <p>d) Mean Absolute Error</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(8)">Show Answer</span>
+            <div class="answer" id="answer8">
+                <p><strong>Answer:</strong> c) Accuracy Score</p>
+                <p><strong>Explanation:</strong> Accuracy Score measures the proportion of correct predictions in a classification model.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>9. What does the fit() method do in scikit-learn?</p>
+            <div class="options">
+                <p>a) Predicts new data</p>
+                <p>b) Trains the model on the provided data</p>
+                <p>c) Evaluates model performance</p>
+                <p>d) Scales the data</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(9)">Show Answer</span>
+            <div class="answer" id="answer9">
+                <p><strong>Answer:</strong> b) Trains the model on the provided data</p>
+                <p><strong>Explanation:</strong> The fit() method trains a machine learning model using the input features and target labels.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>10. What is the purpose of an activation function in a neural network?</p>
+            <div class="options">
+                <p>a) To normalize input data</p>
+                <p>b) To introduce non-linearity</p>
+                <p>c) To reduce dimensionality</p>
+                <p>d) To split data</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(10)">Show Answer</span>
+            <div class="answer" id="answer10">
+                <p><strong>Answer:</strong> b) To introduce non-linearity</p>
+                <p><strong>Explanation:</strong> Activation functions introduce non-linearity, enabling neural networks to model complex patterns.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>11. Which library is used for data manipulation and analysis?</p>
+            <div class="options">
+                <p>a) TensorFlow</p>
+                <p>b) Pandas</p>
+                <p>c) Keras</p>
+                <p>d) Matplotlib</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(11)">Show Answer</span>
+            <div class="answer" id="answer11">
+                <p><strong>Answer:</strong> b) Pandas</p>
+                <p><strong>Explanation:</strong> Pandas provides data structures like DataFrames for efficient data manipulation and analysis.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>12. What is the purpose of GridSearchCV in scikit-learn?</p>
+            <div class="options">
+                <p>a) To visualize data</p>
+                <p>b) To tune hyperparameters</p>
+                <p>c) To preprocess data</p>
+                <p>d) To predict outcomes</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(12)">Show Answer</span>
+            <div class="answer" id="answer12">
+                <p><strong>Answer:</strong> b) To tune hyperparameters</p>
+                <p><strong>Explanation:</strong> GridSearchCV performs an exhaustive search over a grid of hyperparameters to find the optimal combination.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>13. What does the term "bias" refer to in machine learning?</p>
+            <div class="options">
+                <p>a) Overfitting to training data</p>
+                <p>b) Error due to overly simplistic models</p>
+                <p>c) Error due to noisy data</p>
+                <p>d) Error due to missing data</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(13)">Show Answer</span>
+            <div class="answer" id="answer13">
+                <p><strong>Answer:</strong> b) Error due to overly simplistic models</p>
+                <p><strong>Explanation:</strong> Bias occurs when a model is too simple to capture the underlying patterns in the data.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>14. Which algorithm is used for unsupervised clustering?</p>
+            <div class="options">
+                <p>a) Logistic Regression</p>
+                <p>b) K-Means</p>
+                <p>c) Decision Tree</p>
+                <p>d) Support Vector Machine</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(14)">Show Answer</span>
+            <div class="answer" id="answer14">
+                <p><strong>Answer:</strong> b) K-Means</p>
+                <p><strong>Explanation:</strong> K-Means is an unsupervised learning algorithm used for clustering data into groups.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>15. What does the predict() method do in scikit-learn?</p>
+            <div class="options">
+                <p>a) Trains the model</p>
+                <p>b) Evaluates model performance</p>
+                <p>c) Makes predictions on new data</p>
+                <p>d) Preprocesses data</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(15)">Show Answer</span>
+            Ascend
+            <div class="answer" id="answer15">
+                <p><strong>Answer:</strong> c) Makes predictions on new data</p>
+                <p><strong>Explanation:</strong> The predict() method uses a trained model to generate predictions for new input data.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>16. What does PCA stand for in machine learning?</p>
+            <div class="options">
+                <p>a) Principal Component Analysis</p>
+                <p>b) Predictive Clustering Algorithm</p>
+                <p>c) Partial Correlation Analysis</p>
+                <p>d) Probabilistic Classification Algorithm</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(16)">Show Answer</span>
+            <div class="answer" id="answer16">
+                <p><strong>Answer:</strong> a) Principal Component Analysis</p>
+                <p><strong>Explanation:</strong> PCA is a dimensionality reduction technique that transforms data into a lower-dimensional space.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>17. Which evaluation metric is best for imbalanced classification datasets?</p>
+            <div class="options">
+                <p>a) Accuracy</p>
+                <p>b) F1 Score</p>
+                <p>c) Mean Squared Error</p>
+                <p>d) R-squared</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(17)">Show Answer</span>
+            <div class="answer" id="answer17">
+                <p><strong>Answer:</strong> b) F1 Score</p>
+                <p><strong>Explanation:</strong> The F1 Score balances precision and recall, making it suitable for imbalanced datasets.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>18. What is the purpose of the Keras library?</p>
+            <div class="options">
+                <p>a) Data visualization</p>
+                <p>b) Building neural networks</p>
+                <p>c) Data preprocessing</p>
+                <p>d) Statistical analysis</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(18)">Show Answer</span>
+            <div class="answer" id="answer18">
+                <p><strong>Answer:</strong> b) Building neural networks</p>
+                <p><strong>Explanation:</strong> Keras is a high-level API for building and training neural networks, often used with TensorFlow.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>19. What is a hyperparameter in machine learning?</p>
+            <div class="options">
+                <p>a) A parameter learned during training</p>
+                <p>b) A parameter set before training</p>
+                <p>c) A feature of the dataset</p>
+                <p>d) A performance metric</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(19)">Show Answer</span>
+            <div class="answer" id="answer19">
+                <p><strong>Answer:</strong> b) A parameter set before training</p>
+                <p><strong>Explanation:</strong> Hyperparameters are configurations set before training, such as learning rate or number of trees.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>20. Which algorithm is an ensemble method combining multiple decision trees?</p>
+            <div class="options">
+                <p>a) Logistic Regression</p>
+                <p>b) Random Forest</p>
+                <p>c) K-Nearest Neighbors</p>
+                <p>d) Naive Bayes</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(20)">Show Answer</span>
+            <div class="answer" id="answer20">
+                <p><strong>Answer:</strong> b) Random Forest</p>
+                <p><strong>Explanation:</strong> Random Forest combines multiple decision trees to improve accuracy and reduce overfitting.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>21. What does the term "gradient descent" refer to?</p>
+            <div class="options">
+                <p>a) A clustering algorithm</p>
+                <p>b) An optimization algorithm</p>
+                <p>c) A feature selection method</p>
+                <p>d) A data preprocessing technique</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(21)">Show Answer</span>
+            <div class="answer" id="answer21">
+                <p><strong>Answer:</strong> b) An optimization algorithm</p>
+                <p><strong>Explanation:</strong> Gradient descent optimizes model parameters by minimizing a loss function.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>22. What is the purpose of LabelEncoder in scikit-learn?</p>
+            <div class="options">
+                <p>a) To scale numerical data</p>
+                <p>b) To encode categorical variables as integers</p>
+                <p>c) To reduce dimensionality</p>
+                <p>d) To impute missing values</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(22)">Show Answer</span>
+            <div class="answer" id="answer22">
+                <p><strong>Answer:</strong> b) To encode categorical variables as integers</p>
+                <p><strong>Explanation:</strong> LabelEncoder converts categorical labels into numerical values for use in machine learning models.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>23. What does the ROC curve represent?</p>
+            <div class="options">
+                <p>a) Model accuracy</p>
+                <p>b) Trade-off between true positive rate and false positive rate</p>
+                <p>c) Feature importance</p>
+                <p>d) Data distribution</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(23)">Show Answer</span>
+            <div class="answer" id="answer23">
+                <p><strong>Answer:</strong> b) Trade-off between true positive rate and false positive rate</p>
+                <p><strong>Explanation:</strong> The ROC curve plots the true positive rate against the false positive rate to evaluate classifier performance.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>24. Which Python library is used for plotting data visualizations?</p>
+            <div class="options">
+                <p>a) Pandas</p>
+                <p>b) NumPy</p>
+                <p>c) Matplotlib</p>
+                <p>d) Scikit-learn</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(24)">Show Answer</span>
+            <div class="answer" id="answer24">
+                <p><strong>Answer:</strong> c) Matplotlib</p>
+                <p><strong>Explanation:</strong> Matplotlib is a widely used library for creating data visualizations in Python.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>25. What is the purpose of the loss function in a neural network?</p>
+            <div class="options">
+                <p>a) To preprocess data</p>
+                <p>b) To measure model error</p>
+                <p>c) To select features</p>
+                <p>d) To split data</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(25)">Show Answer</span>
+            <div class="answer" id="answer25">
+                <p><strong>Answer:</strong> b) To measure model error</p>
+                <p><strong>Explanation:</strong> The loss function quantifies the difference between predicted and actual values, guiding optimization.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>26. What is the main advantage of Random Forest over a single decision tree?</p>
+            <div class="options">
+                <p>a) Faster training time</p>
+                <p>b) Reduced overfitting</p>
+                <p>c) Simpler implementation</p>
+                <p>d) Lower memory usage</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(26)">Show Answer</span>
+            <div class="answer" id="answer26">
+                <p><strong>Answer:</strong> b) Reduced overfitting</p>
+                <p><strong>Explanation:</strong> Random Forest reduces overfitting by averaging predictions from multiple decision trees.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>27. What does the term "epoch" mean in neural network training?</p>
+            <div class="options">
+                <p>a) A single prediction cycle</p>
+                <p>b) One full pass through the training dataset</p>
+                <p>c) A hyperparameter tuning step</p>
+                <p>d) A data preprocessing step</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(27)">Show Answer</span>
+            <div class="answer" id="answer27">
+                <p><strong>Answer:</strong> b) One full pass through the training dataset</p>
+                <p><strong>Explanation:</strong> An epoch is one complete iteration through the entire training dataset during model training.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>28. Which technique is used to handle missing data in a dataset?</p>
+            <div class="options">
+                <p>a) Cross-validation</p>
+                <p>b) Imputation</p>
+                <p>c) Dimensionality reduction</p>
+                <p>d) Clustering</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(28)">Show Answer</span>
+            <div class="answer" id="answer28">
+                <p><strong>Answer:</strong> b) Imputation</p>
+                <p><strong>Explanation:</strong> Imputation fills in missing data with estimated values, such as the mean or median.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>29. What is the purpose of the learning rate in gradient descent?</p>
+            <div class="options">
+                <p>a) To determine the number of iterations</p>
+                <p>b) To control the step size of parameter updates</p>
+                <p>c) To select features</p>
+                <p>d) To evaluate model performance</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(29)">Show Answer</span>
+            <div class="answer" id="answer29">
+                <p><strong>Answer:</strong> b) To control the step size of parameter updates</p>
+                <p><strong>Explanation:</strong> The learning rate determines the size of parameter updates during optimization.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>30. Which algorithm is suitable for both classification and regression tasks?</p>
+            <div class="options">
+                <p>a) K-Means</p>
+                <p>b) Decision Tree</p>
+                <p>c) Naive Bayes</p>
+                <p>d) PCA</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(30)">Show Answer</span>
+            <div class="answer" id="answer30">
+                <p><strong>Answer:</strong> b) Decision Tree</p>
+                <p><strong>Explanation:</strong> Decision Trees can be used for both classification (predicting categories) and regression (predicting numerical values).</p>
+            </div>
+        </div>
+
+        <a href="#" class="download-btn" onclick="downloadTest()">Download Exam (TXT)</a>
+    </div>
+
+    <script>
+        // Timer functionality
+        let timeLeft = 30 * 60; // 30 minutes in seconds
+        const timerDisplay = document.getElementById('timer');
+        
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                timerDisplay.textContent = "Time's Up!";
+                alert("Time is up!");
+            } else {
+                timeLeft--;
+            }
+        }
+        const timerInterval = setInterval(updateTimer, 1000);
+
+        // Toggle answer visibility
+        function toggleAnswer(id) {
+            const answer = document.getElementById(`answer${id}`);
+            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Download exam as a text file
+        function downloadTest() {
+            const content = `
+Data Science & Generative AI by SATISH @ Sathya Technologies
+Python Machine Learning Programming Exam (30 Minutes)
+
+1. What is the purpose of the train_test_split function in scikit-learn?
+a) To normalize the dataset
+b) To split data into training and testing sets
+c) To perform cross-validation
+d) To impute missing values
+Answer: b) To split data into training and testing sets
+Explanation: The train_test_split function divides a dataset into training and testing subsets for model training and evaluation.
+
+2. Which Python library is primarily used for deep learning?
+a) Pandas
+b) NumPy
+c) TensorFlow
+d) Scikit-learn
+Answer: c) TensorFlow
+Explanation: TensorFlow is a popular library for building and training neural networks in deep learning.
+
+3. What does a False Positive represent in a confusion matrix?
+a) Correctly predicted positive cases
+b) Incorrectly predicted negative cases
+c) Incorrectly predicted positive cases
+d) Correctly predicted negative cases
+Answer: c) Incorrectly predicted positive cases
+Explanation: A False Positive occurs when the model predicts a positive class, but the actual class is negative.
+
+4. What is the role of StandardScaler in scikit-learn?
+a) To reduce dimensionality
+b) To standardize features to mean 0 and variance 1
+c) To encode categorical variables
+d) To split the dataset
+Answer: b) To standardize features to mean 0 and variance 1
+Explanation: StandardScaler transforms features to have a mean of 0 and a standard deviation of 1.
+
+5. Which algorithm is best for text classification like spam detection?
+a) K-Means Clustering
+b) Linear Regression
+c) Naive Bayes
+d) Principal Component Analysis
+Answer: c) Naive Bayes
+Explanation: Naive Bayes is effective for text classification due to its probabilistic approach and ability to handle high-dimensional data.
+
+6. What does overfitting mean in machine learning?
+a) Model performs well on both training and testing data
+b) Model performs poorly on training data
+c) Model learns noise, reducing generalization
+d) Model is too simple to capture patterns
+Answer: c) Model learns noise, reducing generalization
+Explanation: Overfitting occurs when a model captures noise in the training data, leading to poor performance on unseen data.
+
+7. What is the purpose of cross-validation in machine learning?
+a) To preprocess data
+b) To evaluate model performance on multiple data splits
+c) To impute missing values
+d) To select features
+Answer: b) To evaluate model performance on multiple data splits
+Explanation: Cross-validation assesses a model’s performance by splitting data into multiple folds for training and testing.
+
+8. Which metric measures the accuracy of a classification model?
+a) Mean Squared Error
+b) R-squared
+c) Accuracy Score
+d) Mean Absolute Error
+Answer: c) Accuracy Score
+Explanation: Accuracy Score measures the proportion of correct predictions in a classification model.
+
+9. What does the fit() method do in scikit-learn?
+a) Predicts new data
+b) Trains the model on the provided data
+c) Evaluates model performance
+d) Scales the data
+Answer: b) Trains the model on the provided data
+Explanation: The fit() method trains a machine learning model using the input features and target labels.
+
+10. What is the purpose of an activation function in a neural network?
+a) To normalize input data
+b) To introduce non-linearity
+c) To reduce dimensionality
+d) To split data
+Answer: b) To introduce non-linearity
+Explanation: Activation functions introduce non-linearity, enabling neural networks to model complex patterns.
+
+11. Which library is used for data manipulation and analysis?
+a) TensorFlow
+b) Pandas
+c) Keras
+d) Matplotlib
+Answer: b) Pandas
+Explanation: Pandas provides data structures like DataFrames for efficient data manipulation and analysis.
+
+12. What is the purpose of GridSearchCV in scikit-learn?
+a) To visualize data
+b) To tune hyperparameters
+c) To preprocess data
+d) To predict outcomes
+Answer: b) To tune hyperparameters
+Explanation: GridSearchCV performs an exhaustive search over a grid of hyperparameters to find the optimal combination.
+
+13. What does the term "bias" refer to in machine learning?
+a) Overfitting to training data
+b) Error due to overly simplistic models
+c) Error due to noisy data
+d) Error due to missing data
+Answer: b) Error due to overly simplistic models
+Explanation: Bias occurs when a model is too simple to capture the underlying patterns in the data.
+
+14. Which algorithm is used for unsupervised clustering?
+a) Logistic Regression
+b) K-Means
+c) Decision Tree
+d) Support Vector Machine
+Answer: b) K-Means
+Explanation: K-Means is an unsupervised learning algorithm used for clustering data into groups.
+
+15. What does the predict() method do in scikit-learn?
+a) Trains the model
+b) Evaluates model performance
+c) Makes predictions on new data
+d) Preprocesses data
+Answer: c) Makes predictions on new data
+Explanation: The predict() method uses a trained model to generate predictions for new input data.
+
+16. What does PCA stand for in machine learning?
+a) Principal Component Analysis
+b) Predictive Clustering Algorithm
+c) Partial Correlation Analysis
+d) Probabilistic Classification Algorithm
+Answer: a) Principal Component Analysis
+Explanation: PCA is a dimensionality reduction technique that transforms data into a lower-dimensional space.
+
+17. Which evaluation metric is best for imbalanced classification datasets?
+a) Accuracy
+b) F1 Score
+c) Mean Squared Error
+d) R-squared
+Answer: b) F1 Score
+Explanation: The F1 Score balances precision and recall, making it suitable for imbalanced datasets.
+
+18. What is the purpose of the Keras library?
+a) Data visualization
+b) Building neural networks
+c) Data preprocessing
+d) Statistical analysis
+Answer: b) Building neural networks
+Explanation: Keras is a high-level API for building and training neural networks, often used with TensorFlow.
+
+19. What is a hyperparameter in machine learning?
+a) A parameter learned during training
+b) A parameter set before training
+c) A feature of the dataset
+d) A performance metric
+Answer: b) A parameter set before training
+Explanation: Hyperparameters are configurations set before training, such as learning rate or number of trees.
+
+20. Which algorithm is an ensemble method combining multiple decision trees?
+a) Logistic Regression
+b) Random Forest
+c) K-Nearest Neighbors
+d) Naive Bayes
+Answer: b) Random Forest
+Explanation: Random Forest combines multiple decision trees to improve accuracy and reduce overfitting.
+
+21. What does the term "gradient descent" refer to?
+a) A clustering algorithm
+b) An optimization algorithm
+c) A feature selection method
+d) A data preprocessing technique
+Answer: b) An optimization algorithm
+Explanation: Gradient descent optimizes model parameters by minimizing a loss function.
+
+22. What is the purpose of LabelEncoder in scikit-learn?
+a) To scale numerical data
+b) To encode categorical variables as integers
+c) To reduce dimensionality
+d) To impute missing values
+Answer: b) To encode categorical variables as integers
+Explanation: LabelEncoder converts categorical labels into numerical values for use in machine learning models.
+
+23. What does the ROC curve represent?
+a) Model accuracy
+b) Trade-off between true positive rate and false positive rate
+c) Feature importance
+d) Data distribution
+Answer: b) Trade-off between true positive rate and false positive rate
+Explanation: The ROC curve plots the true positive rate against the false positive rate to evaluate classifier performance.
+
+24. Which Python library is used for plotting data visualizations?
+a) Pandas
+b) NumPy
+c) Matplotlib
+d) Scikit-learn
+Answer: c) Matplotlib
+Explanation: Matplotlib is a widely used library for creating data visualizations in Python.
+
+25. What is the purpose of the loss function in a neural network?
+a) To preprocess data
+b) To measure model error
+c) To select features
+d) To split data
+Answer: b) To measure model error
+Explanation: The loss function quantifies the difference between predicted and actual values, guiding optimization.
+
+26. What is the main advantage of Random Forest over a single decision tree?
+a) Faster training time
+b) Reduced overfitting
+c) Simpler implementation
+d) Lower memory usage
+Answer: b) Reduced overfitting
+Explanation: Random Forest reduces overfitting by averaging predictions from multiple decision trees.
+
+27. What does the term "epoch" mean in neural network training?
+a) A single prediction cycle
+b) One full pass through the training dataset
+c) A hyperparameter tuning step
+d) A data preprocessing step
+Answer: b) One full pass through the training dataset
+Explanation: An epoch is one complete iteration through the entire training dataset during model training.
+
+28. Which technique is used to handle missing data in a dataset?
+a) Cross-validation
+b) Imputation
+c) Dimensionality reduction
+d) Clustering
+Answer: b) Imputation
+Explanation: Imputation fills in missing data with estimated values, such as the mean or median.
+
+29. What is the purpose of the learning rate in gradient descent?
+a) To determine the number of iterations
+b) To control the step size of parameter updates
+c) To select features
+d) To evaluate model performance
+Answer: b) To control the step size of parameter updates
+Explanation: The learning rate determines the size of parameter updates during optimization.
+
+30. Which algorithm is suitable for both classification and regression tasks?
+a) K-Means
+b) Decision Tree
+c) Naive Bayes
+d) PCA
+Answer: b) Decision Tree
+Explanation: Decision Trees can be used for both classification (predicting categories) and regression (predicting numerical values).
+            `;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'machine_learning_exam_30q.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>

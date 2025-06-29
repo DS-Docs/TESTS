@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Programs Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #0056b3;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #0056b3;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .question p {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        pre {
+            background-color: #eee;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            color: #c7254e; /* for inline code */
+        }
+        .answer {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e9ffe9;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            color: #28a745;
+            display: none; /* Hidden by default */
+        }
+        .show-answer-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .show-answer-btn:hover {
+            background-color: #0056b3;
+        }
+        .timer-container {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.5em; /* Slightly larger for emphasis */
+            font-weight: bold;
+            color: #d9534f;
+            background-color: #ffe0e0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #d9534f;
+        }
+        .note {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Data Science & Generative AI by SATISH @ Sathya Technologies</h1>
+        <h2>SQL Programs Test</h2>
+
+        <div class="timer-container">
+            Time Left: <span id="time">15:00</span>
+        </div>
+
+        <form id="quizForm">
+            <div class="question">
+                <p>Assume you have the following two tables:</p>
+                <p><strong>Employees Table:</strong></p>
+                <pre>
+CREATE TABLE Employees (
+    EmployeeID INT PRIMARY KEY,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    DepartmentID INT,
+    Salary DECIMAL(10, 2)
+);
+
+INSERT INTO Employees (EmployeeID, FirstName, LastName, DepartmentID, Salary) VALUES
+(1, 'John', 'Doe', 101, 60000.00),
+(2, 'Jane', 'Smith', 102, 75000.00),
+(3, 'Peter', 'Jones', 101, 62000.00),
+(4, 'Alice', 'Williams', 103, 80000.00),
+(5, 'Bob', 'Brown', 102, 70000.00),
+(6, 'Charlie', 'Davis', 101, 58000.00),
+(7, 'Diana', 'Miller', 103, 85000.00),
+(8, 'Eve', 'Wilson', NULL, 55000.00);
+                </pre>
+                <p><strong>Departments Table:</strong></p>
+                <pre>
+CREATE TABLE Departments (
+    DepartmentID INT PRIMARY KEY,
+    DepartmentName VARCHAR(50),
+    Location VARCHAR(50)
+);
+
+INSERT INTO Departments (DepartmentID, DepartmentName, Location) VALUES
+(101, 'Sales', 'New York'),
+(102, 'Marketing', 'London'),
+(103, 'IT', 'Paris'),
+(104, 'HR', 'New York');
+                </pre>
+                <p>Write SQL queries for the following questions:</p>
+            </div>
+
+            <div class="question">
+                <p>1. Write a SQL query to select all employees with a salary greater than 70000.</p>
+                <button type="button" class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="answer">
+                    <pre>
+SELECT *
+FROM Employees
+WHERE Salary > 70000;
+                    </pre>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>2. Write a SQL query to find the first name, last name, and department name for all employees.</p>
+                <button type="button" class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="answer">
+                    <pre>
+SELECT e.FirstName, e.LastName, d.DepartmentName
+FROM Employees e
+JOIN Departments d ON e.DepartmentID = d.DepartmentID;
+                    </pre>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>3. Write a SQL query to calculate the average salary for each department.</p>
+                <button type="button" class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="answer">
+                    <pre>
+SELECT d.DepartmentName, AVG(e.Salary) AS AverageSalary
+FROM Employees e
+JOIN Departments d ON e.DepartmentID = d.DepartmentID
+GROUP BY d.DepartmentName;
+                    </pre>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>4. Write a SQL query to list departments that have no employees.</p>
+                <button type="button" class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="answer">
+                    <pre>
+SELECT d.DepartmentName
+FROM Departments d
+LEFT JOIN Employees e ON d.DepartmentID = e.DepartmentID
+WHERE e.EmployeeID IS NULL;
+                    </pre>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>5. Write a SQL query to find the employee with the highest salary.</p>
+                <button type="button" class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="answer">
+                    <pre>
+SELECT FirstName, LastName, Salary
+FROM Employees
+ORDER BY Salary DESC
+LIMIT 1; -- Use FETCH FIRST 1 ROW ONLY; for SQL Server/Oracle, or ROWNUM = 1
+                    </pre>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>6. Write a SQL query to count the number of employees in each department.</p>
+                <button type="button" class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="answer">
+                    <pre>
+SELECT d.DepartmentName, COUNT(e.EmployeeID) AS NumberOfEmployees
+FROM Departments d
+LEFT JOIN Employees e ON d.DepartmentID = e.DepartmentID
+GROUP BY d.DepartmentName;
+                    </pre>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>7. Write a SQL query to find employees who work in 'New York'.</p>
+                <button type="button" class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="answer">
+                    <pre>
+SELECT e.FirstName, e.LastName, d.Location
+FROM Employees e
+JOIN Departments d ON e.DepartmentID = d.DepartmentID
+WHERE d.Location = 'New York';
+                    </pre>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>8. Write a SQL query to update the salary of 'John Doe' to 65000.</p>
+                <button type="button" class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="answer">
+                    <pre>
+UPDATE Employees
+SET Salary = 65000.00
+WHERE FirstName = 'John' AND LastName = 'Doe';
+                    </pre>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>9. Write a SQL query to delete the employee with EmployeeID 8.</p>
+                <button type="button" class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="answer">
+                    <pre>
+DELETE FROM Employees
+WHERE EmployeeID = 8;
+                    </pre>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>10. Write a SQL query to find the total salary expense for each location.</p>
+                <button type="button" class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="answer">
+                    <pre>
+SELECT d.Location, SUM(e.Salary) AS TotalSalaryExpense
+FROM Employees e
+JOIN Departments d ON e.DepartmentID = d.DepartmentID
+GROUP BY d.Location;
+                    </pre>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>11. Write a SQL query to get the names of employees whose first name starts with 'J'.</p>
+                <button type="button" class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="answer">
+                    <pre>
+SELECT FirstName, LastName
+FROM Employees
+WHERE FirstName LIKE 'J%';
+                    </pre>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>12. Write a SQL query to find the department with the highest average salary.</p>
+                <button type="button" class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="answer">
+                    <pre>
+SELECT d.DepartmentName, AVG(e.Salary) AS AverageSalary
+FROM Employees e
+JOIN Departments d ON e.DepartmentID = d.DepartmentID
+GROUP BY d.DepartmentName
+ORDER BY AverageSalary DESC
+LIMIT 1; -- Or FETCH FIRST 1 ROW ONLY;
+                    </pre>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>13. Write a SQL query to list employees and their departments, including employees who are not assigned to any department (DepartmentID is NULL).</p>
+                <button type="button" class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="answer">
+                    <pre>
+SELECT e.FirstName, e.LastName, d.DepartmentName
+FROM Employees e
+LEFT JOIN Departments d ON e.DepartmentID = d.DepartmentID;
+                    </pre>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>14. Write a SQL query to find the second highest salary among all employees.</p>
+                <button type="button" class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="answer">
+                    <pre>
+SELECT DISTINCT Salary
+FROM Employees
+ORDER BY Salary DESC
+LIMIT 1 OFFSET 1; -- Or FETCH FIRST 1 ROW ONLY OFFSET 1 ROW;
+-- Alternative using subquery for databases without LIMIT/OFFSET like SQL Server:
+-- SELECT Salary FROM Employees ORDER BY Salary DESC OFFSET 1 ROWS FETCH NEXT 1 ROW ONLY;
+-- Alternative using DENSE_RANK() for SQL Server/Oracle:
+-- SELECT Salary FROM (SELECT Salary, DENSE_RANK() OVER (ORDER BY Salary DESC) as rnk FROM Employees) AS RankedSalaries WHERE rnk = 2;
+                    </pre>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>15. Write a SQL query to add a new column `Email` (VARCHAR(100)) to the Employees table.</p>
+                <button type="button" class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="answer">
+                    <pre>
+ALTER TABLE Employees
+ADD COLUMN Email VARCHAR(100);
+                    </pre>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>16. Write a SQL query to drop the `Location` column from the Departments table.</p>
+                <button type="button" class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="answer">
+                    <pre>
+ALTER TABLE Departments
+DROP COLUMN Location;
+                    </pre>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>17. Write a SQL query to retrieve the top 3 highest-paid employees.</p>
+                <button type="button" class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="answer">
+                    <pre>
+SELECT FirstName, LastName, Salary
+FROM Employees
+ORDER BY Salary DESC
+LIMIT 3; -- Or TOP 3 for SQL Server, ROWNUM <= 3 for Oracle
+                    </pre>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>18. Write a SQL query to find employees whose last name ends with 's'.</p>
+                <button type="button" class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="answer">
+                    <pre>
+SELECT FirstName, LastName
+FROM Employees
+WHERE LastName LIKE '%s';
+                    </pre>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>19. Write a SQL query to count the number of distinct department locations.</p>
+                <button type="button" class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="answer">
+                    <pre>
+SELECT COUNT(DISTINCT Location) AS DistinctLocations
+FROM Departments;
+                    </pre>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>20. Write a SQL query to find employees whose salary is between 60000 and 70000 (inclusive).</p>
+                <button type="button" class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="answer">
+                    <pre>
+SELECT FirstName, LastName, Salary
+FROM Employees
+WHERE Salary BETWEEN 60000 AND 70000;
+                    </pre>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>21. Write a SQL query to list all employees ordered by their last name in ascending order, then by first name in ascending order.</p>
+                <button type="button" class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="answer">
+                    <pre>
+SELECT FirstName, LastName, Salary
+FROM Employees
+ORDER BY LastName ASC, FirstName ASC;
+                    </pre>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>22. Write a SQL query to find the maximum, minimum, and average salary of all employees.</p>
+                <button type="button" class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="answer">
+                    <pre>
+SELECT MAX(Salary) AS MaxSalary, MIN(Salary) AS MinSalary, AVG(Salary) AS AvgSalary
+FROM Employees;
+                    </pre>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>23. Write a SQL query to rename the `Employees` table to `Staff`.</p>
+                <button type="button" class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="answer">
+                    <pre>
+ALTER TABLE Employees RENAME TO Staff; -- For PostgreSQL, MySQL, SQLite
+-- RENAME OBJECT Employees TO Staff; -- For SQL Server
+-- RENAME TABLE Employees TO Staff; -- Another variant for MySQL
+                    </pre>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>24. Write a SQL query to add a new employee: EmployeeID 9, FirstName 'Sam', LastName 'Lee', DepartmentID 104, Salary 68000.</p>
+                <button type="button" class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="answer">
+                    <pre>
+INSERT INTO Employees (EmployeeID, FirstName, LastName, DepartmentID, Salary)
+VALUES (9, 'Sam', 'Lee', 104, 68000.00);
+                    </pre>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>25. Write a SQL query to find employees who do not belong to any department listed in the `Departments` table (i.e., their `DepartmentID` does not match any `DepartmentID` in `Departments`).</p>
+                <button type="button" class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="answer">
+                    <pre>
+SELECT e.FirstName, e.LastName
+FROM Employees e
+LEFT JOIN Departments d ON e.DepartmentID = d.DepartmentID
+WHERE d.DepartmentID IS NULL AND e.DepartmentID IS NOT NULL; -- Excludes employees with NULL DepartmentID explicitly
+-- Or more simply, if you only care about unmatched IDs, including NULLs
+-- SELECT e.FirstName, e.LastName
+-- FROM Employees e
+-- WHERE e.DepartmentID NOT IN (SELECT DepartmentID FROM Departments WHERE DepartmentID IS NOT NULL);
+-- Or using NOT EXISTS
+-- SELECT e.FirstName, e.LastName
+-- FROM Employees e
+-- WHERE NOT EXISTS (SELECT 1 FROM Departments d WHERE e.DepartmentID = d.DepartmentID);
+                    </pre>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>26. Write a SQL query to get the names of departments and the number of employees in each, but only for departments with more than 2 employees.</p>
+                <button type="button" class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="answer">
+                    <pre>
+SELECT d.DepartmentName, COUNT(e.EmployeeID) AS NumberOfEmployees
+FROM Departments d
+JOIN Employees e ON d.DepartmentID = e.DepartmentID
+GROUP BY d.DepartmentName
+HAVING COUNT(e.EmployeeID) > 2;
+                    </pre>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>27. Write a SQL query to find employees whose salary is less than the average salary of their department.</p>
+                <button type="button" class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="answer">
+                    <pre>
+SELECT e1.FirstName, e1.LastName, e1.Salary, d.DepartmentName
+FROM Employees e1
+JOIN Departments d ON e1.DepartmentID = d.DepartmentID
+WHERE e1.Salary < (SELECT AVG(e2.Salary) FROM Employees e2 WHERE e2.DepartmentID = e1.DepartmentID);
+                    </pre>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>28. Write a SQL query to get the current date and time.</p>
+                <button type="button" class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="answer">
+                    <pre>
+SELECT NOW(); -- PostgreSQL, MySQL
+-- SELECT GETDATE(); -- SQL Server
+-- SELECT SYSDATE FROM DUAL; -- Oracle
+                    </pre>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>29. Write a SQL query to display the first and last name of employees concatenated as 'FullName'.</p>
+                <button type="button" class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="answer">
+                    <pre>
+SELECT CONCAT(FirstName, ' ', LastName) AS FullName
+FROM Employees; -- MySQL, PostgreSQL, SQLite
+-- SELECT FirstName + ' ' + LastName AS FullName FROM Employees; -- SQL Server
+                    </pre>
+                </div>
+            </div>
+
+            <div class="question">
+                <p>30. Write a SQL query to create a new table called `HighPaidEmployees` with `EmployeeID`, `FirstName`, `LastName`, and `Salary` for employees earning more than 70000.</p>
+                <button type="button" class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+                <div class="answer">
+                    <pre>
+CREATE TABLE HighPaidEmployees AS
+SELECT EmployeeID, FirstName, LastName, Salary
+FROM Employees
+WHERE Salary > 70000; -- For PostgreSQL, MySQL, SQLite
+-- SELECT EmployeeID, FirstName, LastName, Salary
+-- INTO HighPaidEmployees
+-- FROM Employees
+-- WHERE Salary > 70000; -- For SQL Server
+                    </pre>
+                </div>
+            </div>
+        </form>
+        <p class="note">Scroll down to see all questions and answers. Click "Show Answer" to reveal the correct SQL query for each question.</p>
+    </div>
+
+    <script>
+        function toggleAnswer(button) {
+            const answerDiv = button.nextElementSibling;
+            if (answerDiv.style.display === "block") {
+                answerDiv.style.display = "none";
+                button.textContent = "Show Answer";
+            } else {
+                answerDiv.style.display = "block";
+                button.textContent = "Hide Answer";
+            }
+        }
+
+        // Timer functionality
+        const startingMinutes = 15;
+        let time = startingMinutes * 60;
+        const countdownEl = document.getElementById('time');
+
+        function updateCountdown() {
+            const minutes = Math.floor(time / 60);
+            let seconds = time % 60;
+
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+
+            countdownEl.innerHTML = `${minutes}:${seconds}`;
+
+            if (time <= 0) {
+                clearInterval(timerInterval);
+                countdownEl.innerHTML = "Time's Up!";
+                alert("Time's Up! Quiz ended.");
+                disableQuiz();
+            }
+            time--;
+        }
+
+        const timerInterval = setInterval(updateCountdown, 1000);
+
+        function disableQuiz() {
+            const formElements = document.getElementById('quizForm').elements;
+            for (let i = 0; i < formElements.length; i++) {
+                formElements[i].disabled = true;
+            }
+            const showAnswerButtons = document.querySelectorAll('.show-answer-btn');
+            showAnswerButtons.forEach(button => button.disabled = true);
+        }
+    </script>
+</body>
+</html>

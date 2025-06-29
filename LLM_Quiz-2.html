@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Models Exam</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .timer {
+            text-align: center;
+            font-size: 24px;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 5px;
+        }
+        .question {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-left: 4px solid #3498db;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .answers {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #e8f4fc;
+            border-radius: 5px;
+            display: none;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Data Science & Generative AI by SATISH @ Sathya Technologies</h1>
+        <div class="timer" id="timer">30:00</div>
+        
+        <h2>LLM Models Examination (30 Questions)</h2>
+        
+        <div class="question">
+            <p>1. What does LLM stand for in the context of AI?</p>
+            <div class="options">
+                <label><input type="radio" name="q1"> a) Large Language Model</label><br>
+                <label><input type="radio" name="q1"> b) Long Learning Machine</label><br>
+                <label><input type="radio" name="q1"> c) Linguistic Learning Method</label><br>
+                <label><input type="radio" name="q1"> d) Logical Language Module</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>2. Which of the following is NOT a popular LLM?</p>
+            <div class="options">
+                <label><input type="radio" name="q2"> a) GPT-4</label><br>
+                <label><input type="radio" name="q2"> b) BERT</label><br>
+                <label><input type="radio" name="q2"> c) ResNet</label><br>
+                <label><input type="radio" name="q2"> d) PaLM</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>3. What is the primary architecture used in most modern LLMs?</p>
+            <div class="options">
+                <label><input type="radio" name="q3"> a) Convolutional Neural Networks</label><br>
+                <label><input type="radio" name="q3"> b) Recurrent Neural Networks</label><br>
+                <label><input type="radio" name="q3"> c) Transformer</label><br>
+                <label><input type="radio" name="q3"> d) Decision Trees</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>4. Which technique helps LLMs understand the context of words based on surrounding words?</p>
+            <div class="options">
+                <label><input type="radio" name="q4"> a) Attention Mechanism</label><br>
+                <label><input type="radio" name="q4"> b) Backpropagation</label><br>
+                <label><input type="radio" name="q4"> c) Gradient Descent</label><br>
+                <label><input type="radio" name="q4"> d) Pooling</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>5. What does the "GPT" in GPT-4 stand for?</p>
+            <div class="options">
+                <label><input type="radio" name="q5"> a) Generative Pre-trained Transformer</label><br>
+                <label><input type="radio" name="q5"> b) General Purpose Technology</label><br>
+                <label><input type="radio" name="q5"> c) Global Processing Technique</label><br>
+                <label><input type="radio" name="q5"> d) Guided Program Training</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>6. Which of the following is a key challenge in training LLMs?</p>
+            <div class="options">
+                <label><input type="radio" name="q6"> a) High computational costs</label><br>
+                <label><input type="radio" name="q6"> b) Limited training data availability</label><br>
+                <label><input type="radio" name="q6"> c) Small model sizes</label><br>
+                <label><input type="radio" name="q6"> d) Fast training times</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>7. What is "prompt engineering" in the context of LLMs?</p>
+            <div class="options">
+                <label><input type="radio" name="q7"> a) The process of designing effective input prompts to get desired outputs</label><br>
+                <label><input type="radio" name="q7"> b) The physical engineering of computer hardware for LLMs</label><br>
+                <label><input type="radio" name="q7"> c) The debugging of LLM source code</label><br>
+                <label><input type="radio" name="q7"> d) The process of training data collection</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>8. Which of these is a common application of LLMs?</p>
+            <div class="options">
+                <label><input type="radio" name="q8"> a) Text summarization</label><br>
+                <label><input type="radio" name="q8"> b) Image recognition</label><br>
+                <label><input type="radio" name="q8"> c) Weather prediction</label><br>
+                <label><input type="radio" name="q8"> d) Stock market trading</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>9. What is "fine-tuning" in the context of LLMs?</p>
+            <div class="options">
+                <label><input type="radio" name="q9"> a) The process of adapting a pre-trained model to a specific task</label><br>
+                <label><input type="radio" name="q9"> b) Making the model smaller in size</label><br>
+                <label><input type="radio" name="q9"> c) Changing the model's architecture completely</label><br>
+                <label><input type="radio" name="q9"> d) The initial training of a model from scratch</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>10. Which company developed the GPT series of models?</p>
+            <div class="options">
+                <label><input type="radio" name="q10"> a) Google</label><br>
+                <label><input type="radio" name="q10"> b) OpenAI</label><br>
+                <label><input type="radio" name="q10"> c) Microsoft</label><br>
+                <label><input type="radio" name="q10"> d) Facebook</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>11. What is the main purpose of the "temperature" parameter in LLM generation?</p>
+            <div class="options">
+                <label><input type="radio" name="q11"> a) To control the randomness of the output</label><br>
+                <label><input type="radio" name="q11"> b) To monitor the GPU temperature during inference</label><br>
+                <label><input type="radio" name="q11"> c) To determine the training speed</label><br>
+                <label><input type="radio" name="q11"> d) To adjust the model size</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>12. What does "zero-shot learning" mean in LLMs?</p>
+            <div class="options">
+                <label><input type="radio" name="q12"> a) Performing a task without any specific training examples</label><br>
+                <label><input type="radio" name="q12"> b) Training a model with zero data</label><br>
+                <label><input type="radio" name="q12"> c) A model with zero parameters</label><br>
+                <label><input type="radio" name="q12"> d) Running a model without any hardware</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>13. Which of these is a potential ethical concern with LLMs?</p>
+            <div class="options">
+                <label><input type="radio" name="q13"> a) Bias in generated content</label><br>
+                <label><input type="radio" name="q13"> b) High energy consumption</label><br>
+                <label><input type="radio" name="q13"> c) Job displacement</label><br>
+                <label><input type="radio" name="q13"> d) All of the above</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>14. What is "tokenization" in the context of LLMs?</p>
+            <div class="options">
+                <label><input type="radio" name="q14"> a) Breaking text into smaller units for processing</label><br>
+                <label><input type="radio" name="q14"> b) Creating cryptocurrency tokens</label><br>
+                <label><input type="radio" name="q14"> c) The process of model training</label><br>
+                <label><input type="radio" name="q14"> d) A security protocol</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>15. Which component allows Transformers to process words in parallel rather than sequentially?</p>
+            <div class="options">
+                <label><input type="radio" name="q15"> a) Self-attention mechanism</label><br>
+                <label><input type="radio" name="q15"> b) Recurrent connections</label><br>
+                <label><input type="radio" name="q15"> c) Convolutional filters</label><br>
+                <label><input type="radio" name="q15"> d) Pooling layers</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>16. What is the primary advantage of LLMs over traditional rule-based systems?</p>
+            <div class="options">
+                <label><input type="radio" name="q16"> a) They can generalize to unseen data patterns</label><br>
+                <label><input type="radio" name="q16"> b) They require less computational power</label><br>
+                <label><input type="radio" name="q16"> c) They are easier to interpret</label><br>
+                <label><input type="radio" name="q16"> d) They don't require any training data</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>17. What does "few-shot learning" refer to in LLMs?</p>
+            <div class="options">
+                <label><input type="radio" name="q17"> a) Providing a few examples in the prompt to guide the model</label><br>
+                <label><input type="radio" name="q17"> b) Training the model with very little data</label><br>
+                <label><input type="radio" name="q17"> c) Using a small model size</label><br>
+                <label><input type="radio" name="q17"> d) Running the model on limited hardware</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>18. Which of these techniques helps reduce the computational cost of LLMs?</p>
+            <div class="options">
+                <label><input type="radio" name="q18"> a) Model distillation</label><br>
+                <label><input type="radio" name="q18"> b) Quantization</label><br>
+                <label><input type="radio" name="q18"> c) Pruning</label><br>
+                <label><input type="radio" name="q18"> d) All of the above</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>19. What is the purpose of the "top-k sampling" strategy in LLM generation?</p>
+            <div class="options">
+                <label><input type="radio" name="q19"> a) To restrict sampling to the k most likely next tokens</label><br>
+                <label><input type="radio" name="q19"> b) To select the top k models for ensemble</label><br>
+                <label><input type="radio" name="q19"> c) To choose k different hyperparameters</label><br>
+                <label><input type="radio" name="q19"> d) To run k parallel training processes</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>20. Which of these is a common metric for evaluating LLMs?</p>
+            <div class="options">
+                <label><input type="radio" name="q20"> a) Perplexity</label><br>
+                <label><input type="radio" name="q20"> b) BLEU score</label><br>
+                <label><input type="radio" name="q20"> c) Accuracy</label><br>
+                <label><input type="radio" name="q20"> d) All of the above</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>21. What is "hallucination" in the context of LLMs?</p>
+            <div class="options">
+                <label><input type="radio" name="q21"> a) Generating plausible but incorrect or fabricated information</label><br>
+                <label><input type="radio" name="q21"> b) The model's visualization capabilities</label><br>
+                <label><input type="radio" name="q21"> c) A type of attention mechanism</label><br>
+                <label><input type="radio" name="q21"> d) The training process for image generation</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>22. Which of these is NOT a typical component of the Transformer architecture?</p>
+            <div class="options">
+                <label><input type="radio" name="q22"> a) Encoder</label><br>
+                <label><input type="radio" name="q22"> b) Decoder</label><br>
+                <label><input type="radio" name="q22"> c) Attention layers</label><br>
+                <label><input type="radio" name="q22"> d) Convolutional layers</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>23. What is the purpose of positional encoding in Transformers?</p>
+            <div class="options">
+                <label><input type="radio" name="q23"> a) To provide information about the position of tokens in the sequence</label><br>
+                <label><input type="radio" name="q23"> b) To encrypt the model parameters</label><br>
+                <label><input type="radio" name="q23"> c) To determine the hardware location</label><br>
+                <label><input type="radio" name="q23"> d) To optimize memory usage</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>24. Which of these datasets is commonly used for training LLMs?</p>
+            <div class="options">
+                <label><input type="radio" name="q24"> a) Common Crawl</label><br>
+                <label><input type="radio" name="q24"> b) Wikipedia</label><br>
+                <label><input type="radio" name="q24"> c) BookCorpus</label><br>
+                <label><input type="radio" name="q24"> d) All of the above</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>25. What is the primary purpose of the "mask" in masked language modeling?</p>
+            <div class="options">
+                <label><input type="radio" name="q25"> a) To hide certain tokens and predict them during training</label><br>
+                <label><input type="radio" name="q25"> b) To protect sensitive data</label><br>
+                <label><input type="radio" name="q25"> c) To reduce model size</label><br>
+                <label><input type="radio" name="q25"> d) To visualize attention patterns</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>26. Which of these is a technique for making LLMs more efficient during inference?</p>
+            <div class="options">
+                <label><input type="radio" name="q26"> a) KV caching</label><br>
+                <label><input type="radio" name="q26"> b) Batch processing</label><br>
+                <label><input type="radio" name="q26"> c) Quantization</label><br>
+                <label><input type="radio" name="q26"> d) All of the above</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>27. What is "chain-of-thought" prompting?</p>
+            <div class="options">
+                <label><input type="radio" name="q27"> a) Encouraging the model to show its reasoning steps</label><br>
+                <label><input type="radio" name="q27"> b) Connecting multiple LLMs together</label><br>
+                <label><input type="radio" name="q27"> c) A type of training regimen</label><br>
+                <label><input type="radio" name="q27"> d) The sequence of layers in a neural network</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>28. Which of these is a common way to reduce harmful outputs from LLMs?</p>
+            <div class="options">
+                <label><input type="radio" name="q28"> a) Reinforcement Learning from Human Feedback (RLHF)</label><br>
+                <label><input type="radio" name="q28"> b) Content filtering</label><br>
+                <label><input type="radio" name="q28"> c) Prompt engineering</label><br>
+                <label><input type="radio" name="q28"> d) All of the above</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>29. What does "multi-head attention" refer to in Transformers?</p>
+            <div class="options">
+                <label><input type="radio" name="q29"> a) Running multiple attention mechanisms in parallel</label><br>
+                <label><input type="radio" name="q29"> b) Having multiple input heads</label><br>
+                <label><input type="radio" name="q29"> c) Attention across multiple documents</label><br>
+                <label><input type="radio" name="q29"> d) A type of ensemble method</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>30. What is the primary benefit of using pre-trained LLMs?</p>
+            <div class="options">
+                <label><input type="radio" name="q30"> a) Transfer learning - leveraging knowledge gained from general training</label><br>
+                <label><input type="radio" name="q30"> b) They don't require any fine-tuning</label><br>
+                <label><input type="radio" name="q30"> c) They are always more accurate than custom models</label><br>
+                <label><input type="radio" name="q30"> d) They eliminate the need for any data</label>
+            </div>
+        </div>
+        
+        <button onclick="showAnswers()">Show Answers</button>
+        
+        <div class="answers" id="answers">
+            <h3>Answer Key</h3>
+            <p>1. a) Large Language Model</p>
+            <p>2. c) ResNet</p>
+            <p>3. c) Transformer</p>
+            <p>4. a) Attention Mechanism</p>
+            <p>5. a) Generative Pre-trained Transformer</p>
+            <p>6. a) High computational costs</p>
+            <p>7. a) The process of designing effective input prompts to get desired outputs</p>
+            <p>8. a) Text summarization</p>
+            <p>9. a) The process of adapting a pre-trained model to a specific task</p>
+            <p>10. b) OpenAI</p>
+            <p>11. a) To control the randomness of the output</p>
+            <p>12. a) Performing a task without any specific training examples</p>
+            <p>13. d) All of the above</p>
+            <p>14. a) Breaking text into smaller units for processing</p>
+            <p>15. a) Self-attention mechanism</p>
+            <p>16. a) They can generalize to unseen data patterns</p>
+            <p>17. a) Providing a few examples in the prompt to guide the model</p>
+            <p>18. d) All of the above</p>
+            <p>19. a) To restrict sampling to the k most likely next tokens</p>
+            <p>20. d) All of the above</p>
+            <p>21. a) Generating plausible but incorrect or fabricated information</p>
+            <p>22. d) Convolutional layers</p>
+            <p>23. a) To provide information about the position of tokens in the sequence</p>
+            <p>24. d) All of the above</p>
+            <p>25. a) To hide certain tokens and predict them during training</p>
+            <p>26. d) All of the above</p>
+            <p>27. a) Encouraging the model to show its reasoning steps</p>
+            <p>28. d) All of the above</p>
+            <p>29. a) Running multiple attention mechanisms in parallel</p>
+            <p>30. a) Transfer learning - leveraging knowledge gained from general training</p>
+        </div>
+        
+        <div class="footer">
+            <p>Data Science & Generative AI Exam | Sathya Technologies</p>
+        </div>
+    </div>
+
+    <script>
+        // Timer functionality
+        let timeLeft = 30 * 60; // 30 minutes in seconds
+        const timerElement = document.getElementById('timer');
+        
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            timerElement.textContent = `${minutes}:${seconds}`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                timerElement.textContent = "Time's up!";
+                timerElement.style.backgroundColor = "#e74c3c";
+            } else {
+                timeLeft--;
+            }
+        }
+        
+        const timerInterval = setInterval(updateTimer, 1000);
+        
+        // Show answers
+        function showAnswers() {
+            document.getElementById('answers').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
