@@ -1,0 +1,867 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Science & Generative AI Exam</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        h2 {
+            color: #2980b9;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question p {
+            font-weight: bold;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .answer {
+            display: none;
+            background-color: #e8f4f9;
+            padding: 10px;
+            border-left: 4px solid #2980b9;
+            margin-top: 10px;
+        }
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #e74c3c;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        .download-btn {
+            display: block;
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px 20px;
+            background: #27ae60;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .download-btn:hover {
+            background: #219653;
+        }
+        .toggle-btn {
+            cursor: pointer;
+            color: #2980b9;
+            text-decoration: underline;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        code {
+            font-family: Consolas, monospace;
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="timer" id="timer">30:00</div>
+    <div class="container">
+        <h1>Data Science & Generative AI by SATISH @ Sathya Technologies</h1>
+        <h2>Statistics Programming Exam (30 Minutes)</h2>
+        
+        <div class="question">
+            <p>1. What is the mean in statistics?</p>
+            <div class="options">
+                <p>a) The middle value</p>
+                <p>b) The average of a dataset</p>
+                <p>c) The most frequent value</p>
+                <p>d) The difference between max and min</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(1)">Show Answer</span>
+            <div class="answer" id="answer1">
+                <p><strong>Answer:</strong> b) The average of a dataset</p>
+                <p><strong>Explanation:</strong> The mean is calculated by summing all values and dividing by the number of values.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>2. Which measure represents the middle value of an ordered dataset?</p>
+            <div class="options">
+                <p>a) Mean</p>
+                <p>b) Median</p>
+                <p>c) Mode</p>
+                <p>d) Midrange</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(2)">Show Answer</span>
+            <div class="answer" id="answer2">
+                <p><strong>Answer:</strong> b) Median</p>
+                <p><strong>Explanation:</strong> The median is the middle value when data is ordered, or the average of the two middle values for even-sized datasets.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>3. What is the mode of a dataset?</p>
+            <div class="options">
+                <p>a) The average value</p>
+                <p>b) The middle value</p>
+                <p>c) The most frequent value</p>
+                <p>d) The standard deviation</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(3)">Show Answer</span>
+            <div class="answer" id="answer3">
+                <p><strong>Answer:</strong> c) The most frequent value</p>
+                <p><strong>Explanation:</strong> The mode is the value that appears most frequently in a dataset.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>4. What does the standard deviation measure?</p>
+            <div class="options">
+                <p>a) Central tendency</p>
+                <p>b) Data dispersion</p>
+                <p>c) Data frequency</p>
+                <p>d) Correlation strength</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(4)">Show Answer</span>
+            <div class="answer" id="answer4">
+                <p><strong>Answer:</strong> b) Data dispersion</p>
+                <p><strong>Explanation:</strong> Standard deviation measures how spread out data values are from the mean.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>5. What is the variance in statistics?</p>
+            <div class="options">
+                <p>a) The square root of standard deviation</p>
+                <p>b) The square of standard deviation</p>
+                <p>c) The average of data</p>
+                <p>d) The most frequent value</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(5)">Show Answer</span>
+            <div class="answer" id="answer5">
+                <p><strong>Answer:</strong> b) The square of standard deviation</p>
+                <p><strong>Explanation:</strong> Variance is the average of squared differences from the mean, and standard deviation is its square root.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>6. What is a p-value in hypothesis testing?</p>
+            <div class="options">
+                <p>a) The probability of rejecting the null hypothesis</p>
+                <p>b) The probability of the null hypothesis being true</p>
+                <p>c) The probability of observing the data given the null hypothesis</p>
+                <p>d) The sample size</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(6)">Show Answer</span>
+            <div class="answer" id="answer6">
+                <p><strong>Answer:</strong> c) The probability of observing the data given the null hypothesis</p>
+                <p><strong>Explanation:</strong> The p-value measures the probability of obtaining results at least as extreme as observed, assuming the null hypothesis is true.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>7. What does a significance level of 0.05 indicate?</p>
+            <div class="options">
+                <p>a) 5% chance of accepting the null hypothesis</p>
+                <p>b) 5% chance of rejecting a true null hypothesis</p>
+                <p>c) 95% confidence in the null hypothesis</p>
+                <p>d) 5% data variability</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(7)">Show Answer</span>
+            <div class="answer" id="answer7">
+                <p><strong>Answer:</strong> b) 5% chance of rejecting a true null hypothesis</p>
+                <p><strong>Explanation:</strong> A significance level (α) of 0.05 means a 5% risk of Type I error (false positive).</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>8. What is the purpose of a t-test?</p>
+            <div class="options">
+                <p>a) To compare means of groups</p>
+                <p>b) To measure correlation</p>
+                <p>c) To calculate variance</p>
+                <p>d) To estimate population size</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(8)">Show Answer</span>
+            <div class="answer" id="answer8">
+                <p><strong>Answer:</strong> a) To compare means of groups</p>
+                <p><strong>Explanation:</strong> A t-test assesses whether the means of two groups are statistically different.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>9. What is a Type I error in hypothesis testing?</p>
+            <div class="options">
+                <p>a) Accepting a false null hypothesis</p>
+                <p>b) Rejecting a true null hypothesis</p>
+                <p>c) Accepting a true null hypothesis</p>
+                <p>d) Rejecting a false null hypothesis</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(9)">Show Answer</span>
+            <div class="answer" id="answer9">
+                <p><strong>Answer:</strong> b) Rejecting a true null hypothesis</p>
+                <p><strong>Explanation:</strong> A Type I error (false positive) occurs when the null hypothesis is true but is incorrectly rejected.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>10. What is a Type II error?</p>
+            <div class="options">
+                <p>a) Rejecting a true null hypothesis</p>
+                <p>b) Accepting a false null hypothesis</p>
+                <p>c) Calculating incorrect variance</p>
+                <p>d) Using the wrong test statistic</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(10)">Show Answer</span>
+            <div class="answer" id="answer10">
+                <p><strong>Answer:</strong> b) Accepting a false null hypothesis</p>
+                <p><strong>Explanation:</strong> A Type II error (false negative) occurs when the null hypothesis is false but is not rejected.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>11. What is the formula for the sample variance?</p>
+            <div class="options">
+                <p>a) Σ(x - μ)² / N</p>
+                <p>b) Σ(x - x̄)² / (n - 1)</p>
+                <p>c) Σ(x - x̄) / n</p>
+                <p>d) Σx² / n</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(11)">Show Answer</span>
+            <div class="answer" id="answer11">
+                <p><strong>Answer:</strong> b) Σ(x - x̄)² / (n - 1)</p>
+                <p><strong>Explanation:</strong> Sample variance uses n - 1 to correct for bias in estimating population variance from a sample.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>12. What is a normal distribution?</p>
+            <div class="options">
+                <p>a) A skewed distribution</p>
+                <p>b) A bell-shaped distribution</p>
+                <p>c) A uniform distribution</p>
+                <p>d) A discrete distribution</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(12)">Show Answer</span>
+            <div class="answer" id="answer12">
+                <p><strong>Answer:</strong> b) A bell-shaped distribution</p>
+                <p><strong>Explanation:</strong> A normal distribution is symmetric, bell-shaped, and characterized by its mean and standard deviation.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>13. What is the 68-95-99.7 rule in a normal distribution?</p>
+            <div class="options">
+                <p>a) Percentages of data within 1, 2, and 3 standard deviations</p>
+                <p>b) Confidence intervals for hypothesis tests</p>
+                <p>c) Probabilities of Type I errors</p>
+                <p>d) Correlation coefficients</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(13)">Show Answer</span>
+            <div class="answer" id="answer13">
+                <p><strong>Answer:</strong> a) Percentages of data within 1, 2, and 3 standard deviations</p>
+                <p><strong>Explanation:</strong> In a normal distribution, 68% of data lies within 1 SD, 95% within 2 SDs, and 99.7% within 3 SDs.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>14. What is the purpose of a confidence interval?</p>
+            <div class="options">
+                <p>a) To calculate variance</p>
+                <p>b) To estimate a population parameter</p>
+                <p>c) To test correlation</p>
+                <p>d) To measure skewness</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(14)">Show Answer</span>
+            <div class="answer" id="answer14">
+                <p><strong>Answer:</strong> b) To estimate a population parameter</p>
+                <p><strong>Explanation:</strong> A confidence interval provides a range of values likely to contain the population parameter with a specified confidence level.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>15. What is the correlation coefficient?</p>
+            <div class="options">
+                <p>a) A measure of data spread</p>
+                <p>b) A measure of linear relationship strength</p>
+                <p>c) A test statistic</p>
+                <p>d) A probability value</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(15)">Show Answer</span>
+            <div class="answer" id="answer15">
+                <p><strong>Answer:</strong> b) A measure of linear relationship strength</p>
+                <p><strong>Explanation:</strong> The correlation coefficient (e.g., Pearson’s r) ranges from -1 to 1, indicating the strength and direction of a linear relationship.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>16. What is a chi-square test used for?</p>
+            <div class="options">
+                <p>a) Comparing means</p>
+                <p>b) Testing independence or goodness of fit</p>
+                <p>c) Measuring correlation</p>
+                <p>d) Estimating variance</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(16)">Show Answer</span>
+            <div class="answer" id="answer16">
+                <p><strong>Answer:</strong> b) Testing independence or goodness of fit</p>
+                <p><strong>Explanation:</strong> The chi-square test assesses whether observed frequencies differ from expected frequencies or tests variable independence.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>17. What is a z-score?</p>
+            <div class="options">
+                <p>a) A measure of correlation</p>
+                <p>b) The number of standard deviations from the mean</p>
+                <p>c) A test statistic for chi-square tests</p>
+                <p>d) The sample size</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(17)">Show Answer</span>
+            <div class="answer" id="answer17">
+                <p><strong>Answer:</strong> b) The number of standard deviations from the mean</p>
+                <p><strong>Explanation:</strong> A z-score standardizes a data point by measuring its distance from the mean in standard deviation units.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>18. What is the central limit theorem?</p>
+            <div class="options">
+                <p>a) The mean equals the median</p>
+                <p>b) Sample means approximate a normal distribution</p>
+                <p>c) Variance equals standard deviation</p>
+                <p>d) Data is always normally distributed</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(18)">Show Answer</span>
+            <div class="answer" id="answer18">
+                <p><strong>Answer:</strong> b) Sample means approximate a normal distribution</p>
+                <p><strong>Explanation:</strong> The central limit theorem states that the distribution of sample means approaches normality as sample size increases, regardless of population distribution.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>19. What is a binomial distribution?</p>
+            <div class="options">
+                <p>a) A continuous distribution</p>
+                <p>b) A distribution of binary outcomes</p>
+                <p>c) A normal distribution</p>
+                <p>d) A uniform distribution</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(19)">Show Answer</span>
+            <div class="answer" id="answer19">
+                <p><strong>Answer:</strong> b) A distribution of binary outcomes</p>
+                <p><strong>Explanation:</strong> A binomial distribution models the number of successes in a fixed number of independent binary trials.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>20. What is the purpose of linear regression?</p>
+            <div class="options">
+                <p>a) To classify data</p>
+                <p>b) To model the relationship between variables</p>
+                <p>c) To test independence</p>
+                <p>d) To calculate variance</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(20)">Show Answer</span>
+            <div class="answer" id="answer20">
+                <p><strong>Answer:</strong> b) To model the relationship between variables</p>
+                <p><strong>Explanation:</strong> Linear regression models the linear relationship between a dependent variable and one or more independent variables.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>21. What is R-squared in regression analysis?</p>
+            <div class="options">
+                <p>a) The standard deviation of residuals</p>
+                <p>b) The proportion of variance explained</p>
+                <p>c) The correlation coefficient</p>
+                <p>d) The p-value of the model</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(21)">Show Answer</span>
+            <div class="answer" id="answer21">
+                <p><strong>Answer:</strong> b) The proportion of variance explained</p>
+                <p><strong>Explanation:</strong> R-squared indicates the proportion of the dependent variable’s variance explained by the independent variables.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>22. What is a null hypothesis?</p>
+            <div class="options">
+                <p>a) A hypothesis that predicts a difference</p>
+                <p>b) A hypothesis of no effect or difference</p>
+                <p>c) A hypothesis of correlation</p>
+                <p>d) A hypothesis of variance</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(22)">Show Answer</span>
+            <div class="answer" id="answer22">
+                <p><strong>Answer:</strong> b) A hypothesis of no effect or difference</p>
+                <p><strong>Explanation:</strong> The null hypothesis assumes no significant effect or difference, tested against an alternative hypothesis.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>23. What is a probability density function (PDF)?</p>
+            <div class="options">
+                <p>a) A function for discrete probabilities</p>
+                <p>b) A function describing continuous probabilities</p>
+                <p>c) A function for correlation</p>
+                <p>d) A function for variance</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(23)">Show Answer</span>
+            <div class="answer" id="answer23">
+                <p><strong>Answer:</strong> b) A function describing continuous probabilities</p>
+                <p><strong>Explanation:</strong> A PDF describes the likelihood of a continuous random variable taking on a specific value.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>24. What is the difference between population and sample?</p>
+            <div class="options">
+                <p>a) A population is smaller than a sample</p>
+                <p>b) A population includes all elements, a sample is a subset</p>
+                <p>c) A sample is always normally distributed</p>
+                <p>d) A population is a random subset</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(24)">Show Answer</span>
+            <div class="answer" id="answer24">
+                <p><strong>Answer:</strong> b) A population includes all elements, a sample is a subset</p>
+                <p><strong>Explanation:</strong> A population is the entire group of interest, while a sample is a smaller subset used for analysis.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>25. What is a Poisson distribution?</p>
+            <div class="options">
+                <p>a) A continuous distribution</p>
+                <p>b) A distribution for rare events</p>
+                <p>c) A normal distribution</p>
+                <p>d) A uniform distribution</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(25)">Show Answer</span>
+            <div class="answer" id="answer25">
+                <p><strong>Answer:</strong> b) A distribution for rare events</p>
+                <p><strong>Explanation:</strong> A Poisson distribution models the number of times an event occurs in a fixed interval, often for rare events.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>26. What is the purpose of ANOVA?</p>
+            <div class="options">
+                <p>a) To compare variances</p>
+                <p>b) To compare means of multiple groups</p>
+                <p>c) To measure correlation</p>
+                <p>d) To estimate population size</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(26)">Show Answer</span>
+            <div class="answer" id="answer26">
+                <p><strong>Answer:</strong> b) To compare means of multiple groups</p>
+                <p><strong>Explanation:</strong> ANOVA (Analysis of Variance) tests whether the means of three or more groups are significantly different.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>27. What does a skewness value of 0 indicate?</p>
+            <div class="options">
+                <p>a) Left-skewed distribution</p>
+                <p>b) Symmetric distribution</p>
+                <p>c) Right-skewed distribution</p>
+                <p>d) Uniform distribution</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(27)">Show Answer</span>
+            <div class="answer" id="answer27">
+                <p><strong>Answer:</strong> b) Symmetric distribution</p>
+                <p><strong>Explanation:</strong> A skewness of 0 indicates a symmetric distribution, like a normal distribution.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>28. What is the purpose of a box plot?</p>
+            <div class="options">
+                <p>a) To show correlation</p>
+                <p>b) To visualize data distribution</p>
+                <p>c) To test hypotheses</p>
+                <p>d) To calculate variance</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(28)">Show Answer</span>
+            <div class="answer" id="answer28">
+                <p><strong>Answer:</strong> b) To visualize data distribution</p>
+                <p><strong>Explanation:</strong> A box plot displays the median, quartiles, and potential outliers of a dataset.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>29. What is a sample space in probability?</p>
+            <div class="options">
+                <p>a) The range of data values</p>
+                <p>b) The set of all possible outcomes</p>
+                <p>c) The variance of a sample</p>
+                <p>d) The mean of a sample</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(29)">Show Answer</span>
+            <div class="answer" id="answer29">
+                <p><strong>Answer:</strong> b) The set of all possible outcomes</p>
+                <p><strong>Explanation:</strong> The sample space is the collection of all possible outcomes of a random experiment.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>30. What is the law of large numbers?</p>
+            <div class="options">
+                <p>a) Sample means converge to the population mean</p>
+                <p>b) Variance increases with sample size</p>
+                <p>c) All distributions are normal</p>
+                <p>d) Probabilities are always equal</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(30)">Show Answer</span>
+            <div class="answer" id="answer30">
+                <p><strong>Answer:</strong> a) Sample means converge to the population mean</p>
+                <p><strong>Explanation:</strong> The law of large numbers states that as sample size increases, the sample mean approaches the population mean.</p>
+            </div>
+        </div>
+
+        <a href="#" class="download-btn" onclick="downloadTest()">Download Exam (TXT)</a>
+    </div>
+
+    <script>
+        // Timer functionality
+        let timeLeft = 30 * 60; // 30 minutes in seconds
+        const timerDisplay = document.getElementById('timer');
+        
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                timerDisplay.textContent = "Time's Up!";
+                alert("Time is up!");
+            } else {
+                timeLeft--;
+            }
+        }
+        const timerInterval = setInterval(updateTimer, 1000);
+
+        // Toggle answer visibility
+        function toggleAnswer(id) {
+            const answer = document.getElementById(`answer${id}`);
+            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Download exam as a text file
+        function downloadTest() {
+            const content = `
+Data Science & Generative AI by SATISH @ Sathya Technologies
+Statistics Programming Exam (30 Minutes)
+
+1. What is the mean in statistics?
+a) The middle value
+b) The average of a dataset
+c) The most frequent value
+d) The difference between max and min
+Answer: b) The average of a dataset
+Explanation: The mean is calculated by summing all values and dividing by the number of values.
+
+2. Which measure represents the middle value of an ordered dataset?
+a) Mean
+b) Median
+c) Mode
+d) Midrange
+Answer: b) Median
+Explanation: The median is the middle value when data is ordered, or the average of the two middle values for even-sized datasets.
+
+3. What is the mode of a dataset?
+a) The average value
+b) The middle value
+c) The most frequent value
+d) The standard deviation
+Answer: c) The most frequent value
+Explanation: The mode is the value that appears most frequently in a dataset.
+
+4. What does the standard deviation measure?
+a) Central tendency
+b) Data dispersion
+c) Data frequency
+d) Correlation strength
+Answer: b) Data dispersion
+Explanation: Standard deviation measures how spread out data values are from the mean.
+
+5. What is the variance in statistics?
+a) The square root of standard deviation
+b) The square of standard deviation
+c) The average of data
+d) The most frequent value
+Answer: b) The square of standard deviation
+Explanation: Variance is the average of squared differences from the mean, and standard deviation is its square root.
+
+6. What is a p-value in hypothesis testing?
+a) The probability of rejecting the null hypothesis
+b) The probability of the null hypothesis being true
+c) The probability of observing the data given the null hypothesis
+d) The sample size
+Answer: c) The probability of observing the data given the null hypothesis
+Explanation: The p-value measures the probability of obtaining results at least as extreme as observed, assuming the null hypothesis is true.
+
+7. What does a significance level of 0.05 indicate?
+a) 5% chance of accepting the null hypothesis
+b) 5% chance of rejecting a true null hypothesis
+c) 95% confidence in the null hypothesis
+d) 5% data variability
+Answer: b) 5% chance of rejecting a true null hypothesis
+Explanation: A significance level (α) of 0.05 means a 5% risk of Type I error (false positive).
+
+8. What is the purpose of a t-test?
+a) To compare means of groups
+b) To measure correlation
+c) To calculate variance
+d) To estimate population size
+Answer: a) To compare means of groups
+Explanation: A t-test assesses whether the means of two groups are statistically different.
+
+9. What is a Type I error in hypothesis testing?
+a) Accepting a false null hypothesis
+b) Rejecting a true null hypothesis
+c) Accepting a true null hypothesis
+d) Rejecting a false null hypothesis
+Answer: b) Rejecting a true null hypothesis
+Explanation: A Type I error (false positive) occurs when the null hypothesis is true but is incorrectly rejected.
+
+10. What is a Type II error?
+a) Rejecting a true null hypothesis
+b) Accepting a false null hypothesis
+c) Calculating incorrect variance
+d) Using the wrong test statistic
+Answer: b) Accepting a false null hypothesis
+Explanation: A Type II error (false negative) occurs when the null hypothesis is false but is not rejected.
+
+11. What is the formula for the sample variance?
+a) Σ(x - μ)² / N
+b) Σ(x - x̄)² / (n - 1)
+c) Σ(x - x̄) / n
+d) Σx² / n
+Answer: b) Σ(x - x̄)² / (n - 1)
+Explanation: Sample variance uses n - 1 to correct for bias in estimating population variance from a sample.
+
+12. What is a normal distribution?
+a) A skewed distribution
+b) A bell-shaped distribution
+c) A uniform distribution
+d) A discrete distribution
+Answer: b) A bell-shaped distribution
+Explanation: A normal distribution is symmetric, bell-shaped, and characterized by its mean and standard deviation.
+
+13. What is the 68-95-99.7 rule in a normal distribution?
+a) Percentages of data within 1, 2, and 3 standard deviations
+b) Confidence intervals for hypothesis tests
+c) Probabilities of Type I errors
+d) Correlation coefficients
+Answer: a) Percentages of data within 1, 2, and 3 standard deviations
+Explanation: In a normal distribution, 68% of data lies within 1 SD, 95% within 2 SDs, and 99.7% within 3 SDs.
+
+14. What is the purpose of a confidence interval?
+a) To calculate variance
+b) To estimate a population parameter
+c) To test correlation
+d) To measure skewness
+Answer: b) To estimate a population parameter
+Explanation: A confidence interval provides a range of values likely to contain the population parameter with a specified confidence level.
+
+15. What is the correlation coefficient?
+a) A measure of data spread
+b) A measure of linear relationship strength
+c) A test statistic
+d) A probability value
+Answer: b) A measure of linear relationship strength
+Explanation: The correlation coefficient (e.g., Pearson’s r) ranges from -1 to 1, indicating the strength and direction of a linear relationship.
+
+16. What is a chi-square test used for?
+a) Comparing means
+b) Testing independence or goodness of fit
+c) Measuring correlation
+d) Estimating variance
+Answer: b) Testing independence or goodness of fit
+Explanation: The chi-square test assesses whether observed frequencies differ from expected frequencies or tests variable independence.
+
+17. What is a z-score?
+a) A measure of correlation
+b) The number of standard deviations from the mean
+c) A test statistic for chi-square tests
+d) The sample size
+Answer: b) The number of standard deviations from the mean
+Explanation: A z-score standardizes a data point by measuring its distance from the mean in standard deviation units.
+
+18. What is the central limit theorem?
+a) The mean equals the median
+b) Sample means approximate a normal distribution
+c) Variance equals standard deviation
+d) Data is always normally distributed
+Answer: b) Sample means approximate a normal distribution
+Explanation: The central limit theorem states that the distribution of sample means approaches normality as sample size increases, regardless of population distribution.
+
+19. What is a binomial distribution?
+a) A continuous distribution
+b) A distribution of binary outcomes
+c) A normal distribution
+d) A uniform distribution
+Answer: b) A distribution of binary outcomes
+Explanation: A binomial distribution models the number of successes in a fixed number of independent binary trials.
+
+20. What is the purpose of linear regression?
+a) To classify data
+b) To model the relationship between variables
+c) To test independence
+d) To calculate variance
+Answer: b) To model the relationship between variables
+Explanation: Linear regression models the linear relationship between a dependent variable and one or more independent variables.
+
+21. What is R-squared in regression analysis?
+a) The standard deviation of residuals
+b) The proportion of variance explained
+c) The correlation coefficient
+d) The p-value of the model
+Answer: b) The proportion of variance explained
+Explanation: R-squared indicates the proportion of the dependent variable’s variance explained by the independent variables.
+
+22. What is a null hypothesis?
+a) A hypothesis that predicts a difference
+b) A hypothesis of no effect or difference
+c) A hypothesis of correlation
+d) A hypothesis of variance
+Answer: b) A hypothesis of no effect or difference
+Explanation: The null hypothesis assumes no significant effect or difference, tested against an alternative hypothesis.
+
+23. What is a probability density function (PDF)?
+a) A function for discrete probabilities
+b) A function describing continuous probabilities
+c) A function for correlation
+d) A function for variance
+Answer: b) A function describing continuous probabilities
+Explanation: A PDF describes the likelihood of a continuous random variable taking on a specific value.
+
+24. What is the difference between population and sample?
+a) A population is smaller than a sample
+b) A population includes all elements, a sample is a subset
+c) A sample is always normally distributed
+d) A population is a random subset
+Answer: b) A population includes all elements, a sample is a subset
+Explanation: A population is the entire group of interest, while a sample is a smaller subset used for analysis.
+
+25. What is a Poisson distribution?
+a) A continuous distribution
+b) A distribution for rare events
+c) A normal distribution
+d) A uniform distribution
+Answer: b) A distribution for rare events
+Explanation: A Poisson distribution models the number of times an event occurs in a fixed interval, often for rare events.
+
+26. What is the purpose of ANOVA?
+a) To compare variances
+b) To compare means of multiple groups
+c) To measure correlation
+d) To estimate population size
+Answer: b) To compare means of multiple groups
+Explanation: ANOVA (Analysis of Variance) tests whether the means of three or more groups are significantly different.
+
+27. What does a skewness value of 0 indicate?
+a) Left-skewed distribution
+b) Symmetric distribution
+c) Right-skewed distribution
+d) Uniform distribution
+Answer: b) Symmetric distribution
+Explanation: A skewness of 0 indicates a symmetric distribution, like a normal distribution.
+
+28. What is the purpose of a box plot?
+a) To show correlation
+b) To visualize data distribution
+c) To test hypotheses
+d) To calculate variance
+Answer: b) To visualize data distribution
+Explanation: A box plot displays the median, quartiles, and potential outliers of a dataset.
+
+29. What is a sample space in probability?
+a) The range of data values
+b) The set of all possible outcomes
+c) The variance of a sample
+d) The mean of a sample
+Answer: b) The set of all possible outcomes
+Explanation: The sample space is the collection of all possible outcomes of a random experiment.
+
+30. What is the law of large numbers?
+a) Sample means converge to the population mean
+b) Variance increases with sample size
+c) All distributions are normal
+d) Probabilities are always equal
+Answer: a) Sample means converge to the population mean
+Explanation: The law of large numbers states that as sample size increases, the sample mean approaches the population mean.
+            `;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'statistics_exam_30q.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>

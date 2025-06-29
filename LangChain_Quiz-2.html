@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LangChain Examination</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .timer {
+            text-align: center;
+            font-size: 24px;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 5px;
+        }
+        .question {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-left: 4px solid #3498db;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .answers {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #e8f4fc;
+            border-radius: 5px;
+            display: none;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Data Science & Generative AI by SATISH @ Sathya Technologies</h1>
+        <div class="timer" id="timer">30:00</div>
+        
+        <h2>LangChain Examination (30 Questions)</h2>
+        
+        <div class="question">
+            <p>1. What is LangChain primarily used for?</p>
+            <div class="options">
+                <label><input type="radio" name="q1"> a) Building applications with LLMs</label><br>
+                <label><input type="radio" name="q1"> b) Language translation</label><br>
+                <label><input type="radio" name="q1"> c) Computer vision tasks</label><br>
+                <label><input type="radio" name="q1"> d) Database management</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>2. Which of these is NOT a core component of LangChain?</p>
+            <div class="options">
+                <label><input type="radio" name="q2"> a) Models</label><br>
+                <label><input type="radio" name="q2"> b) Prompts</label><br>
+                <label><input type="radio" name="q2"> c) Chains</label><br>
+                <label><input type="radio" name="q2"> d) Neural Networks</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>3. What is a "Chain" in LangChain?</p>
+            <div class="options">
+                <label><input type="radio" name="q3"> a) A sequence of calls to components</label><br>
+                <label><input type="radio" name="q3"> b) A blockchain technology</label><br>
+                <label><input type="radio" name="q3"> c) A type of neural network layer</label><br>
+                <label><input type="radio" name="q3"> d) A database connection</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>4. Which of these LLMs can be integrated with LangChain?</p>
+            <div class="options">
+                <label><input type="radio" name="q4"> a) OpenAI's GPT</label><br>
+                <label><input type="radio" name="q4"> b) Anthropic's Claude</label><br>
+                <label><input type="radio" name="q4"> c) Google's PaLM</label><br>
+                <label><input type="radio" name="q4"> d) All of the above</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>5. What is the purpose of "Agents" in LangChain?</p>
+            <div class="options">
+                <label><input type="radio" name="q5"> a) To make decisions about actions to take</label><br>
+                <label><input type="radio" name="q5"> b) To manage cloud resources</label><br>
+                <label><input type="radio" name="q5"> c) To optimize neural networks</label><br>
+                <label><input type="radio" name="q5"> d) To handle user authentication</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>6. What is a "Memory" component in LangChain used for?</p>
+            <div class="options">
+                <label><input type="radio" name="q6"> a) Persisting state between chain calls</label><br>
+                <label><input type="radio" name="q6"> b) Computer RAM management</label><br>
+                <label><input type="radio" name="q6"> c) Data storage optimization</label><br>
+                <label><input type="radio" name="q6"> d) GPU memory allocation</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>7. Which of these is a type of memory in LangChain?</p>
+            <div class="options">
+                <label><input type="radio" name="q7"> a) ConversationBufferMemory</label><br>
+                <label><input type="radio" name="q7"> b) ConversationSummaryMemory</label><br>
+                <label><input type="radio" name="q7"> c) EntityMemory</label><br>
+                <label><input type="radio" name="q7"> d) All of the above</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>8. What is the main purpose of "Document Loaders" in LangChain?</p>
+            <div class="options">
+                <label><input type="radio" name="q8"> a) To load documents from various sources</label><br>
+                <label><input type="radio" name="q8"> b) To display PDF files</label><br>
+                <label><input type="radio" name="q8"> c) To manage file permissions</label><br>
+                <label><input type="radio" name="q8"> d) To compress document storage</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>9. What does a "Text Splitter" do in LangChain?</p>
+            <div class="options">
+                <label><input type="radio" name="q9"> a) Splits long text into smaller chunks</label><br>
+                <label><input type="radio" name="q9"> b) Divides text into sentences</label><br>
+                <label><input type="radio" name="q9"> c) Separates code from text</label><br>
+                <label><input type="radio" name="q9"> d) Translates text segments</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>10. What is the primary use of "Vector Stores" in LangChain?</p>
+            <div class="options">
+                <label><input type="radio" name="q10"> a) To store and search embeddings</label><br>
+                <label><input type="radio" name="q10"> b) To manage database tables</label><br>
+                <label><input type="radio" name="q10"> c) To store graphical vectors</label><br>
+                <label><input type="radio" name="q10"> d) To handle mathematical operations</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>11. Which of these is a popular Vector Store integrated with LangChain?</p>
+            <div class="options">
+                <label><input type="radio" name="q11"> a) Pinecone</label><br>
+                <label><input type="radio" name="q11"> b) Weaviate</label><br>
+                <label><input type="radio" name="q11"> c) FAISS</label><br>
+                <label><input type="radio" name="q11"> d) All of the above</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>12. What is the purpose of "Retrievers" in LangChain?</p>
+            <div class="options">
+                <label><input type="radio" name="q12"> a) To fetch relevant documents/data</label><br>
+                <label><input type="radio" name="q12"> b) To retrieve lost files</label><br>
+                <label><input type="radio" name="q12"> c) To recover deleted data</label><br>
+                <label><input type="radio" name="q12"> d) To fetch web pages</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>13. What is a "Tool" in LangChain's Agent system?</p>
+            <div class="options">
+                <label><input type="radio" name="q13"> a) A function an agent can use to interact with the world</label><br>
+                <label><input type="radio" name="q13"> b) A software development kit</label><br>
+                <label><input type="radio" name="q13"> c) A debugging instrument</label><br>
+                <label><input type="radio" name="q13"> d) A hardware component</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>14. Which of these is a common use case for LangChain?</p>
+            <div class="options">
+                <label><input type="radio" name="q14"> a) Question answering over documents</label><br>
+                <label><input type="radio" name="q14"> b) Chatbots</label><br>
+                <label><input type="radio" name="q14"> c) Data analysis</label><br>
+                <label><input type="radio" name="q14"> d) All of the above</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>15. What is the "LLMChain" in LangChain?</p>
+            <div class="options">
+                <label><input type="radio" name="q15"> a) A chain that combines a prompt template with an LLM</label><br>
+                <label><input type="radio" name="q15"> b) A blockchain for LLMs</label><br>
+                <label><input type="radio" name="q15"> c) A neural network architecture</label><br>
+                <label><input type="radio" name="q15"> d) A type of database connection</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>16. What does the "SequentialChain" do in LangChain?</p>
+            <div class="options">
+                <label><input type="radio" name="q16"> a) Runs multiple chains in sequence</label><br>
+                <label><input type="radio" name="q16"> b) Optimizes chain performance</label><br>
+                <label><input type="radio" name="q16"> c) Connects to sequential databases</label><br>
+                <label><input type="radio" name="q16"> d) Manages memory sequentially</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>17. What is "PromptTemplate" used for in LangChain?</p>
+            <div class="options">
+                <label><input type="radio" name="q17"> a) To create reusable prompt structures</label><br>
+                <label><input type="radio" name="q17"> b) To design UI templates</label><br>
+                <label><input type="radio" name="q17"> c) To format database queries</label><br>
+                <label><input type="radio" name="q17"> d) To create neural network templates</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>18. Which of these is a type of Agent in LangChain?</p>
+            <div class="options">
+                <label><input type="radio" name="q18"> a) Zero-shot ReAct</label><br>
+                <label><input type="radio" name="q18"> b) Conversational</label><br>
+                <label><input type="radio" name="q18"> c) Self-ask with search</label><br>
+                <label><input type="radio" name="q18"> d) All of the above</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>19. What is the primary language used for LangChain development?</p>
+            <div class="options">
+                <label><input type="radio" name="q19"> a) Python</label><br>
+                <label><input type="radio" name="q19"> b) JavaScript</label><br>
+                <label><input type="radio" name="q19"> c) Java</label><br>
+                <label><input type="radio" name="q19"> d) C++</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>20. What is "OutputParser" used for in LangChain?</p>
+            <div class="options">
+                <label><input type="radio" name="q20"> a) To structure LLM outputs</label><br>
+                <label><input type="radio" name="q20"> b) To analyze performance metrics</label><br>
+                <label><input type="radio" name="q20"> c) To parse server responses</label><br>
+                <label><input type="radio" name="q20"> d) To debug code outputs</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>21. Which of these is a valid LangChain integration?</p>
+            <div class="options">
+                <label><input type="radio" name="q21"> a) Wikipedia</label><br>
+                <label><input type="radio" name="q21"> b) Python REPL</label><br>
+                <label><input type="radio" name="q21"> c) Google Search</label><br>
+                <label><input type="radio" name="q21"> d) All of the above</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>22. What is the purpose of "Callbacks" in LangChain?</p>
+            <div class="options">
+                <label><input type="radio" name="q22"> a) To hook into various stages of execution</label><br>
+                <label><input type="radio" name="q22"> b) To manage phone call integrations</label><br>
+                <label><input type="radio" name="q22"> c) To handle return calls in programming</label><br>
+                <label><input type="radio" name="q22"> d) To callback users in applications</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>23. Which of these is a common text splitter in LangChain?</p>
+            <div class="options">
+                <label><input type="radio" name="q23"> a) CharacterTextSplitter</label><br>
+                <label><input type="radio" name="q23"> b) TokenTextSplitter</label><br>
+                <label><input type="radio" name="q23"> c) RecursiveCharacterTextSplitter</label><br>
+                <label><input type="radio" name="q23"> d) All of the above</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>24. What is "ConversationalRetrievalChain" used for?</p>
+            <div class="options">
+                <label><input type="radio" name="q24"> a) For question answering with chat history</label><br>
+                <label><input type="radio" name="q24"> b) To retrieve conversations</label><br>
+                <label><input type="radio" name="q24"> c) To analyze chat patterns</label><br>
+                <label><input type="radio" name="q24"> d) To store conversations</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>25. What does "LCEL" stand for in LangChain?</p>
+            <div class="options">
+                <label><input type="radio" name="q25"> a) LangChain Expression Language</label><br>
+                <label><input type="radio" name="q25"> b) Language Chain Execution Layer</label><br>
+                <label><input type="radio" name="q25"> c) Linked Chain Expression Logic</label><br>
+                <label><input type="radio" name="q25"> d) LangChain Execution Language</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>26. What is the purpose of "Embeddings" in LangChain?</p>
+            <div class="options">
+                <label><input type="radio" name="q26"> a) To convert text to numerical representations</label><br>
+                <label><input type="radio" name="q26"> b) To embed media in text</label><br>
+                <label><input type="radio" name="q26"> c) To integrate external systems</label><br>
+                <label><input type="radio" name="q26"> d) To compress data</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>27. Which of these is an example of a LangChain "Tool"?</p>
+            <div class="options">
+                <label><input type="radio" name="q27"> a) Search</label><br>
+                <label><input type="radio" name="q27"> b) Calculator</label><br>
+                <label><input type="radio" name="q27"> c) Python REPL</label><br>
+                <label><input type="radio" name="q27"> d) All of the above</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>28. What is "FewShotPromptTemplate" used for?</p>
+            <div class="options">
+                <label><input type="radio" name="q28"> a) To create prompts with examples</label><br>
+                <label><input type="radio" name="q28"> b) To design few-shot learning models</label><br>
+                <label><input type="radio" name="q28"> c) To template small prompts</label><br>
+                <label><input type="radio" name="q28"> d) To optimize prompt performance</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>29. What is the primary benefit of using LangChain over direct LLM API calls?</p>
+            <div class="options">
+                <label><input type="radio" name="q29"> a) Abstraction and composition of LLM workflows</label><br>
+                <label><input type="radio" name="q29"> b) Better performance</label><br>
+                <label><input type="radio" name="q29"> c) Lower cost</label><br>
+                <label><input type="radio" name="q29"> d) More accurate responses</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>30. Which of these databases can be used as a Vector Store in LangChain?</p>
+            <div class="options">
+                <label><input type="radio" name="q30"> a) Chroma</label><br>
+                <label><input type="radio" name="q30"> b) Milvus</label><br>
+                <label><input type="radio" name="q30"> c) Redis</label><br>
+                <label><input type="radio" name="q30"> d) All of the above</label>
+            </div>
+        </div>
+        
+        <button onclick="showAnswers()">Show Answers</button>
+        
+        <div class="answers" id="answers">
+            <h3>Answer Key</h3>
+            <p>1. a) Building applications with LLMs</p>
+            <p>2. d) Neural Networks</p>
+            <p>3. a) A sequence of calls to components</p>
+            <p>4. d) All of the above</p>
+            <p>5. a) To make decisions about actions to take</p>
+            <p>6. a) Persisting state between chain calls</p>
+            <p>7. d) All of the above</p>
+            <p>8. a) To load documents from various sources</p>
+            <p>9. a) Splits long text into smaller chunks</p>
+            <p>10. a) To store and search embeddings</p>
+            <p>11. d) All of the above</p>
+            <p>12. a) To fetch relevant documents/data</p>
+            <p>13. a) A function an agent can use to interact with the world</p>
+            <p>14. d) All of the above</p>
+            <p>15. a) A chain that combines a prompt template with an LLM</p>
+            <p>16. a) Runs multiple chains in sequence</p>
+            <p>17. a) To create reusable prompt structures</p>
+            <p>18. d) All of the above</p>
+            <p>19. a) Python</p>
+            <p>20. a) To structure LLM outputs</p>
+            <p>21. d) All of the above</p>
+            <p>22. a) To hook into various stages of execution</p>
+            <p>23. d) All of the above</p>
+            <p>24. a) For question answering with chat history</p>
+            <p>25. a) LangChain Expression Language</p>
+            <p>26. a) To convert text to numerical representations</p>
+            <p>27. d) All of the above</p>
+            <p>28. a) To create prompts with examples</p>
+            <p>29. a) Abstraction and composition of LLM workflows</p>
+            <p>30. d) All of the above</p>
+        </div>
+        
+        <div class="footer">
+            <p>Data Science & Generative AI Exam | Sathya Technologies</p>
+        </div>
+    </div>
+
+    <script>
+        // Timer functionality
+        let timeLeft = 30 * 60; // 30 minutes in seconds
+        const timerElement = document.getElementById('timer');
+        
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            timerElement.textContent = `${minutes}:${seconds}`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                timerElement.textContent = "Time's up!";
+                timerElement.style.backgroundColor = "#e74c3c";
+            } else {
+                timeLeft--;
+            }
+        }
+        
+        const timerInterval = setInterval(updateTimer, 1000);
+        
+        // Show answers
+        function showAnswers() {
+            document.getElementById('answers').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

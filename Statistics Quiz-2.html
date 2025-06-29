@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics Exam - Data Science & Generative AI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .timer {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #e74c3c;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-left: 3px solid #3498db;
+            background-color: #f9f9f9;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .answer {
+            color: #27ae60;
+            font-weight: bold;
+            margin-top: 5px;
+            display: none;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Data Science & Generative AI by SATISH @ Sathya Technologies</h1>
+    <div class="timer" id="timer">30:00</div>
+    
+    <div class="controls">
+        <button onclick="showAllAnswers()">Show All Answers</button>
+        <button onclick="hideAllAnswers()">Hide All Answers</button>
+        <button onclick="window.print()">Print Exam</button>
+    </div>
+
+    <div id="exam">
+        <div class="question">
+            <p>1. What is the mean of the following numbers: 5, 7, 9, 11, 13?</p>
+            <div class="options">
+                A) 7<br>
+                B) 8<br>
+                C) 9<br>
+                D) 10
+            </div>
+            <div class="answer">Answer: C) 9</div>
+        </div>
+
+        <div class="question">
+            <p>2. Which measure of central tendency is most affected by outliers?</p>
+            <div class="options">
+                A) Mean<br>
+                B) Median<br>
+                C) Mode<br>
+                D) Range
+            </div>
+            <div class="answer">Answer: A) Mean</div>
+        </div>
+
+        <div class="question">
+            <p>3. What is the median of the following data set: 3, 5, 7, 9, 11?</p>
+            <div class="options">
+                A) 5<br>
+                B) 6<br>
+                C) 7<br>
+                D) 8
+            </div>
+            <div class="answer">Answer: C) 7</div>
+        </div>
+
+        <div class="question">
+            <p>4. In a normal distribution, what percentage of data falls within one standard deviation of the mean?</p>
+            <div class="options">
+                A) 50%<br>
+                B) 68%<br>
+                C) 95%<br>
+                D) 99.7%
+            </div>
+            <div class="answer">Answer: B) 68%</div>
+        </div>
+
+        <div class="question">
+            <p>5. What is the range of the following numbers: 12, 15, 18, 20, 22?</p>
+            <div class="options">
+                A) 8<br>
+                B) 10<br>
+                C) 12<br>
+                D) 15
+            </div>
+            <div class="answer">Answer: B) 10</div>
+        </div>
+
+        <div class="question">
+            <p>6. Which of the following is a measure of dispersion?</p>
+            <div class="options">
+                A) Mean<br>
+                B) Median<br>
+                C) Standard deviation<br>
+                D) Mode
+            </div>
+            <div class="answer">Answer: C) Standard deviation</div>
+        </div>
+
+        <div class="question">
+            <p>7. If the correlation coefficient between two variables is 0.85, what does this indicate?</p>
+            <div class="options">
+                A) No correlation<br>
+                B) Weak positive correlation<br>
+                C) Strong positive correlation<br>
+                D) Strong negative correlation
+            </div>
+            <div class="answer">Answer: C) Strong positive correlation</div>
+        </div>
+
+        <div class="question">
+            <p>8. What is the probability of getting a head when flipping a fair coin?</p>
+            <div class="options">
+                A) 0<br>
+                B) 0.25<br>
+                C) 0.5<br>
+                D) 1
+            </div>
+            <div class="answer">Answer: C) 0.5</div>
+        </div>
+
+        <div class="question">
+            <p>9. In hypothesis testing, what does the p-value represent?</p>
+            <div class="options">
+                A) The probability that the null hypothesis is true<br>
+                B) The probability of observing the data if the null hypothesis is true<br>
+                C) The probability that the alternative hypothesis is true<br>
+                D) The power of the test
+            </div>
+            <div class="answer">Answer: B) The probability of observing the data if the null hypothesis is true</div>
+        </div>
+
+        <div class="question">
+            <p>10. What is the mode of the following numbers: 2, 3, 3, 4, 5, 5, 5, 6?</p>
+            <div class="options">
+                A) 3<br>
+                B) 4<br>
+                C) 5<br>
+                D) 6
+            </div>
+            <div class="answer">Answer: C) 5</div>
+        </div>
+
+        <div class="question">
+            <p>11. Which of the following distributions is symmetric?</p>
+            <div class="options">
+                A) Normal distribution<br>
+                B) Exponential distribution<br>
+                C) Poisson distribution<br>
+                D) Binomial distribution
+            </div>
+            <div class="answer">Answer: A) Normal distribution</div>
+        </div>
+
+        <div class="question">
+            <p>12. What is the variance of the following numbers: 2, 4, 6, 8, 10?</p>
+            <div class="options">
+                A) 6<br>
+                B) 8<br>
+                C) 10<br>
+                D) 12
+            </div>
+            <div class="answer">Answer: B) 8</div>
+        </div>
+
+        <div class="question">
+            <p>13. In regression analysis, what does R-squared represent?</p>
+            <div class="options">
+                A) The slope of the regression line<br>
+                B) The proportion of variance explained by the model<br>
+                C) The intercept of the regression line<br>
+                D) The standard error of the estimate
+            </div>
+            <div class="answer">Answer: B) The proportion of variance explained by the model</div>
+        </div>
+
+        <div class="question">
+            <p>14. What is the probability of rolling a 3 on a fair six-sided die?</p>
+            <div class="options">
+                A) 1/6<br>
+                B) 1/3<br>
+                C) 1/2<br>
+                D) 2/3
+            </div>
+            <div class="answer">Answer: A) 1/6</div>
+        </div>
+
+        <div class="question">
+            <p>15. Which of the following is NOT a probability sampling method?</p>
+            <div class="options">
+                A) Simple random sampling<br>
+                B) Stratified sampling<br>
+                C) Convenience sampling<br>
+                D) Cluster sampling
+            </div>
+            <div class="answer">Answer: C) Convenience sampling</div>
+        </div>
+
+        <div class="question">
+            <p>16. What is the standard deviation of the following numbers: 10, 10, 10, 10, 10?</p>
+            <div class="options">
+                A) 0<br>
+                B) 1<br>
+                C) 5<br>
+                D) 10
+            </div>
+            <div class="answer">Answer: A) 0</div>
+        </div>
+
+        <div class="question">
+            <p>17. In a box plot, what does the line inside the box represent?</p>
+            <div class="options">
+                A) Mean<br>
+                B) Median<br>
+                C) Mode<br>
+                D) Range
+            </div>
+            <div class="answer">Answer: B) Median</div>
+        </div>
+
+        <div class="question">
+            <p>18. What is the probability of getting two heads when flipping two fair coins?</p>
+            <div class="options">
+                A) 0.25<br>
+                B) 0.33<br>
+                C) 0.5<br>
+                D) 0.75
+            </div>
+            <div class="answer">Answer: A) 0.25</div>
+        </div>
+
+        <div class="question">
+            <p>19. Which of the following is a discrete probability distribution?</p>
+            <div class="options">
+                A) Normal distribution<br>
+                B) Poisson distribution<br>
+                C) Exponential distribution<br>
+                D) Uniform distribution
+            </div>
+            <div class="answer">Answer: B) Poisson distribution</div>
+        </div>
+
+        <div class="question">
+            <p>20. What is the interquartile range (IQR) of the following numbers: 5, 7, 9, 11, 13, 15, 17?</p>
+            <div class="options">
+                A) 6<br>
+                B) 7<br>
+                C) 8<br>
+                D) 9
+            </div>
+            <div class="answer">Answer: C) 8</div>
+        </div>
+
+        <div class="question">
+            <p>21. If events A and B are independent, what is P(A and B)?</p>
+            <div class="options">
+                A) P(A) + P(B)<br>
+                B) P(A) × P(B)<br>
+                C) P(A) - P(B)<br>
+                D) P(A) / P(B)
+            </div>
+            <div class="answer">Answer: B) P(A) × P(B)</div>
+        </div>
+
+        <div class="question">
+            <p>22. What is the z-score for a value of 75 in a distribution with mean 70 and standard deviation 5?</p>
+            <div class="options">
+                A) 0.5<br>
+                B) 1<br>
+                C) 1.5<br>
+                D) 2
+            </div>
+            <div class="answer">Answer: B) 1</div>
+        </div>
+
+        <div class="question">
+            <p>23. Which of the following is NOT a measure of central tendency?</p>
+            <div class="options">
+                A) Mean<br>
+                B) Median<br>
+                C) Mode<br>
+                D) Variance
+            </div>
+            <div class="answer">Answer: D) Variance</div>
+        </div>
+
+        <div class="question">
+            <p>24. What is the probability of getting at least one head when flipping two fair coins?</p>
+            <div class="options">
+                A) 0.25<br>
+                B) 0.5<br>
+                C) 0.75<br>
+                D) 1
+            </div>
+            <div class="answer">Answer: C) 0.75</div>
+        </div>
+
+        <div class="question">
+            <p>25. In statistics, what does the term "power" refer to?</p>
+            <div class="options">
+                A) The probability of rejecting a false null hypothesis<br>
+                B) The probability of accepting a true null hypothesis<br>
+                C) The probability of Type I error<br>
+                D) The probability of Type II error
+            </div>
+            <div class="answer">Answer: A) The probability of rejecting a false null hypothesis</div>
+        </div>
+
+        <div class="question">
+            <p>26. What is the expected value when rolling a fair six-sided die?</p>
+            <div class="options">
+                A) 2.5<br>
+                B) 3<br>
+                C) 3.5<br>
+                D) 4
+            </div>
+            <div class="answer">Answer: C) 3.5</div>
+        </div>
+
+        <div class="question">
+            <p>27. Which of the following is true about the standard normal distribution?</p>
+            <div class="options">
+                A) Mean = 0, Standard deviation = 1<br>
+                B) Mean = 1, Standard deviation = 0<br>
+                C) Mean = 0, Standard deviation = 0<br>
+                D) Mean = 1, Standard deviation = 1
+            </div>
+            <div class="answer">Answer: A) Mean = 0, Standard deviation = 1</div>
+        </div>
+
+        <div class="question">
+            <p>28. What is the probability of an event that is certain to occur?</p>
+            <div class="options">
+                A) 0<br>
+                B) 0.5<br>
+                C) 1<br>
+                D) Undefined
+            </div>
+            <div class="answer">Answer: C) 1</div>
+        </div>
+
+        <div class="question">
+            <p>29. In hypothesis testing, what is the significance level (α) typically set to?</p>
+            <div class="options">
+                A) 0.01<br>
+                B) 0.05<br>
+                C) 0.10<br>
+                D) All of the above
+            </div>
+            <div class="answer">Answer: D) All of the above</div>
+        </div>
+
+        <div class="question">
+            <p>30. What is the formula for calculating the sample variance?</p>
+            <div class="options">
+                A) Σ(x - μ)² / n<br>
+                B) Σ(x - x̄)² / (n - 1)<br>
+                C) Σ(x - μ) / n<br>
+                D) Σ(x - x̄) / (n - 1)
+            </div>
+            <div class="answer">Answer: B) Σ(x - x̄)² / (n - 1)</div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button onclick="showAllAnswers()">Show All Answers</button>
+        <button onclick="hideAllAnswers()">Hide All Answers</button>
+        <button onclick="window.print()">Print Exam</button>
+    </div>
+
+    <script>
+        // Timer functionality
+        function startTimer(duration, display) {
+            let timer = duration, minutes, seconds;
+            const interval = setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    clearInterval(interval);
+                    alert("Time's up!");
+                    showAllAnswers();
+                }
+            }, 1000);
+        }
+
+        window.onload = function () {
+            const thirtyMinutes = 60 * 30,
+                display = document.querySelector('#timer');
+            startTimer(thirtyMinutes, display);
+        };
+
+        // Answer display functions
+        function showAllAnswers() {
+            const answers = document.querySelectorAll('.answer');
+            answers.forEach(answer => {
+                answer.style.display = 'block';
+            });
+        }
+
+        function hideAllAnswers() {
+            const answers = document.querySelectorAll('.answer');
+            answers.forEach(answer => {
+                answer.style.display = 'none';
+            });
+        }
+
+        // Toggle individual answers when clicking on questions
+        const questions = document.querySelectorAll('.question');
+        questions.forEach(question => {
+            question.addEventListener('click', function() {
+                const answer = this.querySelector('.answer');
+                if (answer.style.display === 'block') {
+                    answer.style.display = 'none';
+                } else {
+                    answer.style.display = 'block';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

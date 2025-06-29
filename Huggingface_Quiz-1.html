@@ -1,0 +1,867 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Science & Generative AI Exam</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        h2 {
+            color: #2980b9;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question p {
+            font-weight: bold;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .answer {
+            display: none;
+            background-color: #e8f4f9;
+            padding: 10px;
+            border-left: 4px solid #2980b9;
+            margin-top: 10px;
+        }
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #e74c3c;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        .download-btn {
+            display: block;
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px 20px;
+            background: #27ae60;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .download-btn:hover {
+            background: #219653;
+        }
+        .toggle-btn {
+            cursor: pointer;
+            color: #2980b9;
+            text-decoration: underline;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        code {
+            font-family: Consolas, monospace;
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="timer" id="timer">30:00</div>
+    <div class="container">
+        <h1>Data Science & Generative AI by SATISH @ Sathya Technologies</h1>
+        <h2>Hugging Face Programming Exam (30 Minutes)</h2>
+        
+        <div class="question">
+            <p>1. What is Hugging Face primarily known for?</p>
+            <div class="options">
+                <p>a) Image processing tools</p>
+                <p>b) NLP and machine learning libraries</p>
+                <p>c) Data visualization</p>
+                <p>d) Database management</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(1)">Show Answer</span>
+            <div class="answer" id="answer1">
+                <p><strong>Answer:</strong> b) NLP and machine learning libraries</p>
+                <p><strong>Explanation:</strong> Hugging Face is renowned for its Transformers library and model hub for NLP and machine learning tasks.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>2. Which Hugging Face library is used for pre-trained language models?</p>
+            <div class="options">
+                <p>a) Datasets</p>
+                <p>b) Transformers</p>
+                <p>c) Evaluate</p>
+                <p>d) Tokenizers</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(2)">Show Answer</span>
+            <div class="answer" id="answer2">
+                <p><strong>Answer:</strong> b) Transformers</p>
+                <p><strong>Explanation:</strong> The Transformers library provides pre-trained models like BERT and GPT for NLP tasks.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>3. What does <code>AutoModel.from_pretrained()</code> do in Transformers?</p>
+            <div class="options">
+                <p>a) Trains a new model</p>
+                <p>b) Loads a pre-trained model</p>
+                <p>c) Tokenizes text</p>
+                <p>d) Evaluates a model</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(3)">Show Answer</span>
+            <div class="answer" id="answer3">
+                <p><strong>Answer:</strong> b) Loads a pre-trained model</p>
+                <p><strong>Explanation:</strong> <code>AutoModel.from_pretrained()</code> loads a pre-trained model from the Hugging Face model hub.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>4. Which class handles tokenization in the Transformers library?</p>
+            <div class="options">
+                <p>a) <code>AutoTokenizer</code></p>
+                <p>b) <code>AutoModel</code></p>
+                <p>c) <code>Trainer</code></p>
+                <p>d) <code>Pipeline</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(4)">Show Answer</span>
+            <div class="answer" id="answer4">
+                <p><strong>Answer:</strong> a) <code>AutoTokenizer</code></p>
+                <p><strong>Explanation:</strong> <code>AutoTokenizer</code> loads a tokenizer specific to a pre-trained model for text preprocessing.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>5. What is the purpose of the <code>Pipeline</code> class in Transformers?</p>
+            <div class="options">
+                <p>a) To train models</p>
+                <p>b) To simplify common NLP tasks</p>
+                <p>c) To tokenize text</p>
+                <p>d) To reduce model size</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(5)">Show Answer</span>
+            <div class="answer" id="answer5">
+                <p><strong>Answer:</strong> b) To simplify common NLP tasks</p>
+                <p><strong>Explanation:</strong> The <code>Pipeline</code> class provides a high-level API for tasks like text classification and generation.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>6. Which pipeline is used for sentiment analysis?</p>
+            <div class="options">
+                <p>a) <code>text-generation</code></p>
+                <p>b) <code>sentiment-analysis</code></p>
+                <p>c) <code>question-answering</code></p>
+                <p>d) <code>ner</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(6)">Show Answer</span>
+            <div class="answer" id="answer6">
+                <p><strong>Answer:</strong> b) <code>sentiment-analysis</code></p>
+                <p><strong>Explanation:</strong> The <code>sentiment-analysis</code> pipeline classifies text as positive, negative, or neutral.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>7. What does the Hugging Face Datasets library provide?</p>
+            <div class="options">
+                <p>a) Pre-trained models</p>
+                <p>b) Datasets for training and evaluation</p>
+                <p>c) Tokenization tools</p>
+                <p>d) Model optimization</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(7)">Show Answer</span>
+            <div class="answer" id="answer7">
+                <p><strong>Answer:</strong> b) Datasets for training and evaluation</p>
+                <p><strong>Explanation:</strong> The Datasets library offers efficient access to a wide range of datasets for machine learning tasks.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>8. How do you load a dataset using the Datasets library?</p>
+            <div class="options">
+                <p>a) <code>load_model()</code></p>
+                <p>b) <code>load_dataset()</code></p>
+                <p>c) <code>load_tokenizer()</code></p>
+                <p>d) <code>load_pipeline()</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(8)">Show Answer</span>
+            <div class="answer" id="answer8">
+                <p><strong>Answer:</strong> b) <code>load_dataset()</code></p>
+                <p><strong>Explanation:</strong> <code>load_dataset()</code> retrieves a dataset from the Hugging Face hub or a local source.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>9. What is the purpose of the <code>Trainer</code> class in Transformers?</p>
+            <div class="options">
+                <p>a) To tokenize text</p>
+                <p>b) To fine-tune models</p>
+                <p>c) To generate text</p>
+                <p>d) To evaluate datasets</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(9)">Show Answer</span>
+            <div class="answer" id="answer9">
+                <p><strong>Answer:</strong> b) To fine-tune models</p>
+                <p><strong>Explanation:</strong> The <code>Trainer</code> class simplifies fine-tuning of pre-trained models on custom datasets.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>10. Which class configures training hyperparameters in Transformers?</p>
+            <div class="options">
+                <p>a) <code>AutoTokenizer</code></p>
+                <p>b) <code>TrainingArguments</code></p>
+                <p>c) <code>Pipeline</code></p>
+                <p>d) <code>AutoModel</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(10)">Show Answer</span>
+            <div class="answer" id="answer10">
+                <p><strong>Answer:</strong> b) <code>TrainingArguments</code></p>
+                <p><strong>Explanation:</strong> <code>TrainingArguments</code> specifies parameters like learning rate and batch size for fine-tuning.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>11. What does the <code>generate()</code> method do in Transformers?</p>
+            <div class="options">
+                <p>a) Trains a model</p>
+                <p>b) Generates text</p>
+                <p>c) Evaluates a model</p>
+                <p>d) Tokenizes text</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(11)">Show Answer</span>
+            <div class="answer" id="answer11">
+                <p><strong>Answer:</strong> b) Generates text</p>
+                <p><strong>Explanation:</strong> The <code>generate()</code> method produces text output for models like GPT based on input prompts.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>12. Which parameter controls the length of generated text?</p>
+            <div class="options">
+                <p>a) <code>temperature</code></p>
+                <p>b) <code>max_length</code></p>
+                <p>c) <code>num_beams</code></p>
+                <p>d) <code>learning_rate</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(12)">Show Answer</span>
+            <div class="answer" id="answer12">
+                <p><strong>Answer:</strong> b) <code>max_length</code></p>
+                <p><strong>Explanation:</strong> <code>max_length</code> sets the maximum number of tokens in the generated text output.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>13. What is the purpose of the <code>attention_mask</code> in Transformers?</p>
+            <div class="options">
+                <p>a) To normalize embeddings</p>
+                <p>b) To ignore padding tokens</p>
+                <p>c) To train the model</p>
+                <p>d) To generate text</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(13)">Show Answer</span>
+            <div class="answer" id="answer13">
+                <p><strong>Answer:</strong> b) To ignore padding tokens</p>
+                <p><strong>Explanation:</strong> The <code>attention_mask</code> ensures padding tokens are ignored during attention calculations.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>14. Which pipeline is used for named entity recognition?</p>
+            <div class="options">
+                <p>a) <code>text-generation</code></p>
+                <p>b) <code>ner</code></p>
+                <p>c) <code>sentiment-analysis</code></p>
+                <p>d) <code>question-answering</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(14)">Show Answer</span>
+            <div class="answer" id="answer14">
+                <p><strong>Answer:</strong> b) <code>ner</code></p>
+                <p><strong>Explanation:</strong> The <code>ner</code> pipeline identifies and classifies named entities in text.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>15. What is the Hugging Face Model Hub?</p>
+            <div class="options">
+                <p>a) A dataset repository</p>
+                <p>b) A repository for pre-trained models</p>
+                <p>c) A training framework</p>
+                <p>d) A tokenization tool</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(15)">Show Answer</span>
+            <div class="answer" id="answer15">
+                <p><strong>Answer:</strong> b) A repository for pre-trained models</p>
+                <p><strong>Explanation:</strong> The Model Hub hosts thousands of pre-trained models for tasks like NLP and computer vision.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>16. Which method evaluates a model’s performance in the <code>Trainer</code> class?</p>
+            <div class="options">
+                <p>a) <code>generate()</code></p>
+                <p>b) <code>evaluate()</code></p>
+                <p>c) <code>fit()</code></p>
+                <p>d) <code>predict()</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(16)">Show Answer</span>
+            <div class="answer" id="answer16">
+                <p><strong>Answer:</strong> b) <code>evaluate()</code></p>
+                <p><strong>Explanation:</strong> The <code>evaluate()</code> method computes metrics on a test dataset for model evaluation.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>17. What is the purpose of the <code>temperature</code> parameter in text generation?</p>
+            <div class="options">
+                <p>a) To set the learning rate</p>
+                <p>b) To control output randomness</p>
+                <p>c) To pad sequences</p>
+                <p>d) To normalize embeddings</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(17)">Show Answer</span>
+            <div class="answer" id="answer17">
+                <p><strong>Answer:</strong> b) To control output randomness</p>
+                <p><strong>Explanation:</strong> <code>temperature</code> adjusts the randomness of generated text, with higher values increasing diversity.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>18. Which parameter controls beam search in text generation?</p>
+            <div class="options">
+                <p>a) <code>max_length</code></p>
+                <p>b) <code>num_beams</code></p>
+                <p>c) <code>top_k</code></p>
+                <p>d) <code>temperature</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(18)">Show Answer</span>
+            <div class="answer" id="answer18">
+                <p><strong>Answer:</strong> b) <code>num_beams</code></p>
+                <p><strong>Explanation:</strong> <code>num_beams</code> sets the number of beams in beam search, improving text generation quality.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>19. What is the purpose of the <code>pad_token_id</code> in tokenization?</p>
+            <div class="options">
+                <p>a) To encode word order</p>
+                <p>b) To mark padding tokens</p>
+                <p>c) To generate text</p>
+                <p>d) To normalize embeddings</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(19)">Show Answer</span>
+            <div class="answer" id="answer19">
+                <p><strong>Answer:</strong> b) To mark padding tokens</p>
+                <p><strong>Explanation:</strong> <code>pad_token_id</code> identifies padding tokens to ensure uniform sequence lengths.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>20. Which pipeline is used for question answering?</p>
+            <div class="options">
+                <p>a) <code>text-generation</code></p>
+                <p>b) <code>question-answering</code></p>
+                <p>c) <code>sentiment-analysis</code></p>
+                <p>d) <code>ner</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(20)">Show Answer</span>
+            <div class="answer" id="answer20">
+                <p><strong>Answer:</strong> b) <code>question-answering</code></p>
+                <p><strong>Explanation:</strong> The <code>question-answering</code> pipeline extracts answers from a context based on a given question.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>21. What is the Hugging Face Evaluate library used for?</p>
+            <div class="options">
+                <p>a) To tokenize text</p>
+                <p>b) To compute evaluation metrics</p>
+                <p>c) To train models</p>
+                <p>d) To generate text</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(21)">Show Answer</span>
+            <div class="answer" id="answer21">
+                <p><strong>Answer:</strong> b) To compute evaluation metrics</p>
+                <p><strong>Explanation:</strong> The Evaluate library provides standardized metrics like accuracy and F1 for model evaluation.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>22. Which method loads a metric in the Evaluate library?</p>
+            <div class="options">
+                <p>a) <code>load_model()</code></p>
+                <p>b) <code>load_metric()</code></p>
+                <p>c) <code>load_dataset()</code></p>
+                <p>d) <code>load_tokenizer()</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(22)">Show Answer</span>
+            <div class="answer" id="answer22">
+                <p><strong>Answer:</strong> b) <code>load_metric()</code></p>
+                <p><strong>Explanation:</strong> <code>load_metric()</code> loads a specific evaluation metric from the Evaluate library.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>23. What is the purpose of the <code>top_k</code> parameter in text generation?</p>
+            <div class="options">
+                <p>a) To set the learning rate</p>
+                <p>b) To sample from the top k probable tokens</p>
+                <p>c) To pad sequences</p>
+                <p>d) To normalize inputs</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(23)">Show Answer</span>
+            <div class="answer" id="answer23">
+                <p><strong>Answer:</strong> b) To sample from the top k probable tokens</p>
+                <p><strong>Explanation:</strong> <code>top_k</code> restricts sampling to the k most likely tokens, controlling generation diversity.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>24. Which model is best suited for text generation in the Hugging Face ecosystem?</p>
+            <div class="options">
+                <p>a) BERT</p>
+                <p>b) GPT-2</p>
+                <p>c) T5</p>
+                <p>d) RoBERTa</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(24)">Show Answer</span>
+            <div class="answer" id="answer24">
+                <p><strong>Answer:</strong> b) GPT-2</p>
+                <p><strong>Explanation:</strong> GPT-2, a decoder-only model, is optimized for text generation tasks in the Transformers library.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>25. What is the role of the <code>CLS</code> token in BERT models?</p>
+            <div class="options">
+                <p>a) To generate text</p>
+                <p>b) To represent the entire sequence</p>
+                <p>c) To pad sequences</p>
+                <p>d) To normalize embeddings</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(25)">Show Answer</span>
+            <div class="answer" id="answer25">
+                <p><strong>Answer:</strong> b) To represent the entire sequence</p>
+                <p><strong>Explanation:</strong> The <code>CLS</code> token’s embedding is used for sequence-level tasks like classification in BERT.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>26. Which pipeline is used for text summarization?</p>
+            <div class="options">
+                <p>a) <code>summarization</code></p>
+                <p>b) <code>text-generation</code></p>
+                <p>c) <code>ner</code></p>
+                <p>d) <code>sentiment-analysis</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(26)">Show Answer</span>
+            <div class="answer" id="answer26">
+                <p><strong>Answer:</strong> a) <code>summarization</code></p>
+                <p><strong>Explanation:</strong> The <code>summarization</code> pipeline generates concise summaries of input text.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>27. What is LoRA in the context of Hugging Face?</p>
+            <div class="options">
+                <p>a) A tokenization method</p>
+                <p>b) A fine-tuning technique</p>
+                <p>c) A text generation algorithm</p>
+                <p>d) A model architecture</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(27)">Show Answer</span>
+            <div class="answer" id="answer27">
+                <p><strong>Answer:</strong> b) A fine-tuning technique</p>
+                <p><strong>Explanation:</strong> LoRA (Low-Rank Adaptation) is an efficient fine-tuning method supported by Hugging Face for updating model parameters.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>28. Which library is used for efficient model inference in Hugging Face?</p>
+            <div class="options">
+                <p>a) Datasets</p>
+                <p>b) Accelerate</p>
+                <p>c) Evaluate</p>
+                <p>d) Tokenizers</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(28)">Show Answer</span>
+            <div class="answer" id="answer28">
+                <p><strong>Answer:</strong> b) Accelerate</p>
+                <p><strong>Explanation:</strong> The Accelerate library optimizes model training and inference on various hardware setups.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>29. What is the purpose of the <code>SEP</code> token in BERT?</p>
+            <div class="options">
+                <p>a) To generate text</p>
+                <p>b) To separate input sequences</p>
+                <p>c) To pad sequences</p>
+                <p>d) To normalize embeddings</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(29)">Show Answer</span>
+            <div class="answer" id="answer29">
+                <p><strong>Answer:</strong> b) To separate input sequences</p>
+                <p><strong>Explanation:</strong> The <code>SEP</code> token separates two input sequences (e.g., question and answer) in BERT models.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>30. What is transfer learning in the context of Hugging Face?</p>
+            <div class="options">
+                <p>a) Training a model from scratch</p>
+                <p>b) Using a pre-trained model for a new task</p>
+                <p>c) Splitting data into subsets</p>
+                <p>d) Reducing model size</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(30)">Show Answer</span>
+            <div class="answer" id="answer30">
+                <p><strong>Answer:</strong> b) Using a pre-trained model for a new task</p>
+                <p><strong>Explanation:</strong> Transfer learning uses pre-trained models from the Hugging Face hub and fine-tunes them for specific tasks.</p>
+            </div>
+        </div>
+
+        <a href="#" class="download-btn" onclick="downloadTest()">Download Exam (TXT)</a>
+    </div>
+
+    <script>
+        // Timer functionality
+        let timeLeft = 30 * 60; // 30 minutes in seconds
+        const timerDisplay = document.getElementById('timer');
+        
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                timerDisplay.textContent = "Time's Up!";
+                alert("Time is up!");
+            } else {
+                timeLeft--;
+            }
+        }
+        const timerInterval = setInterval(updateTimer, 1000);
+
+        // Toggle answer visibility
+        function toggleAnswer(id) {
+            const answer = document.getElementById(`answer${id}`);
+            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Download exam as a text file
+        function downloadTest() {
+            const content = `
+Data Science & Generative AI by SATISH @ Sathya Technologies
+Hugging Face Programming Exam (30 Minutes)
+
+1. What is Hugging Face primarily known for?
+a) Image processing tools
+b) NLP and machine learning libraries
+c) Data visualization
+d) Database management
+Answer: b) NLP and machine learning libraries
+Explanation: Hugging Face is renowned for its Transformers library and model hub for NLP and machine learning tasks.
+
+2. Which Hugging Face library is used for pre-trained language models?
+a) Datasets
+b) Transformers
+c) Evaluate
+d) Tokenizers
+Answer: b) Transformers
+Explanation: The Transformers library provides pre-trained models like BERT and GPT for NLP tasks.
+
+3. What does AutoModel.from_pretrained() do in Transformers?
+a) Trains a new model
+b) Loads a pre-trained model
+c) Tokenizes text
+d) Evaluates a model
+Answer: b) Loads a pre-trained model
+Explanation: AutoModel.from_pretrained() loads a pre-trained model from the Hugging Face model hub.
+
+4. Which class handles tokenization in the Transformers library?
+a) AutoTokenizer
+b) AutoModel
+c) Trainer
+d) Pipeline
+Answer: a) AutoTokenizer
+Explanation: AutoTokenizer loads a tokenizer specific to a pre-trained model for text preprocessing.
+
+5. What is the purpose of the Pipeline class in Transformers?
+a) To train models
+b) To simplify common NLP tasks
+c) To tokenize text
+d) To reduce model size
+Answer: b) To simplify common NLP tasks
+Explanation: The Pipeline class provides a high-level API for tasks like text classification and generation.
+
+6. Which pipeline is used for sentiment analysis?
+a) text-generation
+b) sentiment-analysis
+c) question-answering
+d) ner
+Answer: b) sentiment-analysis
+Explanation: The sentiment-analysis pipeline classifies text as positive, negative, or neutral.
+
+7. What does the Hugging Face Datasets library provide?
+a) Pre-trained models
+b) Datasets for training and evaluation
+c) Tokenization tools
+d) Model optimization
+Answer: b) Datasets for training and evaluation
+Explanation: The Datasets library offers efficient access to a wide range of datasets for machine learning tasks.
+
+8. How do you load a dataset using the Datasets library?
+a) load_model()
+b) load_dataset()
+c) load_tokenizer()
+d) load_pipeline()
+Answer: b) load_dataset()
+Explanation: load_dataset() retrieves a dataset from the Hugging Face hub or a local source.
+
+9. What is the purpose of the Trainer class in Transformers?
+a) To tokenize text
+b) To fine-tune models
+c) To generate text
+d) To evaluate datasets
+Answer: b) To fine-tune models
+Explanation: The Trainer class simplifies fine-tuning of pre-trained models on custom datasets.
+
+10. Which class configures training hyperparameters in Transformers?
+a) AutoTokenizer
+b) TrainingArguments
+c) Pipeline
+d) AutoModel
+Answer: b) TrainingArguments
+Explanation: TrainingArguments specifies parameters like learning rate and batch size for fine-tuning.
+
+11. What does the generate() method do in Transformers?
+a) Trains a model
+b) Generates text
+c) Evaluates a model
+d) Tokenizes text
+Answer: b) Generates text
+Explanation: The generate() method produces text output for models like GPT based on input prompts.
+
+12. Which parameter controls the length of generated text?
+a) temperature
+b) max_length
+c) num_beams
+d) learning_rate
+Answer: b) max_length
+Explanation: max_length sets the maximum number of tokens in the generated text output.
+
+13. What is the purpose of the attention_mask in Transformers?
+a) To normalize embeddings
+b) To ignore padding tokens
+c) To train the model
+d) To generate text
+Answer: b) To ignore padding tokens
+Explanation: The attention_mask ensures padding tokens are ignored during attention calculations.
+
+14. Which pipeline is used for named entity recognition?
+a) text-generation
+b) ner
+c) sentiment-analysis
+d) question-answering
+Answer: b) ner
+Explanation: The ner pipeline identifies and classifies named entities in text.
+
+15. What is the Hugging Face Model Hub?
+a) A dataset repository
+b) A repository for pre-trained models
+c) A training framework
+d) A tokenization tool
+Answer: b) A repository for pre-trained models
+Explanation: The Model Hub hosts thousands of pre-trained models for tasks like NLP and computer vision.
+
+16. Which method evaluates a model’s performance in the Trainer class?
+a) generate()
+b) evaluate()
+c) fit()
+d) predict()
+Answer: b) evaluate()
+Explanation: The evaluate() method computes metrics on a test dataset for model evaluation.
+
+17. What is the purpose of the temperature parameter in text generation?
+a) To set the learning rate
+b) To control output randomness
+c) To pad sequences
+d) To normalize embeddings
+Answer: b) To control output randomness
+Explanation: temperature adjusts the randomness of generated text, with higher values increasing diversity.
+
+18. Which parameter controls beam search in text generation?
+a) max_length
+b) num_beams
+c) top_k
+d) temperature
+Answer: b) num_beams
+Explanation: num_beams sets the number of beams in beam search, improving text generation quality.
+
+19. What is the purpose of the pad_token_id in tokenization?
+a) To encode word order
+b) To mark padding tokens
+c) To generate text
+d) To normalize embeddings
+Answer: b) To mark padding tokens
+Explanation: pad_token_id identifies padding tokens to ensure uniform sequence lengths.
+
+20. Which pipeline is used for question answering?
+a) text-generation
+b) question-answering
+c) sentiment-analysis
+d) ner
+Answer: b) question-answering
+Explanation: The question-answering pipeline extracts answers from a context based on a given question.
+
+21. What is the Hugging Face Evaluate library used for?
+a) To tokenize text
+b) To compute evaluation metrics
+c) To train models
+d) To generate text
+Answer: b) To compute evaluation metrics
+Explanation: The Evaluate library provides standardized metrics like accuracy and F1 for model evaluation.
+
+22. Which method loads a metric in the Evaluate library?
+a) load_model()
+b) load_metric()
+c) load_dataset()
+d) load_tokenizer()
+Answer: b) load_metric()
+Explanation: load_metric() loads a specific evaluation metric from the Evaluate library.
+
+23. What is the purpose of the top_k parameter in text generation?
+a) To set the learning rate
+b) To sample from the top k probable tokens
+c) To pad sequences
+d) To normalize inputs
+Answer: b) To sample from the top k probable tokens
+Explanation: top_k restricts sampling to the k most likely tokens, controlling generation diversity.
+
+24. Which model is best suited for text generation in the Hugging Face ecosystem?
+a) BERT
+b) GPT-2
+c) T5
+d) RoBERTa
+Answer: b) GPT-2
+Explanation: GPT-2, a decoder-only model, is optimized for text generation tasks in the Transformers library.
+
+25. What is the role of the CLS token in BERT models?
+a) To generate text
+b) To represent the entire sequence
+c) To pad sequences
+d) To normalize embeddings
+Answer: b) To represent the entire sequence
+Explanation: The CLS token’s embedding is used for sequence-level tasks like classification in BERT.
+
+26. Which pipeline is used for text summarization?
+a) summarization
+b) text-generation
+c) ner
+d) sentiment-analysis
+Answer: a) summarization
+Explanation: The summarization pipeline generates concise summaries of input text.
+
+27. What is LoRA in the context of Hugging Face?
+a) A tokenization method
+b) A fine-tuning technique
+c) A text generation algorithm
+d) A model architecture
+Answer: b) A fine-tuning technique
+Explanation: LoRA (Low-Rank Adaptation) is an efficient fine-tuning method supported by Hugging Face for updating model parameters.
+
+28. Which library is used for efficient model inference in Hugging Face?
+a) Datasets
+b) Accelerate
+c) Evaluate
+d) Tokenizers
+Answer: b) Accelerate
+Explanation: The Accelerate library optimizes model training and inference on various hardware setups.
+
+29. What is the purpose of the SEP token in BERT?
+a) To generate text
+b) To separate input sequences
+c) To pad sequences
+d) To normalize embeddings
+Answer: b) To separate input sequences
+Explanation: The SEP token separates two input sequences (e.g., question and answer) in BERT models.
+
+30. What is transfer learning in the context of Hugging Face?
+a) Training a model from scratch
+b) Using a pre-trained model for a new task
+c) Splitting data into subsets
+d) Reducing model size
+Answer: b) Using a pre-trained model for a new task
+Explanation: Transfer learning uses pre-trained models from the Hugging Face hub and fine-tunes them for specific tasks.
+            `;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'huggingface_exam_30q.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microsoft Excel Examination</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .timer {
+            text-align: center;
+            font-size: 24px;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 5px;
+        }
+        .question {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-left: 4px solid #3498db;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .answers {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #e8f4fc;
+            border-radius: 5px;
+            display: none;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Data Science & Generative AI by SATISH @ Sathya Technologies</h1>
+        <div class="timer" id="timer">30:00</div>
+        
+        <h2>Microsoft Excel Examination (30 Questions)</h2>
+        
+        <div class="question">
+            <p>1. What is the file extension for Excel workbooks in the modern format?</p>
+            <div class="options">
+                <label><input type="radio" name="q1"> a) .xls</label><br>
+                <label><input type="radio" name="q1"> b) .xlsx</label><br>
+                <label><input type="radio" name="q1"> c) .exl</label><br>
+                <label><input type="radio" name="q1"> d) .exc</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>2. Which function adds up all the numbers in a range of cells?</p>
+            <div class="options">
+                <label><input type="radio" name="q2"> a) COUNT</label><br>
+                <label><input type="radio" name="q2"> b) SUM</label><br>
+                <label><input type="radio" name="q2"> c) ADD</label><br>
+                <label><input type="radio" name="q2"> d) TOTAL</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>3. What is the correct formula to calculate the average of cells A1 to A10?</p>
+            <div class="options">
+                <label><input type="radio" name="q3"> a) =AVG(A1:A10)</label><br>
+                <label><input type="radio" name="q3"> b) =AVERAGE(A1:A10)</label><br>
+                <label><input type="radio" name="q3"> c) =MEAN(A1:A10)</label><br>
+                <label><input type="radio" name="q3"> d) =SUM(A1:A10)/10</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>4. Which keyboard shortcut opens the Format Cells dialog box?</p>
+            <div class="options">
+                <label><input type="radio" name="q4"> a) Ctrl+1</label><br>
+                <label><input type="radio" name="q4"> b) Alt+1</label><br>
+                <label><input type="radio" name="q4"> c) Shift+1</label><br>
+                <label><input type="radio" name="q4"> d) F1</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>5. What does the VLOOKUP function do?</p>
+            <div class="options">
+                <label><input type="radio" name="q5"> a) Looks up a value vertically in the first column of a range</label><br>
+                <label><input type="radio" name="q5"> b) Creates a vertical list</label><br>
+                <label><input type="radio" name="q5"> c) Aligns text vertically</label><br>
+                <label><input type="radio" name="q5"> d) Validates data entries</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>6. Which function would you use to count the number of cells that contain numbers?</p>
+            <div class="options">
+                <label><input type="radio" name="q6"> a) COUNTA</label><br>
+                <label><input type="radio" name="q6"> b) COUNT</label><br>
+                <label><input type="radio" name="q6"> c) COUNTNUM</label><br>
+                <label><input type="radio" name="q6"> d) SUMCOUNT</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>7. What does the IF function do?</p>
+            <div class="options">
+                <label><input type="radio" name="q7"> a) Performs a logical test and returns one value for TRUE, another for FALSE</label><br>
+                <label><input type="radio" name="q7"> b) Checks if a cell is empty</label><br>
+                <label><input type="radio" name="q7"> c) Imports data from another file</label><br>
+                <label><input type="radio" name="q7"> d) Filters data based on conditions</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>8. Which feature allows you to quickly fill a series of cells with data following a pattern?</p>
+            <div class="options">
+                <label><input type="radio" name="q8"> a) AutoComplete</label><br>
+                <label><input type="radio" name="q8"> b) Flash Fill</label><br>
+                <label><input type="radio" name="q8"> c) AutoFill</label><br>
+                <label><input type="radio" name="q8"> d) Quick Analysis</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>9. What is the correct syntax for an absolute cell reference?</p>
+            <div class="options">
+                <label><input type="radio" name="q9"> a) $A$1</label><br>
+                <label><input type="radio" name="q9"> b) #A#1</label><br>
+                <label><input type="radio" name="q9"> c) !A!1</label><br>
+                <label><input type="radio" name="q9"> d) *A*1</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>10. Which function concatenates (combines) text from multiple cells?</p>
+            <div class="options">
+                <label><input type="radio" name="q10"> a) MERGE</label><br>
+                <label><input type="radio" name="q10"> b) CONCAT</label><br>
+                <label><input type="radio" name="q10"> c) JOIN</label><br>
+                <label><input type="radio" name="q10"> d) COMBINE</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>11. What does the PMT function calculate?</p>
+            <div class="options">
+                <label><input type="radio" name="q11"> a) Payment for a loan based on constant payments and interest rate</label><br>
+                <label><input type="radio" name="q11"> b) Percentage of total</label><br>
+                <label><input type="radio" name="q11"> c) Probability mass function</label><br>
+                <label><input type="radio" name="q11"> d) Prime number test</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>12. Which feature allows you to view data from different angles by rearranging rows and columns?</p>
+            <div class="options">
+                <label><input type="radio" name="q12"> a) Power Query</label><br>
+                <label><input type="radio" name="q12"> b) PivotTable</label><br>
+                <label><input type="radio" name="q12"> c) Data Model</label><br>
+                <label><input type="radio" name="q12"> d) Scenario Manager</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>13. What is the keyboard shortcut to insert the current date in a cell?</p>
+            <div class="options">
+                <label><input type="radio" name="q13"> a) Ctrl+;</label><br>
+                <label><input type="radio" name="q13"> b) Ctrl+D</label><br>
+                <label><input type="radio" name="q13"> c) Alt+D</label><br>
+                <label><input type="radio" name="q13"> d) Shift+D</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>14. Which function would you use to find the highest value in a range?</p>
+            <div class="options">
+                <label><input type="radio" name="q14"> a) TOP</label><br>
+                <label><input type="radio" name="q14"> b) MAX</label><br>
+                <label><input type="radio" name="q14"> c) HIGH</label><br>
+                <label><input type="radio" name="q14"> d) PEAK</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>15. What does the COUNTIF function do?</p>
+            <div class="options">
+                <label><input type="radio" name="q15"> a) Counts cells that meet a single condition</label><br>
+                <label><input type="radio" name="q15"> b) Counts all cells in a range</label><br>
+                <label><input type="radio" name="q15"> c) Counts empty cells</label><br>
+                <label><input type="radio" name="q15"> d) Counts cells with formulas</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>16. Which feature protects a worksheet from being modified?</p>
+            <div class="options">
+                <label><input type="radio" name="q16"> a) Data Validation</label><br>
+                <label><input type="radio" name="q16"> b) Protect Sheet</label><br>
+                <label><input type="radio" name="q16"> c) Freeze Panes</label><br>
+                <label><input type="radio" name="q16"> d) Track Changes</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>17. What does the INDEX-MATCH combination do?</p>
+            <div class="options">
+                <label><input type="radio" name="q17"> a) A more flexible alternative to VLOOKUP</label><br>
+                <label><input type="radio" name="q17"> b) Creates an index of all formulas</label><br>
+                <label><input type="radio" name="q17"> c) Matches cell colors</label><br>
+                <label><input type="radio" name="q17"> d) Aligns data in columns</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>18. Which function returns the current date and time?</p>
+            <div class="options">
+                <label><input type="radio" name="q18"> a) TODAY()</label><br>
+                <label><input type="radio" name="q18"> b) NOW()</label><br>
+                <label><input type="radio" name="q18"> c) CURRENT()</label><br>
+                <label><input type="radio" name="q18"> d) DATE()</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>19. What is the purpose of Data Validation?</p>
+            <div class="options">
+                <label><input type="radio" name="q19"> a) To restrict what data can be entered in a cell</label><br>
+                <label><input type="radio" name="q19"> b) To check for errors in formulas</label><br>
+                <label><input type="radio" name="q19"> c) To validate external data connections</label><br>
+                <label><input type="radio" name="q19"> d) To verify data accuracy</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>20. Which function would you use to round a number to a specified number of digits?</p>
+            <div class="options">
+                <label><input type="radio" name="q20"> a) ROUND</label><br>
+                <label><input type="radio" name="q20"> b) FIX</label><br>
+                <label><input type="radio" name="q20"> c) TRUNC</label><br>
+                <label><input type="radio" name="q20"> d) FORMAT</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>21. What does the TEXTJOIN function do?</p>
+            <div class="options">
+                <label><input type="radio" name="q21"> a) Combines text with a specified delimiter</label><br>
+                <label><input type="radio" name="q21"> b) Joins text files</label><br>
+                <label><input type="radio" name="q21"> c) Formats text appearance</label><br>
+                <label><input type="radio" name="q21"> d) Validates text entries</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>22. Which keyboard shortcut creates a new pivot table?</p>
+            <div class="options">
+                <label><input type="radio" name="q22"> a) Alt+N+V</label><br>
+                <label><input type="radio" name="q22"> b) Ctrl+P</label><br>
+                <label><input type="radio" name="q22"> c) Shift+F11</label><br>
+                <label><input type="radio" name="q22"> d) Alt+D+P</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>23. What does the SUMPRODUCT function do?</p>
+            <div class="options">
+                <label><input type="radio" name="q23"> a) Multiplies corresponding components and returns the sum of those products</label><br>
+                <label><input type="radio" name="q23"> b) Adds products of numbers</label><br>
+                <label><input type="radio" name="q23"> c) Calculates cumulative product</label><br>
+                <label><input type="radio" name="q23"> d) Multiplies all numbers in a range</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>24. Which function extracts a specified number of characters from the start of a text string?</p>
+            <div class="options">
+                <label><input type="radio" name="q24"> a) MID</label><br>
+                <label><input type="radio" name="q24"> b) RIGHT</label><br>
+                <label><input type="radio" name="q24"> c) LEFT</label><br>
+                <label><input type="radio" name="q24"> d) EXTRACT</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>25. What is the purpose of the IFERROR function?</p>
+            <div class="options">
+                <label><input type="radio" name="q25"> a) Returns a value you specify if a formula evaluates to an error</label><br>
+                <label><input type="radio" name="q25"> b) Checks for all types of errors in a worksheet</label><br>
+                <label><input type="radio" name="q25"> c) Validates data entries</label><br>
+                <label><input type="radio" name="q25"> d) Tests if a cell contains an error</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>26. Which feature allows you to highlight cells based on their values?</p>
+            <div class="options">
+                <label><input type="radio" name="q26"> a) Data Bars</label><br>
+                <label><input type="radio" name="q26"> b) Conditional Formatting</label><br>
+                <label><input type="radio" name="q26"> c) Cell Styles</label><br>
+                <label><input type="radio" name="q26"> d) Format Painter</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>27. What does the XLOOKUP function improve upon compared to VLOOKUP?</p>
+            <div class="options">
+                <label><input type="radio" name="q27"> a) Can search in any direction and return any column</label><br>
+                <label><input type="radio" name="q27"> b) Faster calculation speed</label><br>
+                <label><input type="radio" name="q27"> c) Simpler syntax</label><br>
+                <label><input type="radio" name="q27"> d) All of the above</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>28. Which keyboard shortcut opens the Go To dialog box?</p>
+            <div class="options">
+                <label><input type="radio" name="q28"> a) Ctrl+G</label><br>
+                <label><input type="radio" name="q28"> b) Alt+G</label><br>
+                <label><input type="radio" name="q28"> c) F5</label><br>
+                <label><input type="radio" name="q28"> d) Both a and c</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>29. What is the purpose of the LET function in Excel?</p>
+            <div class="options">
+                <label><input type="radio" name="q29"> a) To assign names to calculation results</label><br>
+                <label><input type="radio" name="q29"> b) To limit calculation ranges</label><br>
+                <label><input type="radio" name="q29"> c) To create local variables in formulas</label><br>
+                <label><input type="radio" name="q29"> d) Both a and c</label>
+            </div>
+        </div>
+        
+        <div class="question">
+            <p>30. Which feature allows you to see how changing values affect formulas?</p>
+            <div class="options">
+                <label><input type="radio" name="q30"> a) Scenario Manager</label><br>
+                <label><input type="radio" name="q30"> b) Data Tables</label><br>
+                <label><input type="radio" name="q30"> c) Goal Seek</label><br>
+                <label><input type="radio" name="q30"> d) All of the above</label>
+            </div>
+        </div>
+        
+        <button onclick="showAnswers()">Show Answers</button>
+        
+        <div class="answers" id="answers">
+            <h3>Answer Key</h3>
+            <p>1. b) .xlsx</p>
+            <p>2. b) SUM</p>
+            <p>3. b) =AVERAGE(A1:A10)</p>
+            <p>4. a) Ctrl+1</p>
+            <p>5. a) Looks up a value vertically in the first column of a range</p>
+            <p>6. b) COUNT</p>
+            <p>7. a) Performs a logical test and returns one value for TRUE, another for FALSE</p>
+            <p>8. c) AutoFill</p>
+            <p>9. a) $A$1</p>
+            <p>10. b) CONCAT</p>
+            <p>11. a) Payment for a loan based on constant payments and interest rate</p>
+            <p>12. b) PivotTable</p>
+            <p>13. a) Ctrl+;</p>
+            <p>14. b) MAX</p>
+            <p>15. a) Counts cells that meet a single condition</p>
+            <p>16. b) Protect Sheet</p>
+            <p>17. a) A more flexible alternative to VLOOKUP</p>
+            <p>18. b) NOW()</p>
+            <p>19. a) To restrict what data can be entered in a cell</p>
+            <p>20. a) ROUND</p>
+            <p>21. a) Combines text with a specified delimiter</p>
+            <p>22. a) Alt+N+V</p>
+            <p>23. a) Multiplies corresponding components and returns the sum of those products</p>
+            <p>24. c) LEFT</p>
+            <p>25. a) Returns a value you specify if a formula evaluates to an error</p>
+            <p>26. b) Conditional Formatting</p>
+            <p>27. d) All of the above</p>
+            <p>28. d) Both a and c</p>
+            <p>29. d) Both a and c</p>
+            <p>30. d) All of the above</p>
+        </div>
+        
+        <div class="footer">
+            <p>Data Science & Generative AI Exam | Sathya Technologies</p>
+        </div>
+    </div>
+
+    <script>
+        // Timer functionality
+        let timeLeft = 30 * 60; // 30 minutes in seconds
+        const timerElement = document.getElementById('timer');
+        
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            timerElement.textContent = `${minutes}:${seconds}`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                timerElement.textContent = "Time's up!";
+                timerElement.style.backgroundColor = "#e74c3c";
+            } else {
+                timeLeft--;
+            }
+        }
+        
+        const timerInterval = setInterval(updateTimer, 1000);
+        
+        // Show answers
+        function showAnswers() {
+            document.getElementById('answers').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,867 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Science & Generative AI Exam</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        h2 {
+            color: #2980b9;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question p {
+            font-weight: bold;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .answer {
+            display: none;
+            background-color: #e8f4f9;
+            padding: 10px;
+            border-left: 4px solid #2980b9;
+            margin-top: 10px;
+        }
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #e74c3c;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        .download-btn {
+            display: block;
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px 20px;
+            background: #27ae60;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .download-btn:hover {
+            background: #219653;
+        }
+        .toggle-btn {
+            cursor: pointer;
+            color: #2980b9;
+            text-decoration: underline;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        code {
+            font-family: Consolas, monospace;
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="timer" id="timer">30:00</div>
+    <div class="container">
+        <h1>Data Science & Generative AI by SATISH @ Sathya Technologies</h1>
+        <h2>Data Analyst Programming Exam (30 Minutes)</h2>
+        
+        <div class="question">
+            <p>1. What is the primary role of a data analyst?</p>
+            <div class="options">
+                <p>a) Developing machine learning models</p>
+                <p>b) Interpreting data to inform business decisions</p>
+                <p>c) Managing databases</p>
+                <p>d) Designing software applications</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(1)">Show Answer</span>
+            <div class="answer" id="answer1">
+                <p><strong>Answer:</strong> b) Interpreting data to inform business decisions</p>
+                <p><strong>Explanation:</strong> Data analysts collect, process, and analyze data to provide actionable insights for business decisions.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>2. Which tool is commonly used for data visualization?</p>
+            <div class="options">
+                <p>a) TensorFlow</p>
+                <p>b) Tableau</p>
+                <p>c) Django</p>
+                <p>d) Kubernetes</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(2)">Show Answer</span>
+            <div class="answer" id="answer2">
+                <p><strong>Answer:</strong> b) Tableau</p>
+                <p><strong>Explanation:</strong> Tableau is a popular tool for creating interactive data visualizations and dashboards.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>3. What does the <code>mean</code> represent in a dataset?</p>
+            <div class="options">
+                <p>a) The most frequent value</p>
+                <p>b) The middle value</p>
+                <p>c) The average of all values</p>
+                <p>d) The range of values</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(3)">Show Answer</span>
+            <div class="answer" id="answer3">
+                <p><strong>Answer:</strong> c) The average of all values</p>
+                <p><strong>Explanation:</strong> The mean is calculated by summing all values and dividing by the number of values.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>4. In SQL, which command retrieves data from a database?</p>
+            <div class="options">
+                <p>a) <code>INSERT</code></p>
+                <p>b) <code>SELECT</code></p>
+                <p>c) <code>UPDATE</code></p>
+                <p>d) <code>DELETE</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(4)">Show Answer</span>
+            <div class="answer" id="answer4">
+                <p><strong>Answer:</strong> b) <code>SELECT</code></p>
+                <p><strong>Explanation:</strong> The <code>SELECT</code> command is used to query and retrieve data from a database table.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>5. What is the purpose of a PivotTable in Excel?</p>
+            <div class="options">
+                <p>a) To automate tasks</p>
+                <p>b) To summarize and analyze data</p>
+                <p>c) To write VBA code</p>
+                <p>d) To create charts</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(5)">Show Answer</span>
+            <div class="answer" id="answer5">
+                <p><strong>Answer:</strong> b) To summarize and analyze data</p>
+                <p><strong>Explanation:</strong> PivotTables aggregate data for quick analysis, such as grouping, filtering, and summarizing.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>6. Which Python library is used for data manipulation?</p>
+            <div class="options">
+                <p>a) <code>TensorFlow</code></p>
+                <p>b) <code>pandas</code></p>
+                <p>c) <code>matplotlib</code></p>
+                <p>d) <code>scikit-learn</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(6)">Show Answer</span>
+            <div class="answer" id="answer6">
+                <p><strong>Answer:</strong> b) <code>pandas</code></p>
+                <p><strong>Explanation:</strong> <code>pandas</code> provides data structures like DataFrames for efficient data manipulation and analysis.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>7. What is data cleaning?</p>
+            <div class="options">
+                <p>a) Creating visualizations</p>
+                <p>b) Removing or correcting errors in data</p>
+                <p>c) Building machine learning models</p>
+                <p>d) Writing SQL queries</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(7)">Show Answer</span>
+            <div class="answer" id="answer7">
+                <p><strong>Answer:</strong> b) Removing or correcting errors in data</p>
+                <p><strong>Explanation:</strong> Data cleaning involves handling missing values, duplicates, and inconsistencies to ensure data quality.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>8. Which SQL clause filters rows after a query?</p>
+            <div class="options">
+                <p>a) <code>GROUP BY</code></p>
+                <p>b) <code>WHERE</code></p>
+                <p>c) <code>ORDER BY</code></p>
+                <p>d) <code>HAVING</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(8)">Show Answer</span>
+            <div class="answer" id="answer8">
+                <p><strong>Answer:</strong> b) <code>WHERE</code></p>
+                <p><strong>Explanation:</strong> The <code>WHERE</code> clause filters rows based on a condition before aggregation in SQL.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>9. What does the <code>VLOOKUP</code> function in Excel do?</p>
+            <div class="options">
+                <p>a) Sums values</p>
+                <p>b) Looks up values vertically</p>
+                <p>c) Counts cells</p>
+                <p>d) Combines text</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(9)">Show Answer</span>
+            <div class="answer" id="answer9">
+                <p><strong>Answer:</strong> b) Looks up values vertically</p>
+                <p><strong>Explanation:</strong> <code>VLOOKUP</code> searches for a value in the first column of a range and returns a value from the same row.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>10. Which Python library is used for plotting?</p>
+            <div class="options">
+                <p>a) <code>numpy</code></p>
+                <p>b) <code>matplotlib</code></p>
+                <p>c) <code>pandas</code></p>
+                <p>d) <code>scikit-learn</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(10)">Show Answer</span>
+            <div class="answer" id="answer10">
+                <p><strong>Answer:</strong> b) <code>matplotlib</code></p>
+                <p><strong>Explanation:</strong> <code>matplotlib</code> is a Python library for creating static, interactive, and animated visualizations.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>11. What is the purpose of a box plot?</p>
+            <div class="options">
+                <p>a) To show correlations</p>
+                <p>b) To visualize data distribution</p>
+                <p>c) To test hypotheses</p>
+                <p>d) To calculate variance</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(11)">Show Answer</span>
+            <div class="answer" id="answer11">
+                <p><strong>Answer:</strong> b) To visualize data distribution</p>
+                <p><strong>Explanation:</strong> A box plot displays the median, quartiles, and outliers of a dataset.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>12. In SQL, which command aggregates data?</p>
+            <div class="options">
+                <p>a) <code>SELECT</code></p>
+                <p>b) <code>GROUP BY</code></p>
+                <p>c) <code>WHERE</code></p>
+                <p>d) <code>ORDER BY</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(12)">Show Answer</span>
+            <div class="answer" id="answer12">
+                <p><strong>Answer:</strong> b) <code>GROUP BY</code></p>
+                <p><strong>Explanation:</strong> <code>GROUP BY</code> groups rows with the same values for aggregation functions like <code>COUNT</code> or <code>SUM</code>.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>13. What is the standard deviation?</p>
+            <div class="options">
+                <p>a) The average of a dataset</p>
+                <p>b) A measure of data dispersion</p>
+                <p>c) The most frequent value</p>
+                <p>d) The middle value</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(13)">Show Answer</span>
+            <div class="answer" id="answer13">
+                <p><strong>Answer:</strong> b) A measure of data dispersion</p>
+                <p><strong>Explanation:</strong> Standard deviation measures how spread out data values are from the mean.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>14. Which Excel function performs conditional logic?</p>
+            <div class="options">
+                <p>a) <code>SUM</code></p>
+                <p>b) <code>IF</code></p>
+                <p>c) <code>COUNT</code></p>
+                <p>d) <code>AVERAGE</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(14)">Show Answer</span>
+            <div class="answer" id="answer14">
+                <p><strong>Answer:</strong> b) <code>IF</code></p>
+                <p><strong>Explanation:</strong> The <code>IF</code> function evaluates a condition and returns one value if true, another if false.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>15. What is the purpose of <code>pandas.DataFrame</code> in Python?</p>
+            <div class="options">
+                <p>a) To create visualizations</p>
+                <p>b) To store and manipulate tabular data</p>
+                <p>c) To train machine learning models</p>
+                <p>d) To query databases</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(15)">Show Answer</span>
+            <div class="answer" id="answer15">
+                <p><strong>Answer:</strong> b) To store and manipulate tabular data</p>
+                <p><strong>Explanation:</strong> <code>pandas.DataFrame</code> is a 2D data structure for handling tabular data in Python.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>16. What is a p-value in hypothesis testing?</p>
+            <div class="options">
+                <p>a) The sample size</p>
+                <p>b) The probability of observing data given the null hypothesis</p>
+                <p>c) The correlation coefficient</p>
+                <p>d) The variance of data</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(16)">Show Answer</span>
+            <div class="answer" id="answer16">
+                <p><strong>Answer:</strong> b) The probability of observing data given the null hypothesis</p>
+                <p><strong>Explanation:</strong> The p-value measures the likelihood of obtaining results at least as extreme as observed, assuming the null hypothesis is true.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>17. Which SQL join returns all rows from both tables?</p>
+            <div class="options">
+                <p>a) <code>INNER JOIN</code></p>
+                <p>b) <code>LEFT JOIN</code></p>
+                <p>c) <code>RIGHT JOIN</code></p>
+                <p>d) <code>FULL JOIN</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(17)">Show Answer</span>
+            <div class="answer" id="answer17">
+                <p><strong>Answer:</strong> d) <code>FULL JOIN</code></p>
+                <p><strong>Explanation:</strong> <code>FULL JOIN</code> returns all rows from both tables, with NULLs where there is no match.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>18. What is the purpose of Power Query in Excel?</p>
+            <div class="options">
+                <p>a) To create charts</p>
+                <p>b) To transform and import data</p>
+                <p>c) To write VBA code</p>
+                <p>d) To summarize data</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(18)">Show Answer</span>
+            <div class="answer" id="answer18">
+                <p><strong>Answer:</strong> b) To transform and import data</p>
+                <p><strong>Explanation:</strong> Power Query is used to import, clean, and transform data from various sources in Excel.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>19. Which Python function calculates the correlation coefficient?</p>
+            <div class="options">
+                <p>a) <code>pandas.DataFrame.mean</code></p>
+                <p>b) <code>pandas.DataFrame.corr</code></p>
+                <p>c) <code>numpy.sum</code></p>
+                <p>d) <code>matplotlib.plot</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(19)">Show Answer</span>
+            <div class="answer" id="answer19">
+                <p><strong>Answer:</strong> b) <code>pandas.DataFrame.corr</code></p>
+                <p><strong>Explanation:</strong> <code>pandas.DataFrame.corr</code> computes the correlation matrix, including Pearson’s correlation coefficient.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>20. What is a histogram used for?</p>
+            <div class="options">
+                <p>a) To show relationships between variables</p>
+                <p>b) To display the distribution of a single variable</p>
+                <p>c) To compare means</p>
+                <p>d) To test hypotheses</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(20)">Show Answer</span>
+            <div class="answer" id="answer20">
+                <p><strong>Answer:</strong> b) To display the distribution of a single variable</p>
+                <p><strong>Explanation:</strong> A histogram visualizes the frequency distribution of a single numerical variable.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>21. What does the <code>COUNTIF</code> function in Excel do?</p>
+            <div class="options">
+                <p>a) Sums values</p>
+                <p>b) Counts cells meeting a criterion</p>
+                <p>c) Looks up values</p>
+                <p>d) Combines text</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(21)">Show Answer</span>
+            <div class="answer" id="answer21">
+                <p><strong>Answer:</strong> b) Counts cells meeting a criterion</p>
+                <p><strong>Explanation:</strong> <code>COUNTIF</code> counts cells in a range that meet a specified condition, like values greater than 10.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>22. In SQL, which function calculates the average?</p>
+            <div class="options">
+                <p>a) <code>SUM</code></p>
+                <p>b) <code>AVG</code></p>
+                <p>c) <code>COUNT</code></p>
+                <p>d) <code>MAX</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(22)">Show Answer</span>
+            <div class="answer" id="answer22">
+                <p><strong>Answer:</strong> b) <code>AVG</code></p>
+                <p><strong>Explanation:</strong> The <code>AVG</code> function calculates the mean of a numeric column in SQL.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>23. What is the purpose of a t-test?</p>
+            <div class="options">
+                <p>a) To measure correlation</p>
+                <p>b) To compare means of groups</p>
+                <p>c) To calculate variance</p>
+                <p>d) To visualize data</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(23)">Show Answer</span>
+            <div class="answer" id="answer23">
+                <p><strong>Answer:</strong> b) To compare means of groups</p>
+                <p><strong>Explanation:</strong> A t-test assesses whether the means of two groups are statistically different.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>24. Which Python library is used for statistical modeling?</p>
+            <div class="options">
+                <p>a) <code>matplotlib</code></p>
+                <p>b) <code>statsmodels</code></p>
+                <p>c) <code>pandas</code></p>
+                <p>d) <code>numpy</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(24)">Show Answer</span>
+            <div class="answer" id="answer24">
+                <p><strong>Answer:</strong> b) <code>statsmodels</code></p>
+                <p><strong>Explanation:</strong> <code>statsmodels</code> provides tools for statistical modeling, like regression and hypothesis testing.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>25. What is the purpose of Power Pivot in Excel?</p>
+            <div class="options">
+                <p>a) To automate tasks</p>
+                <p>b) To create advanced data models</p>
+                <p>c) To import data</p>
+                <p>d) To create charts</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(25)">Show Answer</span>
+            <div class="answer" id="answer25">
+                <p><strong>Answer:</strong> b) To create advanced data models</p>
+                <p><strong>Explanation:</strong> Power Pivot enables advanced data modeling and interactive dashboards using DAX formulas.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>26. What is data normalization?</p>
+            <div class="options">
+                <p>a) Visualizing data</p>
+                <p>b) Scaling data to a standard range</p>
+                <p>c) Removing outliers</p>
+                <p>d) Aggregating data</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(26)">Show Answer</span>
+            <div class="answer" id="answer26">
+                <p><strong>Answer:</strong> b) Scaling data to a standard range</p>
+                <p><strong>Explanation:</strong> Normalization scales data (e.g., to 0-1) to ensure consistency in analysis.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>27. Which SQL clause sorts query results?</p>
+            <div class="options">
+                <p>a) <code>WHERE</code></p>
+                <p>b) <code>GROUP BY</code></p>
+                <p>c) <code>ORDER BY</code></p>
+                <p>d) <code>HAVING</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(27)">Show Answer</span>
+            <div class="answer" id="answer27">
+                <p><strong>Answer:</strong> c) <code>ORDER BY</code></p>
+                <p><strong>Explanation:</strong> <code>ORDER BY</code> sorts query results in ascending or descending order.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>28. What is the purpose of a scatter plot?</p>
+            <div class="options">
+                <p>a) To show data distribution</p>
+                <p>b) To visualize relationships between two variables</p>
+                <p>c) To compare categories</p>
+                <p>d) To show trends over time</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(28)">Show Answer</span>
+            <div class="answer" id="answer28">
+                <p><strong>Answer:</strong> b) To visualize relationships between two variables</p>
+                <p><strong>Explanation:</strong> A scatter plot displays data points to show the relationship or correlation between two variables.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>29. Which Excel tool is used for regression analysis?</p>
+            <div class="options">
+                <p>a) PivotTable</p>
+                <p>b) Data Analysis ToolPak</p>
+                <p>c) Conditional Formatting</p>
+                <p>d) Goal Seek</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(29)">Show Answer</span>
+            <div class="answer" id="answer29">
+                <p><strong>Answer:</strong> b) Data Analysis ToolPak</p>
+                <p><strong>Explanation:</strong> The Data Analysis ToolPak provides tools for statistical analysis, including regression.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>30. In Python, how do you handle missing values in a <code>pandas.DataFrame</code>?</p>
+            <div class="options">
+                <p>a) <code>df.dropna()</code></p>
+                <p>b) <code>df.plot()</code></p>
+                <p>c) <code>df.groupby()</code></p>
+                <p>d) <code>df.merge()</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(30)">Show Answer</span>
+            <div class="answer" id="answer30">
+                <p><strong>Answer:</strong> a) <code>df.dropna()</code></p>
+                <p><strong>Explanation:</strong> <code>df.dropna()</code> removes rows or columns with missing values from a DataFrame.</p>
+            </div>
+        </div>
+
+        <a href="#" class="download-btn" onclick="downloadTest()">Download Exam (TXT)</a>
+    </div>
+
+    <script>
+        // Timer functionality
+        let timeLeft = 30 * 60; // 30 minutes in seconds
+        const timerDisplay = document.getElementById('timer');
+        
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                timerDisplay.textContent = "Time's Up!";
+                alert("Time is up!");
+            } else {
+                timeLeft--;
+            }
+        }
+        const timerInterval = setInterval(updateTimer, 1000);
+
+        // Toggle answer visibility
+        function toggleAnswer(id) {
+            const answer = document.getElementById(`answer${id}`);
+            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Download exam as a text file
+        function downloadTest() {
+            const content = `
+Data Science & Generative AI by SATISH @ Sathya Technologies
+Data Analyst Programming Exam (30 Minutes)
+
+1. What is the primary role of a data analyst?
+a) Developing machine learning models
+b) Interpreting data to inform business decisions
+c) Managing databases
+d) Designing software applications
+Answer: b) Interpreting data to inform business decisions
+Explanation: Data analysts collect, process, and analyze data to provide actionable insights for business decisions.
+
+2. Which tool is commonly used for data visualization?
+a) TensorFlow
+b) Tableau
+c) Django
+d) Kubernetes
+Answer: b) Tableau
+Explanation: Tableau is a popular tool for creating interactive data visualizations and dashboards.
+
+3. What does the mean represent in a dataset?
+a) The most frequent value
+b) The middle value
+c) The average of all values
+d) The range of values
+Answer: c) The average of all values
+Explanation: The mean is calculated by summing all values and dividing by the number of values.
+
+4. In SQL, which command retrieves data from a database?
+a) INSERT
+b) SELECT
+c) UPDATE
+d) DELETE
+Answer: b) SELECT
+Explanation: The SELECT command is used to query and retrieve data from a database table.
+
+5. What is the purpose of a PivotTable in Excel?
+a) To automate tasks
+b) To summarize and analyze data
+c) To write VBA code
+d) To create charts
+Answer: b) To summarize and analyze data
+Explanation: PivotTables aggregate data for quick analysis, such as grouping, filtering, and summarizing.
+
+6. Which Python library is used for data manipulation?
+a) TensorFlow
+b) pandas
+c) matplotlib
+d) scikit-learn
+Answer: b) pandas
+Explanation: pandas provides data structures like DataFrames for efficient data manipulation and analysis.
+
+7. What is data cleaning?
+a) Creating visualizations
+b) Removing or correcting errors in data
+c) Building machine learning models
+d) Writing SQL queries
+Answer: b) Removing or correcting errors in data
+Explanation: Data cleaning involves handling missing values, duplicates, and inconsistencies to ensure data quality.
+
+8. Which SQL clause filters rows after a query?
+a) GROUP BY
+b) WHERE
+c) ORDER BY
+d) HAVING
+Answer: b) WHERE
+Explanation: The WHERE clause filters rows based on a condition before aggregation in SQL.
+
+9. What does the VLOOKUP function in Excel do?
+a) Sums values
+b) Looks up values vertically
+c) Counts cells
+d) Combines text
+Answer: b) Looks up values vertically
+Explanation: VLOOKUP searches for a value in the first column of a range and returns a value from the same row.
+
+10. Which Python library is used for plotting?
+a) numpy
+b) matplotlib
+c) pandas
+d) scikit-learn
+Answer: b) matplotlib
+Explanation: matplotlib is a Python library for creating static, interactive, and animated visualizations.
+
+11. What is the purpose of a box plot?
+a) To show correlations
+b) To visualize data distribution
+c) To test hypotheses
+d) To calculate variance
+Answer: b) To visualize data distribution
+Explanation: A box plot displays the median, quartiles, and outliers of a dataset.
+
+12. In SQL, which command aggregates data?
+a) SELECT
+b) GROUP BY
+c) WHERE
+d) ORDER BY
+Answer: b) GROUP BY
+Explanation: GROUP BY groups rows with the same values for aggregation functions like COUNT or SUM.
+
+13. What is the standard deviation?
+a) The average of a dataset
+b) A measure of data dispersion
+c) The most frequent value
+d) The middle value
+Answer: b) A measure of data dispersion
+Explanation: Standard deviation measures how spread out data values are from the mean.
+
+14. Which Excel function performs conditional logic?
+a) SUM
+b) IF
+c) COUNT
+d) AVERAGE
+Answer: b) IF
+Explanation: The IF function evaluates a condition and returns one value if true, another if false.
+
+15. What is the purpose of pandas.DataFrame in Python?
+a) To create visualizations
+b) To store and manipulate tabular data
+c) To train machine learning models
+d) To query databases
+Answer: b) To store and manipulate tabular data
+Explanation: pandas.DataFrame is a 2D data structure for handling tabular data in Python.
+
+16. What is a p-value in hypothesis testing?
+a) The sample size
+b) The probability of observing data given the null hypothesis
+c) The correlation coefficient
+d) The variance of data
+Answer: b) The probability of observing data given the null hypothesis
+Explanation: The p-value measures the likelihood of obtaining results at least as extreme as observed, assuming the null hypothesis is true.
+
+17. Which SQL join returns all rows from both tables?
+a) INNER JOIN
+b) LEFT JOIN
+c) RIGHT JOIN
+d) FULL JOIN
+Answer: d) FULL JOIN
+Explanation: FULL JOIN returns all rows from both tables, with NULLs where there is no match.
+
+18. What is the purpose of Power Query in Excel?
+a) To create charts
+b) To transform and import data
+c) To write VBA code
+d) To summarize data
+Answer: b) To transform and import data
+Explanation: Power Query is used to import, clean, and transform data from various sources in Excel.
+
+19. Which Python function calculates the correlation coefficient?
+a) pandas.DataFrame.mean
+b) pandas.DataFrame.corr
+c) numpy.sum
+d) matplotlib.plot
+Answer: b) pandas.DataFrame.corr
+Explanation: pandas.DataFrame.corr computes the correlation matrix, including Pearson’s correlation coefficient.
+
+20. What is a histogram used for?
+a) To show relationships between variables
+b) To display the distribution of a single variable
+c) To compare means
+d) To test hypotheses
+Answer: b) To display the distribution of a single variable
+Explanation: A histogram visualizes the frequency distribution of a single numerical variable.
+
+21. What does the COUNTIF function in Excel do?
+a) Sums values
+b) Counts cells meeting a criterion
+c) Looks up values
+d) Combines text
+Answer: b) Counts cells meeting a criterion
+Explanation: COUNTIF counts cells in a range that meet a specified condition, like values greater than 10.
+
+22. In SQL, which function calculates the average?
+a) SUM
+b) AVG
+c) COUNT
+d) MAX
+Answer: b) AVG
+Explanation: The AVG function calculates the mean of a numeric column in SQL.
+
+23. What is the purpose of a t-test?
+a) To measure correlation
+b) To compare means of groups
+c) To calculate variance
+d) To visualize data
+Answer: b) To compare means of groups
+Explanation: A t-test assesses whether the means of two groups are statistically different.
+
+24. Which Python library is used for statistical modeling?
+a) matplotlib
+b) statsmodels
+c) pandas
+d) numpy
+Answer: b) statsmodels
+Explanation: statsmodels provides tools for statistical modeling, like regression and hypothesis testing.
+
+25. What is the purpose of Power Pivot in Excel?
+a) To automate tasks
+b) To create advanced data models
+c) To import data
+d) To create charts
+Answer: b) To create advanced data models
+Explanation: Power Pivot enables advanced data modeling and interactive dashboards using DAX formulas.
+
+26. What is data normalization?
+a) Visualizing data
+b) Scaling data to a standard range
+c) Removing outliers
+d) Aggregating data
+Answer: b) Scaling data to a standard range
+Explanation: Normalization scales data (e.g., to 0-1) to ensure consistency in analysis.
+
+27. Which SQL clause sorts query results?
+a) WHERE
+b) GROUP BY
+c) ORDER BY
+d) HAVING
+Answer: c) ORDER BY
+Explanation: ORDER BY sorts query results in ascending or descending order.
+
+28. What is the purpose of a scatter plot?
+a) To show data distribution
+b) To visualize relationships between two variables
+c) To compare categories
+d) To show trends over time
+Answer: b) To visualize relationships between two variables
+Explanation: A scatter plot displays data points to show the relationship or correlation between two variables.
+
+29. Which Excel tool is used for regression analysis?
+a) PivotTable
+b) Data Analysis ToolPak
+c) Conditional Formatting
+d) Goal Seek
+Answer: b) Data Analysis ToolPak
+Explanation: The Data Analysis ToolPak provides tools for statistical analysis, including regression.
+
+30. In Python, how do you handle missing values in a pandas.DataFrame?
+a) df.dropna()
+b) df.plot()
+c) df.groupby()
+d) df.merge()
+Answer: a) df.dropna()
+Explanation: df.dropna() removes rows or columns with missing values from a DataFrame.
+            `;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'data_analyst_exam_30q.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>

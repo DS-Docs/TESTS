@@ -1,0 +1,867 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Science & Generative AI Exam</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        h2 {
+            color: #2980b9;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question p {
+            font-weight: bold;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .answer {
+            display: none;
+            background-color: #e8f4f9;
+            padding: 10px;
+            border-left: 4px solid #2980b9;
+            margin-top: 10px;
+        }
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #e74c3c;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        .download-btn {
+            display: block;
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px 20px;
+            background: #27ae60;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .download-btn:hover {
+            background: #219653;
+        }
+        .toggle-btn {
+            cursor: pointer;
+            color: #2980b9;
+            text-decoration: underline;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        code {
+            font-family: Consolas, monospace;
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="timer" id="timer">30:00</div>
+    <div class="container">
+        <h1>Data Science & Generative AI by SATISH @ Sathya Technologies</h1>
+        <h2>Microsoft Excel Programming Exam (30 Minutes)</h2>
+        
+        <div class="question">
+            <p>1. What is the primary use of Microsoft Excel in data science?</p>
+            <div class="options">
+                <p>a) Image processing</p>
+                <p>b) Data analysis and visualization</p>
+                <p>c) Web development</p>
+                <p>d) Database management</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(1)">Show Answer</span>
+            <div class="answer" id="answer1">
+                <p><strong>Answer:</strong> b) Data analysis and visualization</p>
+                <p><strong>Explanation:</strong> Excel is widely used in data science for data cleaning, analysis, and creating visualizations like charts.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>2. Which Excel function returns the sum of a range of cells?</p>
+            <div class="options">
+                <p>a) <code>AVERAGE</code></p>
+                <p>b) <code>SUM</code></p>
+                <p>c) <code>COUNT</code></p>
+                <p>d) <code>MAX</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(2)">Show Answer</span>
+            <div class="answer" id="answer2">
+                <p><strong>Answer:</strong> b) <code>SUM</code></p>
+                <p><strong>Explanation:</strong> The <code>SUM</code> function adds all numbers in a specified range of cells.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>3. What does the <code>VLOOKUP</code> function do?</p>
+            <div class="options">
+                <p>a) Counts cells</p>
+                <p>b) Looks up a value in a table vertically</p>
+                <p>c) Calculates averages</p>
+                <p>d) Sorts data</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(3)">Show Answer</span>
+            <div class="answer" id="answer3">
+                <p><strong>Answer:</strong> b) Looks up a value in a table vertically</p>
+                <p><strong>Explanation:</strong> <code>VLOOKUP</code> searches for a value in the first column of a range and returns a value from the same row.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>4. Which function combines text from multiple cells?</p>
+            <div class="options">
+                <p>a) <code>CONCAT</code></p>
+                <p>b) <code>SUM</code></p>
+                <p>c) <code>IF</code></p>
+                <p>d) <code>AVERAGE</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(4)">Show Answer</span>
+            <div class="answer" id="answer4">
+                <p><strong>Answer:</strong> a) <code>CONCAT</code></p>
+                <p><strong>Explanation:</strong> <code>CONCAT</code> (or <code>TEXTJOIN</code> in newer versions) combines text from multiple cells into one string.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>5. What is the purpose of a PivotTable in Excel?</p>
+            <div class="options">
+                <p>a) To write VBA code</p>
+                <p>b) To summarize and analyze data</p>
+                <p>c) To create charts</p>
+                <p>d) To merge cells</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(5)">Show Answer</span>
+            <div class="answer" id="answer5">
+                <p><strong>Answer:</strong> b) To summarize and analyze data</p>
+                <p><strong>Explanation:</strong> PivotTables aggregate and summarize data, enabling quick analysis like grouping and filtering.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>6. Which Excel feature is used to automate repetitive tasks?</p>
+            <div class="options">
+                <p>a) PivotTable</p>
+                <p>b) VBA</p>
+                <p>c) Conditional Formatting</p>
+                <p>d) Data Validation</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(6)">Show Answer</span>
+            <div class="answer" id="answer6">
+                <p><strong>Answer:</strong> b) VBA</p>
+                <p><strong>Explanation:</strong> VBA (Visual Basic for Applications) allows users to write macros to automate tasks in Excel.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>7. What does the <code>IF</code> function do in Excel?</p>
+            <div class="options">
+                <p>a) Combines text</p>
+                <p>b) Performs conditional logic</p>
+                <p>c) Calculates sums</p>
+                <p>d) Looks up values</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(7)">Show Answer</span>
+            <div class="answer" id="answer7">
+                <p><strong>Answer:</strong> b) Performs conditional logic</p>
+                <p><strong>Explanation:</strong> The <code>IF</code> function evaluates a condition and returns one value if true, another if false.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>8. Which function counts cells with numerical values?</p>
+            <div class="options">
+                <p>a) <code>COUNT</code></p>
+                <p>b) <code>COUNTA</code></p>
+                <p>c) <code>COUNTBLANK</code></p>
+                <p>d) <code>SUM</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(8)">Show Answer</span>
+            <div class="answer" id="answer8">
+                <p><strong>Answer:</strong> a) <code>COUNT</code></p>
+                <p><strong>Explanation:</strong> <code>COUNT</code> counts cells containing numbers, while <code>COUNTA</code> counts non-empty cells.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>9. What is the purpose of Conditional Formatting in Excel?</p>
+            <div class="options">
+                <p>a) To validate data</p>
+                <p>b) To highlight cells based on rules</p>
+                <p>c) To create charts</p>
+                <p>d) To write VBA code</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(9)">Show Answer</span>
+            <div class="answer" id="answer9">
+                <p><strong>Answer:</strong> b) To highlight cells based on rules</p>
+                <p><strong>Explanation:</strong> Conditional Formatting applies formatting (e.g., colors) to cells based on specified conditions.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>10. Which function looks up values horizontally in a table?</p>
+            <div class="options">
+                <p>a) <code>VLOOKUP</code></p>
+                <p>b) <code>HLOOKUP</code></p>
+                <p>c) <code>INDEX</code></p>
+                <p>d) <code>MATCH</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(10)">Show Answer</span>
+            <div class="answer" id="answer10">
+                <p><strong>Answer:</strong> b) <code>HLOOKUP</code></p>
+                <p><strong>Explanation:</strong> <code>HLOOKUP</code> searches for a value in the first row of a table and returns a value from the same column.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>11. What does the <code>INDEX</code> function return?</p>
+            <div class="options">
+                <p>a) A sum of values</p>
+                <p>b) A value at a specified position</p>
+                <p>c) A count of cells</p>
+                <p>d) A sorted list</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(11)">Show Answer</span>
+            <div class="answer" id="answer11">
+                <p><strong>Answer:</strong> b) A value at a specified position</p>
+                <p><strong>Explanation:</strong> <code>INDEX</code> returns the value at a given row and column in a range.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>12. Which function finds the position of a value in a range?</p>
+            <div class="options">
+                <p>a) <code>VLOOKUP</code></p>
+                <p>b) <code>MATCH</code></p>
+                <p>c) <code>SUM</code></p>
+                <p>d) <code>IF</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(12)">Show Answer</span>
+            <div class="answer" id="answer12">
+                <p><strong>Answer:</strong> b) <code>MATCH</code></p>
+                <p><strong>Explanation:</strong> <code>MATCH</code> returns the relative position of a value in a range, often used with <code>INDEX</code>.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>13. What is the purpose of Data Validation in Excel?</p>
+            <div class="options">
+                <p>a) To create charts</p>
+                <p>b) To restrict data entry</p>
+                <p>c) To summarize data</p>
+                <p>d) To automate tasks</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(13)">Show Answer</span>
+            <div class="answer" id="answer13">
+                <p><strong>Answer:</strong> b) To restrict data entry</p>
+                <p><strong>Explanation:</strong> Data Validation ensures that entered data meets specific criteria, like dropdown lists or numeric ranges.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>14. Which Excel tool is used for what-if analysis?</p>
+            <div class="options">
+                <p>a) PivotTable</p>
+                <p>b) Goal Seek</p>
+                <p>c) Conditional Formatting</p>
+                <p>d) VBA</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(14)">Show Answer</span>
+            <div class="answer" id="answer14">
+                <p><strong>Answer:</strong> b) Goal Seek</p>
+                <p><strong>Explanation:</strong> Goal Seek adjusts an input value to achieve a desired result in a formula, used for what-if analysis.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>15. What does the <code>AVERAGE</code> function do?</p>
+            <div class="options">
+                <p>a) Counts cells</p>
+                <p>b) Calculates the mean of numbers</p>
+                <p>c) Looks up values</p>
+                <p>d) Combines text</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(15)">Show Answer</span>
+            <div class="answer" id="answer15">
+                <p><strong>Answer:</strong> b) Calculates the mean of numbers</p>
+                <p><strong>Explanation:</strong> <code>AVERAGE</code> computes the arithmetic mean of a range of numerical values.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>16. Which function rounds a number to a specified number of digits?</p>
+            <div class="options">
+                <p>a) <code>ROUND</code></p>
+                <p>b) <code>CEILING</code></p>
+                <p>c) <code>FLOOR</code></p>
+                <p>d) <code>TRUNC</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(16)">Show Answer</span>
+            <div class="answer" id="answer16">
+                <p><strong>Answer:</strong> a) <code>ROUND</code></p>
+                <p><strong>Explanation:</strong> <code>ROUND</code> rounds a number to a specified number of decimal places.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>17. What is the purpose of the <code>COUNTIF</code> function?</p>
+            <div class="options">
+                <p>a) To sum values</p>
+                <p>b) To count cells meeting a criterion</p>
+                <p>c) To look up values</p>
+                <p>d) To combine text</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(17)">Show Answer</span>
+            <div class="answer" id="answer17">
+                <p><strong>Answer:</strong> b) To count cells meeting a criterion</p>
+                <p><strong>Explanation:</strong> <code>COUNTIF</code> counts cells in a range that meet a specified condition, like values greater than 10.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>18. Which Excel feature visualizes data trends?</p>
+            <div class="options">
+                <p>a) PivotTable</p>
+                <p>b) Chart</p>
+                <p>c) Data Validation</p>
+                <p>d) VBA</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(18)">Show Answer</span>
+            <div class="answer" id="answer18">
+                <p><strong>Answer:</strong> b) Chart</p>
+                <p><strong>Explanation:</strong> Charts (e.g., line, bar) visualize data trends and patterns for better interpretation.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>19. What does the <code>SUMIF</code> function do?</p>
+            <div class="options">
+                <p>a) Counts cells</p>
+                <p>b) Sums values meeting a criterion</p>
+                <p>c) Looks up values</p>
+                <p>d) Rounds numbers</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(19)">Show Answer</span>
+            <div class="answer" id="answer19">
+                <p><strong>Answer:</strong> b) Sums values meeting a criterion</p>
+                <p><strong>Explanation:</strong> <code>SUMIF</code> adds values in a range that meet a specified condition.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>20. Which Excel tool is used for regression analysis?</p>
+            <div class="options">
+                <p>a) PivotTable</p>
+                <p>b) Data Analysis ToolPak</p>
+                <p>c) Conditional Formatting</p>
+                <p>d) Goal Seek</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(20)">Show Answer</span>
+            <div class="answer" id="answer20">
+                <p><strong>Answer:</strong> b) Data Analysis ToolPak</p>
+                <p><strong>Explanation:</strong> The Data Analysis ToolPak provides tools like regression and descriptive statistics for data analysis.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>21. What is the purpose of the <code>TEXT</code> function?</p>
+            <div class="options">
+                <p>a) To sum values</p>
+                <p>b) To format numbers as text</p>
+                <p>c) To count cells</p>
+                <p>d) To look up values</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(21)">Show Answer</span>
+            <div class="answer" id="answer21">
+                <p><strong>Answer:</strong> b) To format numbers as text</p>
+                <p><strong>Explanation:</strong> <code>TEXT</code> formats numbers or dates into a specified text format, like "MM/DD/YYYY".</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>22. Which VBA object represents an Excel worksheet?</p>
+            <div class="options">
+                <p>a) <code>Workbook</code></p>
+                <p>b) <code>Worksheet</code></p>
+                <p>c) <code>Range</code></p>
+                <p>d) <code>Cell</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(22)">Show Answer</span>
+            <div class="answer" id="answer22">
+                <p><strong>Answer:</strong> b) <code>Worksheet</code></p>
+                <p><strong>Explanation:</strong> The <code>Worksheet</code> object in VBA represents a single worksheet in an Excel workbook.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>23. What does the <code>AND</code> function do?</p>
+            <div class="options">
+                <p>a) Combines text</p>
+                <p>b) Checks multiple conditions</p>
+                <p>c) Sums values</p>
+                <p>d) Looks up values</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(23)">Show Answer</span>
+            <div class="answer" id="answer23">
+                <p><strong>Answer:</strong> b) Checks multiple conditions</p>
+                <p><strong>Explanation:</strong> <code>AND</code> returns TRUE if all specified conditions are true, often used with <code>IF</code>.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>24. Which Excel feature filters data in a PivotTable?</p>
+            <div class="options">
+                <p>a) Slicer</p>
+                <p>b) Chart</p>
+                <p>c) Conditional Formatting</p>
+                <p>d) Data Validation</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(24)">Show Answer</span>
+            <div class="answer" id="answer24">
+                <p><strong>Answer:</strong> a) Slicer</p>
+                <p><strong>Explanation:</strong> Slicers provide an interactive way to filter data in PivotTables.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>25. What is the purpose of the <code>XLOOKUP</code> function?</p>
+            <div class="options">
+                <p>a) To count cells</p>
+                <p>b) To replace <code>VLOOKUP</code> with more flexibility</p>
+                <p>c) To sum values</p>
+                <p>d) To combine text</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(25)">Show Answer</span>
+            <div class="answer" id="answer25">
+                <p><strong>Answer:</strong> b) To replace <code>VLOOKUP</code> with more flexibility</p>
+                <p><strong>Explanation:</strong> <code>XLOOKUP</code> is a modern lookup function that offers more flexibility than <code>VLOOKUP</code> and <code>HLOOKUP</code>.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>26. Which VBA method saves a workbook?</p>
+            <div class="options">
+                <p>a) <code>Save</code></p>
+                <p>b) <code>Close</code></p>
+                <p>c) <code>Open</code></p>
+                <p>d) <code>Write</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(26)">Show Answer</span>
+            <div class="answer" id="answer26">
+                <p><strong>Answer:</strong> a) <code>Save</code></p>
+                <p><strong>Explanation:</strong> The <code>Save</code> method of the <code>Workbook</code> object saves the current workbook in VBA.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>27. What does the <code>POWER</code> function do?</p>
+            <div class="options">
+                <p>a) Raises a number to a power</p>
+                <p>b) Counts cells</p>
+                <p>c) Combines text</p>
+                <p>d) Looks up values</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(27)">Show Answer</span>
+            <div class="answer" id="answer27">
+                <p><strong>Answer:</strong> a) Raises a number to a power</p>
+                <p><strong>Explanation:</strong> <code>POWER</code> raises a number to a specified exponent, e.g., <code>POWER(2,3)</code> returns 8.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>28. Which Excel tool creates interactive dashboards?</p>
+            <div class="options">
+                <p>a) PivotTable</p>
+                <p>b) Slicer</p>
+                <p>c) Power Query</p>
+                <p>d) Power Pivot</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(28)">Show Answer</span>
+            <div class="answer" id="answer28">
+                <p><strong>Answer:</strong> d) Power Pivot</p>
+                <p><strong>Explanation:</strong> Power Pivot enables advanced data modeling and interactive dashboards using DAX formulas.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>29. What is the purpose of Power Query in Excel?</p>
+            <div class="options">
+                <p>a) To write VBA code</p>
+                <p>b) To transform and import data</p>
+                <p>c) To create charts</p>
+                <p>d) To summarize data</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(29)">Show Answer</span>
+            <div class="answer" id="answer29">
+                <p><strong>Answer:</strong> b) To transform and import data</p>
+                <p><strong>Explanation:</strong> Power Query is used to import, clean, and transform data from various sources in Excel.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>30. Which function calculates the standard deviation of a range?</p>
+            <div class="options">
+                <p>a) <code>STDEV.P</code></p>
+                <p>b) <code>AVERAGE</code></p>
+                <p>c) <code>SUM</code></p>
+                <p>d) <code>COUNT</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(30)">Show Answer</span>
+            <div class="answer" id="answer30">
+                <p><strong>Answer:</strong> a) <code>STDEV.P</code></p>
+                <p><strong>Explanation:</strong> <code>STDEV.P</code> calculates the standard deviation for an entire population, while <code>STDEV.S</code> is for a sample.</p>
+            </div>
+        </div>
+
+        <a href="#" class="download-btn" onclick="downloadTest()">Download Exam (TXT)</a>
+    </div>
+
+    <script>
+        // Timer functionality
+        let timeLeft = 30 * 60; // 30 minutes in seconds
+        const timerDisplay = document.getElementById('timer');
+        
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                timerDisplay.textContent = "Time's Up!";
+                alert("Time is up!");
+            } else {
+                timeLeft--;
+            }
+        }
+        const timerInterval = setInterval(updateTimer, 1000);
+
+        // Toggle answer visibility
+        function toggleAnswer(id) {
+            const answer = document.getElementById(`answer${id}`);
+            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Download exam as a text file
+        function downloadTest() {
+            const content = `
+Data Science & Generative AI by SATISH @ Sathya Technologies
+Microsoft Excel Programming Exam (30 Minutes)
+
+1. What is the primary use of Microsoft Excel in data science?
+a) Image processing
+b) Data analysis and visualization
+c) Web development
+d) Database management
+Answer: b) Data analysis and visualization
+Explanation: Excel is widely used in data science for data cleaning, analysis, and creating visualizations like charts.
+
+2. Which Excel function returns the sum of a range of cells?
+a) AVERAGE
+b) SUM
+c) COUNT
+d) MAX
+Answer: b) SUM
+Explanation: The SUM function adds all numbers in a specified range of cells.
+
+3. What does the VLOOKUP function do?
+a) Counts cells
+b) Looks up a value in a table vertically
+c) Calculates averages
+d) Sorts data
+Answer: b) Looks up a value in a table vertically
+Explanation: VLOOKUP searches for a value in the first column of a range and returns a value from the same row.
+
+4. Which function combines text from multiple cells?
+a) CONCAT
+b) SUM
+c) IF
+d) AVERAGE
+Answer: a) CONCAT
+Explanation: CONCAT (or TEXTJOIN in newer versions) combines text from multiple cells into one string.
+
+5. What is the purpose of a PivotTable in Excel?
+a) To write VBA code
+b) To summarize and analyze data
+c) To create charts
+d) To merge cells
+Answer: b) To summarize and analyze data
+Explanation: PivotTables aggregate and summarize data, enabling quick analysis like grouping and filtering.
+
+6. Which Excel feature is used to automate repetitive tasks?
+a) PivotTable
+b) VBA
+c) Conditional Formatting
+d) Data Validation
+Answer: b) VBA
+Explanation: VBA (Visual Basic for Applications) allows users to write macros to automate tasks in Excel.
+
+7. What does the IF function do in Excel?
+a) Combines text
+b) Performs conditional logic
+c) Calculates sums
+d) Looks up values
+Answer: b) Performs conditional logic
+Explanation: The IF function evaluates a condition and returns one value if true, another if false.
+
+8. Which function counts cells with numerical values?
+a) COUNT
+b) COUNTA
+c) COUNTBLANK
+d) SUM
+Answer: a) COUNT
+Explanation: COUNT counts cells containing numbers, while COUNTA counts non-empty cells.
+
+9. What is the purpose of Conditional Formatting in Excel?
+a) To validate data
+b) To highlight cells based on rules
+c) To create charts
+d) To write VBA code
+Answer: b) To highlight cells based on rules
+Explanation: Conditional Formatting applies formatting (e.g., colors) to cells based on specified conditions.
+
+10. Which function looks up values horizontally in a table?
+a) VLOOKUP
+b) HLOOKUP
+c) INDEX
+d) MATCH
+Answer: b) HLOOKUP
+Explanation: HLOOKUP searches for a value in the first row of a table and returns a value from the same column.
+
+11. What does the INDEX function return?
+a) A sum of values
+b) A value at a specified position
+c) A count of cells
+d) A sorted list
+Answer: b) A value at a specified position
+Explanation: INDEX returns the value at a given row and column in a range.
+
+12. Which function finds the position of a value in a range?
+a) VLOOKUP
+b) MATCH
+c) SUM
+d) IF
+Answer: b) MATCH
+Explanation: MATCH returns the relative position of a value in a range, often used with INDEX.
+
+13. What is the purpose of Data Validation in Excel?
+a) To create charts
+b) To restrict data entry
+c) To summarize data
+d) To automate tasks
+Answer: b) To restrict data entry
+Explanation: Data Validation ensures that entered data meets specific criteria, like dropdown lists or numeric ranges.
+
+14. Which Excel tool is used for what-if analysis?
+a) PivotTable
+b) Goal Seek
+c) Conditional Formatting
+d) VBA
+Answer: b) Goal Seek
+Explanation: Goal Seek adjusts an input value to achieve a desired result in a formula, used for what-if analysis.
+
+15. What does the AVERAGE function do?
+a) Counts cells
+b) Calculates the mean of numbers
+c) Looks up values
+d) Combines text
+Answer: b) Calculates the mean of numbers
+Explanation: AVERAGE computes the arithmetic mean of a range of numerical values.
+
+16. Which function rounds a number to a specified number of digits?
+a) ROUND
+b) CEILING
+c) FLOOR
+d) TRUNC
+Answer: a) ROUND
+Explanation: ROUND rounds a number to a specified number of decimal places.
+
+17. What is the purpose of the COUNTIF function?
+a) To sum values
+b) To count cells meeting a criterion
+c) To look up values
+d) To combine text
+Answer: b) To count cells meeting a criterion
+Explanation: COUNTIF counts cells in a range that meet a specified condition, like values greater than 10.
+
+18. Which Excel feature visualizes data trends?
+a) PivotTable
+b) Chart
+c) Data Validation
+d) VBA
+Answer: b) Chart
+Explanation: Charts (e.g., line, bar) visualize data trends and patterns for better interpretation.
+
+19. What does the SUMIF function do?
+a) Counts cells
+b) Sums values meeting a criterion
+c) Looks up values
+d) Rounds numbers
+Answer: b) Sums values meeting a criterion
+Explanation: SUMIF adds values in a range that meet a specified condition.
+
+20. Which Excel tool is used for regression analysis?
+a) PivotTable
+b) Data Analysis ToolPak
+c) Conditional Formatting
+d) Goal Seek
+Answer: b) Data Analysis ToolPak
+Explanation: The Data Analysis ToolPak provides tools like regression and descriptive statistics for data analysis.
+
+21. What is the purpose of the TEXT function?
+a) To sum values
+b) To format numbers as text
+c) To count cells
+d) To look up values
+Answer: b) To format numbers as text
+Explanation: TEXT formats numbers or dates into a specified text format, like "MM/DD/YYYY".
+
+22. Which VBA object represents an Excel worksheet?
+a) Workbook
+b) Worksheet
+c) Range
+d) Cell
+Answer: b) Worksheet
+Explanation: The Worksheet object in VBA represents a single worksheet in an Excel workbook.
+
+23. What does the AND function do?
+a) Combines text
+b) Checks multiple conditions
+c) Sums values
+d) Looks up values
+Answer: b) Checks multiple conditions
+Explanation: AND returns TRUE if all specified conditions are true, often used with IF.
+
+24. Which Excel feature filters data in a PivotTable?
+a) Slicer
+b) Chart
+c) Conditional Formatting
+d) Data Validation
+Answer: a) Slicer
+Explanation: Slicers provide an interactive way to filter data in PivotTables.
+
+25. What is the purpose of the XLOOKUP function?
+a) To count cells
+b) To replace VLOOKUP with more flexibility
+c) To sum values
+d) To combine text
+Answer: b) To replace VLOOKUP with more flexibility
+Explanation: XLOOKUP is a modern lookup function that offers more flexibility than VLOOKUP and HLOOKUP.
+
+26. Which VBA method saves a workbook?
+a) Save
+b) Close
+c) Open
+d) Write
+Answer: a) Save
+Explanation: The Save method of the Workbook object saves the current workbook in VBA.
+
+27. What does the POWER function do?
+a) Raises a number to a power
+b) Counts cells
+c) Combines text
+d) Looks up values
+Answer: a) Raises a number to a power
+Explanation: POWER raises a number to a specified exponent, e.g., POWER(2,3) returns 8.
+
+28. Which Excel tool creates interactive dashboards?
+a) PivotTable
+b) Slicer
+c) Power Query
+d) Power Pivot
+Answer: d) Power Pivot
+Explanation: Power Pivot enables advanced data modeling and interactive dashboards using DAX formulas.
+
+29. What is the purpose of Power Query in Excel?
+a) To write VBA code
+b) To transform and import data
+c) To create charts
+d) To summarize data
+Answer: b) To transform and import data
+Explanation: Power Query is used to import, clean, and transform data from various sources in Excel.
+
+30. Which function calculates the standard deviation of a range?
+a) STDEV.P
+b) AVERAGE
+c) SUM
+d) COUNT
+Answer: a) STDEV.P
+Explanation: STDEV.P calculates the standard deviation for an entire population, while STDEV.S is for a sample.
+            `;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'excel_exam_30q.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>

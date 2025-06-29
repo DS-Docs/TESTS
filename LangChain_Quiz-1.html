@@ -1,0 +1,867 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Science & Generative AI Exam</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        h2 {
+            color: #2980b9;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question p {
+            font-weight: bold;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .answer {
+            display: none;
+            background-color: #e8f4f9;
+            padding: 10px;
+            border-left: 4px solid #2980b9;
+            margin-top: 10px;
+        }
+        .timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #e74c3c;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        .download-btn {
+            display: block;
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px 20px;
+            background: #27ae60;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .download-btn:hover {
+            background: #219653;
+        }
+        .toggle-btn {
+            cursor: pointer;
+            color: #2980b9;
+            text-decoration: underline;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        code {
+            font-family: Consolas, monospace;
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="timer" id="timer">30:00</div>
+    <div class="container">
+        <h1>Data Science & Generative AI by SATISH @ Sathya Technologies</h1>
+        <h2>LangChain Programming Exam (30 Minutes)</h2>
+        
+        <div class="question">
+            <p>1. What is LangChain primarily used for?</p>
+            <div class="options">
+                <p>a) Building image processing pipelines</p>
+                <p>b) Developing applications with LLMs</p>
+                <p>c) Data visualization</p>
+                <p>d) Database management</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(1)">Show Answer</span>
+            <div class="answer" id="answer1">
+                <p><strong>Answer:</strong> b) Developing applications with LLMs</p>
+                <p><strong>Explanation:</strong> LangChain is a framework for building applications powered by LLMs, enabling context-aware and interactive solutions.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>2. Which component in LangChain represents a sequence of operations?</p>
+            <div class="options">
+                <p>a) Agent</p>
+                <p>b) Chain</p>
+                <p>c) Tool</p>
+                <p>d) Memory</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(2)">Show Answer</span>
+            <div class="answer" id="answer2">
+                <p><strong>Answer:</strong> b) Chain</p>
+                <p><strong>Explanation:</strong> A Chain in LangChain combines LLMs, prompts, and other components into a sequence of operations.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>3. What is the purpose of the <code>LLMChain</code> class in LangChain?</p>
+            <div class="options">
+                <p>a) To manage memory</p>
+                <p>b) To combine an LLM with a prompt</p>
+                <p>c) To execute external tools</p>
+                <p>d) To retrieve documents</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(3)">Show Answer</span>
+            <div class="answer" id="answer3">
+                <p><strong>Answer:</strong> b) To combine an LLM with a prompt</p>
+                <p><strong>Explanation:</strong> <code>LLMChain</code> integrates a language model with a prompt template for structured interactions.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>4. Which LangChain module is used for prompt engineering?</p>
+            <div class="options">
+                <p>a) <code>langchain.prompts</code></p>
+                <p>b) <code>langchain.agents</code></p>
+                <p>c) <code>langchain.tools</code></p>
+                <p>d) <code>langchain.memory</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(4)">Show Answer</span>
+            <div class="answer" id="answer4">
+                <p><strong>Answer:</strong> a) <code>langchain.prompts</code></p>
+                <p><strong>Explanation:</strong> The <code>langchain.prompts</code> module provides tools like <code>PromptTemplate</code> for crafting LLM inputs.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>5. What does <code>PromptTemplate</code> do in LangChain?</p>
+            <div class="options">
+                <p>a) Executes external tools</p>
+                <p>b) Formats input strings for LLMs</p>
+                <p>c) Manages conversation history</p>
+                <p>d) Retrieves documents</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(5)">Show Answer</span>
+            <div class="answer" id="answer5">
+                <p><strong>Answer:</strong> b) Formats input strings for LLMs</p>
+                <p><strong>Explanation:</strong> <code>PromptTemplate</code> creates reusable templates for structuring LLM prompts with dynamic inputs.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>6. Which LangChain component enables LLMs to use external tools?</p>
+            <div class="options">
+                <p>a) Chain</p>
+                <p>b) Agent</p>
+                <p>c) Memory</p>
+                <p>d) Retriever</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(6)">Show Answer</span>
+            <div class="answer" id="answer6">
+                <p><strong>Answer:</strong> b) Agent</p>
+                <p><strong>Explanation:</strong> Agents in LangChain allow LLMs to interact with external tools like APIs or search engines.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>7. What is the purpose of the <code>ConversationChain</code> in LangChain?</p>
+            <div class="options">
+                <p>a) To retrieve documents</p>
+                <p>b) To manage conversational memory</p>
+                <p>c) To execute tools</p>
+                <p>d) To fine-tune LLMs</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(7)">Show Answer</span>
+            <div class="answer" id="answer7">
+                <p><strong>Answer:</strong> b) To manage conversational memory</p>
+                <p><strong>Explanation:</strong> <code>ConversationChain</code> integrates memory to maintain context in conversational applications.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>8. Which class provides memory for conversation history in LangChain?</p>
+            <div class="options">
+                <p>a) <code>ConversationBufferMemory</code></p>
+                <p>b) <code>PromptTemplate</code></p>
+                <p>c) <code>AgentExecutor</code></p>
+                <p>d) <code>VectorStore</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(8)">Show Answer</span>
+            <div class="answer" id="answer8">
+                <p><strong>Answer:</strong> a) <code>ConversationBufferMemory</code></p>
+                <p><strong>Explanation:</strong> <code>ConversationBufferMemory</code> stores and retrieves conversation history for context-aware responses.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>9. What is Retrieval-Augmented Generation (RAG) in LangChain?</p>
+            <div class="options">
+                <p>a) A fine-tuning technique</p>
+                <p>b) Combining LLMs with external knowledge retrieval</p>
+                <p>c) A text generation algorithm</p>
+                <p>d) A prompt engineering method</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(9)">Show Answer</span>
+            <div class="answer" id="answer9">
+                <p><strong>Answer:</strong> b) Combining LLMs with external knowledge retrieval</p>
+                <p><strong>Explanation:</strong> RAG integrates document retrieval with LLM generation to provide contextually relevant answers.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>10. Which LangChain component is used for document retrieval?</p>
+            <div class="options">
+                <p>a) <code>Agent</code></p>
+                <p>b) <code>Retriever</code></p>
+                <p>c) <code>Chain</code></p>
+                <p>d) <code>Tool</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(10)">Show Answer</span>
+            <div class="answer" id="answer10">
+                <p><strong>Answer:</strong> b) <code>Retriever</code></p>
+                <p><strong>Explanation:</strong> Retrievers fetch relevant documents from a data source to enhance LLM responses in RAG setups.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>11. What is the role of <code>VectorStore</code> in LangChain?</p>
+            <div class="options">
+                <p>a) To store conversation history</p>
+                <p>b) To store document embeddings for retrieval</p>
+                <p>c) To execute external tools</p>
+                <p>d) To fine-tune LLMs</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(11)">Show Answer</span>
+            <div class="answer" id="answer11">
+                <p><strong>Answer:</strong> b) To store document embeddings for retrieval</p>
+                <p><strong>Explanation:</strong> <code>VectorStore</code> stores document embeddings to enable efficient similarity-based retrieval.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>12. Which LangChain class runs an agent with tools?</p>
+            <div class="options">
+                <p>a) <code>LLMChain</code></p>
+                <p>b) <code>AgentExecutor</code></p>
+                <p>c) <code>ConversationChain</code></p>
+                <p>d) <code>PromptTemplate</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(12)">Show Answer</span>
+            <div class="answer" id="answer12">
+                <p><strong>Answer:</strong> b) <code>AgentExecutor</code></p>
+                <p><strong>Explanation:</strong> <code>AgentExecutor</code> manages the execution of an agent with access to tools and LLMs.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>13. What does the <code>ChatPromptTemplate</code> do in LangChain?</p>
+            <div class="options">
+                <p>a) Executes tools</p>
+                <p>b) Formats prompts for chat-based interactions</p>
+                <p>c) Retrieves documents</p>
+                <p>d) Manages memory</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(13)">Show Answer</span>
+            <div class="answer" id="answer13">
+                <p><strong>Answer:</strong> b) Formats prompts for chat-based interactions</p>
+                <p><strong>Explanation:</strong> <code>ChatPromptTemplate</code> structures prompts for conversational models, supporting roles like user and assistant.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>14. Which memory type stores a fixed number of recent messages?</p>
+            <div class="options">
+                <p>a) <code>ConversationBufferMemory</code></p>
+                <p>b) <code>ConversationBufferWindowMemory</code></p>
+                <p>c) <code>ConversationSummaryMemory</code></p>
+                <p>d) <code>VectorStore</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(14)">Show Answer</span>
+            <div class="answer" id="answer14">
+                <p><strong>Answer:</strong> b) <code>ConversationBufferWindowMemory</code></p>
+                <p><strong>Explanation:</strong> <code>ConversationBufferWindowMemory</code> retains only a fixed number of recent messages for context.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>15. What is the purpose of the <code>langchain.tools</code> module?</p>
+            <div class="options">
+                <p>a) To manage prompts</p>
+                <p>b) To provide external tool integrations</p>
+                <p>c) To store embeddings</p>
+                <p>d) To fine-tune LLMs</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(15)">Show Answer</span>
+            <div class="answer" id="answer15">
+                <p><strong>Answer:</strong> b) To provide external tool integrations</p>
+                <p><strong>Explanation:</strong> The <code>langchain.tools</code> module defines tools like search or APIs for agents to use.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>16. Which LangChain component integrates with external data sources?</p>
+            <div class="options">
+                <p>a) <code>Chain</code></p>
+                <p>b) <code>Retriever</code></p>
+                <p>c) <code>Agent</code></p>
+                <p>d) <code>PromptTemplate</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(16)">Show Answer</span>
+            <div class="answer" id="answer16">
+                <p><strong>Answer:</strong> b) <code>Retriever</code></p>
+                <p><strong>Explanation:</strong> Retrievers connect to external data sources like vector stores for document retrieval.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>17. What does the <code>ConversationalRetrievalChain</code> do?</p>
+            <div class="options">
+                <p>a) Generates text without context</p>
+                <p>b) Combines retrieval with conversational memory</p>
+                <p>c) Executes external tools</p>
+                <p>d) Formats prompts</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(17)">Show Answer</span>
+            <div class="answer" id="answer17">
+                <p><strong>Answer:</strong> b) Combines retrieval with conversational memory</p>
+                <p><strong>Explanation:</strong> <code>ConversationalRetrievalChain</code> integrates RAG with memory for context-aware conversations.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>18. Which LangChain class summarizes conversation history?</p>
+            <div class="options">
+                <p>a) <code>ConversationBufferMemory</code></p>
+                <p>b) <code>ConversationSummaryMemory</code></p>
+                <p>c) <code>ConversationBufferWindowMemory</code></p>
+                <p>d) <code>VectorStore</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(18)">Show Answer</span>
+            <div class="answer" id="answer18">
+                <p><strong>Answer:</strong> b) <code>ConversationSummaryMemory</code></p>
+                <p><strong>Explanation:</strong> <code>ConversationSummaryMemory</code> uses an LLM to summarize conversation history for efficient context retention.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>19. What is the purpose of the <code>initialize_agent</code> function?</p>
+            <div class="options">
+                <p>a) To create a prompt template</p>
+                <p>b) To set up an agent with tools and LLM</p>
+                <p>c) To retrieve documents</p>
+                <p>d) To manage memory</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(19)">Show Answer</span>
+            <div class="answer" id="answer19">
+                <p><strong>Answer:</strong> b) To set up an agent with tools and LLM</p>
+                <p><strong>Explanation:</strong> <code>initialize_agent</code> configures an agent with an LLM, tools, and a prompt for execution.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>20. Which vector store is commonly used with LangChain for RAG?</p>
+            <div class="options">
+                <p>a) <code>FAISS</code></p>
+                <p>b) <code>PromptTemplate</code></p>
+                <p>c) <code>LLMChain</code></p>
+                <p>d) <code>AgentExecutor</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(20)">Show Answer</span>
+            <div class="answer" id="answer20">
+                <p><strong>Answer:</strong> a) <code>FAISS</code></p>
+                <p><strong>Explanation:</strong> <code>FAISS</code> is a popular vector store for storing and retrieving document embeddings in LangChain.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>21. What does the <code>langchain.document_loaders</code> module do?</p>
+            <div class="options">
+                <p>a) Loads external tools</p>
+                <p>b) Loads documents from various sources</p>
+                <p>c) Formats prompts</p>
+                <p>d) Manages memory</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(21)">Show Answer</span>
+            <div class="answer" id="answer21">
+                <p><strong>Answer:</strong> b) Loads documents from various sources</p>
+                <p><strong>Explanation:</strong> <code>langchain.document_loaders</code> provides classes to load documents from files, URLs, or databases.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>22. What is the purpose of the <code>TextSplitter</code> in LangChain?</p>
+            <div class="options">
+                <p>a) To generate text</p>
+                <p>b) To split documents into chunks</p>
+                <p>c) To execute tools</p>
+                <p>d) To manage memory</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(22)">Show Answer</span>
+            <div class="answer" id="answer22">
+                <p><strong>Answer:</strong> b) To split documents into chunks</p>
+                <p><strong>Explanation:</strong> <code>TextSplitter</code> divides large documents into smaller chunks for efficient processing in RAG.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>23. Which LangChain tool integrates with search engines?</p>
+            <div class="options">
+                <p>a) <code>SerpAPI</code></p>
+                <p>b) <code>FAISS</code></p>
+                <p>c) <code>PromptTemplate</code></p>
+                <p>d) <code>ConversationChain</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(23)">Show Answer</span>
+            <div class="answer" id="answer23">
+                <p><strong>Answer:</strong> a) <code>SerpAPI</code></p>
+                <p><strong>Explanation:</strong> <code>SerpAPI</code> is a LangChain tool that enables agents to query search engines like Google.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>24. What is the role of the <code>Chroma</code> vector store in LangChain?</p>
+            <div class="options">
+                <p>a) To manage conversation history</p>
+                <p>b) To store and retrieve document embeddings</p>
+                <p>c) To execute external tools</p>
+                <p>d) To format prompts</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(24)">Show Answer</span>
+            <div class="answer" id="answer24">
+                <p><strong>Answer:</strong> b) To store and retrieve document embeddings</p>
+                <p><strong>Explanation:</strong> <code>Chroma</code> is an open-source vector store for storing and querying document embeddings.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>25. Which method runs a LangChain chain?</p>
+            <div class="options">
+                <p>a) <code>run()</code></p>
+                <p>b) <code>generate()</code></p>
+                <p>c) <code>evaluate()</code></p>
+                <p>d) <code>fit()</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(25)">Show Answer</span>
+            <div class="answer" id="answer25">
+                <p><strong>Answer:</strong> a) <code>run()</code></p>
+                <p><strong>Explanation:</strong> The <code>run()</code> method executes a LangChain chain with provided inputs.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>26. What is the purpose of the <code>langchain.embeddings</code> module?</p>
+            <div class="options">
+                <p>a) To generate text</p>
+                <p>b) To create embeddings for text</p>
+                <p>c) To execute tools</p>
+                <p>d) To manage memory</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(26)">Show Answer</span>
+            <div class="answer" id="answer26">
+                <p><strong>Answer:</strong> b) To create embeddings for text</p>
+                <p><strong>Explanation:</strong> <code>langchain.embeddings</code> provides classes to generate text embeddings for use in vector stores.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>27. Which LangChain class integrates with Hugging Face models?</p>
+            <div class="options">
+                <p>a) <code>HuggingFaceHub</code></p>
+                <p>b) <code>ConversationChain</code></p>
+                <p>c) <code>VectorStore</code></p>
+                <p>d) <code>TextSplitter</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(27)">Show Answer</span>
+            <div class="answer" id="answer27">
+                <p><strong>Answer:</strong> a) <code>HuggingFaceHub</code></p>
+                <p><strong>Explanation:</strong> <code>HuggingFaceHub</code> enables LangChain to use models from the Hugging Face hub.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>28. What is the purpose of the <code>load_tools</code> function in LangChain?</p>
+            <div class="options">
+                <p>a) To load prompt templates</p>
+                <p>b) To load external tools for agents</p>
+                <p>c) To load document embeddings</p>
+                <p>d) To load conversation history</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(28)">Show Answer</span>
+            <div class="answer" id="answer28">
+                <p><strong>Answer:</strong> b) To load external tools for agents</p>
+                <p><strong>Explanation:</strong> <code>load_tools</code> initializes tools like <code>SerpAPI</code> for use by LangChain agents.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>29. Which LangChain component supports multi-step reasoning?</p>
+            <div class="options">
+                <p>a) <code>PromptTemplate</code></p>
+                <p>b) <code>Agent</code></p>
+                <p>c) <code>VectorStore</code></p>
+                <p>d) <code>TextSplitter</code></p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(29)">Show Answer</span>
+            <div class="answer" id="answer29">
+                <p><strong>Answer:</strong> b) <code>Agent</code></p>
+                <p><strong>Explanation:</strong> Agents use LLMs and tools to perform multi-step reasoning for complex tasks.</p>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>30. What is the role of the <code>langchain.chains</code> module?</p>
+            <div class="options">
+                <p>a) To manage document retrieval</p>
+                <p>b) To define sequences of operations</p>
+                <p>c) To create embeddings</p>
+                <p>d) To execute external tools</p>
+            </div>
+            <span class="toggle-btn" onclick="toggleAnswer(30)">Show Answer</span>
+            <div class="answer" id="answer30">
+                <p><strong>Answer:</strong> b) To define sequences of operations</p>
+                <p><strong>Explanation:</strong> The <code>langchain.chains</code> module provides classes like <code>LLMChain</code> to create workflows with LLMs.</p>
+            </div>
+        </div>
+
+        <a href="#" class="download-btn" onclick="downloadTest()">Download Exam (TXT)</a>
+    </div>
+
+    <script>
+        // Timer functionality
+        let timeLeft = 30 * 60; // 30 minutes in seconds
+        const timerDisplay = document.getElementById('timer');
+        
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                timerDisplay.textContent = "Time's Up!";
+                alert("Time is up!");
+            } else {
+                timeLeft--;
+            }
+        }
+        const timerInterval = setInterval(updateTimer, 1000);
+
+        // Toggle answer visibility
+        function toggleAnswer(id) {
+            const answer = document.getElementById(`answer${id}`);
+            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Download exam as a text file
+        function downloadTest() {
+            const content = `
+Data Science & Generative AI by SATISH @ Sathya Technologies
+LangChain Programming Exam (30 Minutes)
+
+1. What is LangChain primarily used for?
+a) Building image processing pipelines
+b) Developing applications with LLMs
+c) Data visualization
+d) Database management
+Answer: b) Developing applications with LLMs
+Explanation: LangChain is a framework for building applications powered by LLMs, enabling context-aware and interactive solutions.
+
+2. Which component in LangChain represents a sequence of operations?
+a) Agent
+b) Chain
+c) Tool
+d) Memory
+Answer: b) Chain
+Explanation: A Chain in LangChain combines LLMs, prompts, and other components into a sequence of operations.
+
+3. What is the purpose of the LLMChain class in LangChain?
+a) To manage memory
+b) To combine an LLM with a prompt
+c) To execute external tools
+d) To retrieve documents
+Answer: b) To combine an LLM with a prompt
+Explanation: LLMChain integrates a language model with a prompt template for structured interactions.
+
+4. Which LangChain module is used for prompt engineering?
+a) langchain.prompts
+b) langchain.agents
+c) langchain.tools
+d) langchain.memory
+Answer: a) langchain.prompts
+Explanation: The langchain.prompts module provides tools like PromptTemplate for crafting LLM inputs.
+
+5. What does PromptTemplate do in LangChain?
+a) Executes tools
+b) Formats input strings for LLMs
+c) Manages conversation history
+d) Retrieves documents
+Answer: b) Formats input strings for LLMs
+Explanation: PromptTemplate creates reusable templates for structuring LLM prompts with dynamic inputs.
+
+6. Which LangChain component enables LLMs to use external tools?
+a) Chain
+b) Agent
+c) Memory
+d) Retriever
+Answer: b) Agent
+Explanation: Agents in LangChain allow LLMs to interact with external tools like APIs or search engines.
+
+7. What is the purpose of the ConversationChain in LangChain?
+a) To retrieve documents
+b) To manage conversational memory
+c) To execute tools
+d) To fine-tune LLMs
+Answer: b) To manage conversational memory
+Explanation: ConversationChain integrates memory to maintain context in conversational applications.
+
+8. Which class provides memory for conversation history in LangChain?
+a) ConversationBufferMemory
+b) PromptTemplate
+c) AgentExecutor
+d) VectorStore
+Answer: a) ConversationBufferMemory
+Explanation: ConversationBufferMemory stores and retrieves conversation history for context-aware responses.
+
+9. What is Retrieval-Augmented Generation (RAG) in LangChain?
+a) A fine-tuning technique
+b) Combining LLMs with external knowledge retrieval
+c) A text generation algorithm
+d) A prompt engineering method
+Answer: b) Combining LLMs with external knowledge retrieval
+Explanation: RAG integrates document retrieval with LLM generation to provide contextually relevant answers.
+
+10. Which LangChain component is used for document retrieval?
+a) Agent
+b) Retriever
+c) Chain
+d) Tool
+Answer: b) Retriever
+Explanation: Retrievers fetch relevant documents from a data source to enhance LLM responses in RAG setups.
+
+11. What is the role of VectorStore in LangChain?
+a) To store conversation history
+b) To store document embeddings for retrieval
+c) To execute external tools
+d) To fine-tune LLMs
+Answer: b) To store document embeddings for retrieval
+Explanation: VectorStore stores document embeddings to enable efficient similarity-based retrieval.
+
+12. Which LangChain class runs an agent with tools?
+a) LLMChain
+b) AgentExecutor
+c) ConversationChain
+d) PromptTemplate
+Answer: b) AgentExecutor
+Explanation: AgentExecutor manages the execution of an agent with access to tools and LLMs.
+
+13. What does the ChatPromptTemplate do in LangChain?
+a) Executes tools
+b) Formats prompts for chat-based interactions
+c) Retrieves documents
+d) Manages memory
+Answer: b) Formats prompts for chat-based interactions
+Explanation: ChatPromptTemplate structures prompts for conversational models, supporting roles like user and assistant.
+
+14. Which memory type stores a fixed number of recent messages?
+a) ConversationBufferMemory
+b) ConversationBufferWindowMemory
+c) ConversationSummaryMemory
+d) VectorStore
+Answer: b) ConversationBufferWindowMemory
+Explanation: ConversationBufferWindowMemory retains only a fixed number of recent messages for context.
+
+15. What is the purpose of the langchain.tools module?
+a) To manage prompts
+b) To provide external tool integrations
+c) To store embeddings
+d) To fine-tune LLMs
+Answer: b) To provide external tool integrations
+Explanation: The langchain.tools module defines tools like search or APIs for agents to use.
+
+16. Which LangChain component integrates with external data sources?
+a) Chain
+b) Retriever
+c) Agent
+d) PromptTemplate
+Answer: b) Retriever
+Explanation: Retrievers connect to external data sources like vector stores for document retrieval.
+
+17. What does the ConversationalRetrievalChain do?
+a) Generates text without context
+b) Combines retrieval with conversational memory
+c) Executes external tools
+d) Formats prompts
+Answer: b) Combines retrieval with conversational memory
+Explanation: ConversationalRetrievalChain integrates RAG with memory for context-aware conversations.
+
+18. Which LangChain class summarizes conversation history?
+a) ConversationBufferMemory
+b) ConversationSummaryMemory
+c) ConversationBufferWindowMemory
+d) VectorStore
+Answer: b) ConversationSummaryMemory
+Explanation: ConversationSummaryMemory uses an LLM to summarize conversation history for efficient context retention.
+
+19. What is the purpose of the initialize_agent function?
+a) To create a prompt template
+b) To set up an agent with tools and LLM
+c) To retrieve documents
+d) To manage memory
+Answer: b) To set up an agent with tools and LLM
+Explanation: initialize_agent configures an agent with an LLM, tools, and a prompt for execution.
+
+20. Which vector store is commonly used with LangChain for RAG?
+a) FAISS
+b) PromptTemplate
+c) LLMChain
+d) AgentExecutor
+Answer: a) FAISS
+Explanation: FAISS is a popular vector store for storing and retrieving document embeddings in LangChain.
+
+21. What does the langchain.document_loaders module do?
+a) Loads external tools
+b) Loads documents from various sources
+c) Formats prompts
+d) Manages memory
+Answer: b) Loads documents from various sources
+Explanation: langchain.document_loaders provides classes to load documents from files, URLs, or databases.
+
+22. What is the purpose of the TextSplitter in LangChain?
+a) To generate text
+b) To split documents into chunks
+c) To execute tools
+d) To manage memory
+Answer: b) To split documents into chunks
+Explanation: TextSplitter divides large documents into smaller chunks for efficient processing in RAG.
+
+23. Which LangChain tool integrates with search engines?
+a) SerpAPI
+b) FAISS
+c) PromptTemplate
+d) ConversationChain
+Answer: a) SerpAPI
+Explanation: SerpAPI is a LangChain tool that enables agents to query search engines like Google.
+
+24. What is the role of the Chroma vector store in LangChain?
+a) To manage conversation history
+b) To store and retrieve document embeddings
+c) To execute external tools
+d) To format prompts
+Answer: b) To store and retrieve document embeddings
+Explanation: Chroma is an open-source vector store for storing and querying document embeddings.
+
+25. Which method runs a LangChain chain?
+a) run()
+b) generate()
+c) evaluate()
+d) fit()
+Answer: a) run()
+Explanation: The run() method executes a LangChain chain with provided inputs.
+
+26. What is the purpose of the langchain.embeddings module?
+a) To generate text
+b) To create embeddings for text
+c) To execute tools
+d) To manage memory
+Answer: b) To create embeddings for text
+Explanation: langchain.embeddings provides classes to generate text embeddings for use in vector stores.
+
+27. Which LangChain class integrates with Hugging Face models?
+a) HuggingFaceHub
+b) ConversationChain
+c) VectorStore
+d) TextSplitter
+Answer: a) HuggingFaceHub
+Explanation: HuggingFaceHub enables LangChain to use models from the Hugging Face hub.
+
+28. What is the purpose of the load_tools function in LangChain?
+a) To load prompt templates
+b) To load external tools for agents
+c) To load document embeddings
+d) To load conversation history
+Answer: b) To load external tools for agents
+Explanation: load_tools initializes tools like SerpAPI for use by LangChain agents.
+
+29. Which LangChain component supports multi-step reasoning?
+a) PromptTemplate
+b) Agent
+c) VectorStore
+d) TextSplitter
+Answer: b) Agent
+Explanation: Agents use LLMs and tools to perform multi-step reasoning for complex tasks.
+
+30. What is the role of the langchain.chains module?
+a) To manage document retrieval
+b) To define sequences of operations
+c) To create embeddings
+d) To execute external tools
+Answer: b) To define sequences of operations
+Explanation: The langchain.chains module provides classes like LLMChain to create workflows with LLMs.
+            `;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'langchain_exam_30q.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>

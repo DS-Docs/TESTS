@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Analyst Exam - Data Science & Generative AI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .timer {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #e74c3c;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-left: 3px solid #3498db;
+            background-color: #f9f9f9;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .answer {
+            color: #27ae60;
+            font-weight: bold;
+            margin-top: 5px;
+            display: none;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Data Science & Generative AI by SATISH @ Sathya Technologies</h1>
+    <div class="timer" id="timer">30:00</div>
+    
+    <div class="controls">
+        <button onclick="showAllAnswers()">Show All Answers</button>
+        <button onclick="hideAllAnswers()">Hide All Answers</button>
+        <button onclick="window.print()">Print Exam</button>
+    </div>
+
+    <div id="exam">
+        <div class="question">
+            <p>1. What is the primary purpose of data cleaning in data analysis?</p>
+            <div class="options">
+                A) To make data look more organized<br>
+                B) To remove all outliers from the dataset<br>
+                C) To ensure data quality and consistency<br>
+                D) To reduce the size of the dataset
+            </div>
+            <div class="answer">Answer: C) To ensure data quality and consistency</div>
+        </div>
+
+        <div class="question">
+            <p>2. Which of the following is NOT a common data type in data analysis?</p>
+            <div class="options">
+                A) Integer<br>
+                B) Float<br>
+                C) String<br>
+                D) Loop
+            </div>
+            <div class="answer">Answer: D) Loop</div>
+        </div>
+
+        <div class="question">
+            <p>3. What is the first step in the data analysis process?</p>
+            <div class="options">
+                A) Data visualization<br>
+                B) Data cleaning<br>
+                C) Problem definition<br>
+                D) Model building
+            </div>
+            <div class="answer">Answer: C) Problem definition</div>
+        </div>
+
+        <div class="question">
+            <p>4. In SQL, which clause is used to filter data?</p>
+            <div class="options">
+                A) SELECT<br>
+                B) FROM<br>
+                C) WHERE<br>
+                D) GROUP BY
+            </div>
+            <div class="answer">Answer: C) WHERE</div>
+        </div>
+
+        <div class="question">
+            <p>5. What does ETL stand for in data analysis?</p>
+            <div class="options">
+                A) Extract, Transform, Load<br>
+                B) Enter, Test, Leave<br>
+                C) Evaluate, Transfer, Loop<br>
+                D) Export, Translate, Link
+            </div>
+            <div class="answer">Answer: A) Extract, Transform, Load</div>
+        </div>
+
+        <div class="question">
+            <p>6. Which of these is a common data visualization tool?</p>
+            <div class="options">
+                A) Tableau<br>
+                B) MySQL<br>
+                C) Hadoop<br>
+                D) Spark
+            </div>
+            <div class="answer">Answer: A) Tableau</div>
+        </div>
+
+        <div class="question">
+            <p>7. What is the purpose of a pivot table in Excel?</p>
+            <div class="options">
+                A) To create charts automatically<br>
+                B) To summarize and analyze data<br>
+                C) To clean data automatically<br>
+                D) To export data to other formats
+            </div>
+            <div class="answer">Answer: B) To summarize and analyze data</div>
+        </div>
+
+        <div class="question">
+            <p>8. Which Python library is primarily used for data manipulation and analysis?</p>
+            <div class="options">
+                A) NumPy<br>
+                B) Pandas<br>
+                C) Matplotlib<br>
+                D) Scikit-learn
+            </div>
+            <div class="answer">Answer: B) Pandas</div>
+        </div>
+
+        <div class="question">
+            <p>9. What is the main purpose of data normalization?</p>
+            <div class="options">
+                A) To reduce data storage requirements<br>
+                B) To eliminate redundant data<br>
+                C) To organize data into tables<br>
+                D) To scale numeric data to a common range
+            </div>
+            <div class="answer">Answer: D) To scale numeric data to a common range</div>
+        </div>
+
+        <div class="question">
+            <p>10. Which of these is NOT a common data quality issue?</p>
+            <div class="options">
+                A) Missing values<br>
+                B) Duplicate data<br>
+                C) Consistent formatting<br>
+                D) Outliers
+            </div>
+            <div class="answer">Answer: C) Consistent formatting</div>
+        </div>
+
+        <div class="question">
+            <p>11. What does the term "data wrangling" refer to?</p>
+            <div class="options">
+                A) The process of collecting data from multiple sources<br>
+                B) The process of cleaning and transforming raw data<br>
+                C) The process of visualizing data<br>
+                D) The process of storing data in databases
+            </div>
+            <div class="answer">Answer: B) The process of cleaning and transforming raw data</div>
+        </div>
+
+        <div class="question">
+            <p>12. In Python, what does the df.head() function do?</p>
+            <div class="options">
+                A) Displays the first 5 rows of a DataFrame<br>
+                B) Displays the column headers<br>
+                C) Displays summary statistics<br>
+                D) Displays the last 5 rows of a DataFrame
+            </div>
+            <div class="answer">Answer: A) Displays the first 5 rows of a DataFrame</div>
+        </div>
+
+        <div class="question">
+            <p>13. What is the purpose of A/B testing?</p>
+            <div class="options">
+                A) To compare two versions of something to determine which performs better<br>
+                B) To test the accuracy of a machine learning model<br>
+                C) To analyze time series data<br>
+                D) To clean datasets with missing values
+            </div>
+            <div class="answer">Answer: A) To compare two versions of something to determine which performs better</div>
+        </div>
+
+        <div class="question">
+            <p>14. Which SQL function is used to count the number of rows in a table?</p>
+            <div class="options">
+                A) SUM()<br>
+                B) AVG()<br>
+                C) COUNT()<br>
+                D) TOTAL()
+            </div>
+            <div class="answer">Answer: C) COUNT()</div>
+        </div>
+
+        <div class="question">
+            <p>15. What is the primary purpose of a dashboard in data analysis?</p>
+            <div class="options">
+                A) To store large amounts of data<br>
+                B) To visually track and display key metrics<br>
+                C) To clean and transform data<br>
+                D) To perform statistical tests
+            </div>
+            <div class="answer">Answer: B) To visually track and display key metrics</div>
+        </div>
+
+        <div class="question">
+            <p>16. Which of these is NOT a common data storage format?</p>
+            <div class="options">
+                A) CSV<br>
+                B) JSON<br>
+                C) XML<br>
+                D) JPG
+            </div>
+            <div class="answer">Answer: D) JPG</div>
+        </div>
+
+        <div class="question">
+            <p>17. What is the purpose of the GROUP BY clause in SQL?</p>
+            <div class="options">
+                A) To filter rows<br>
+                B) To sort results<br>
+                C) To group rows that have the same values<br>
+                D) To join tables together
+            </div>
+            <div class="answer">Answer: C) To group rows that have the same values</div>
+        </div>
+
+        <div class="question">
+            <p>18. Which Python library is commonly used for data visualization?</p>
+            <div class="options">
+                A) Pandas<br>
+                B) NumPy<br>
+                C) Matplotlib<br>
+                D) Scikit-learn
+            </div>
+            <div class="answer">Answer: C) Matplotlib</div>
+        </div>
+
+        <div class="question">
+            <p>19. What is the purpose of correlation analysis?</p>
+            <div class="options">
+                A) To predict future values<br>
+                B) To measure the strength of relationship between variables<br>
+                C) To clean missing data<br>
+                D) To categorize data into groups
+            </div>
+            <div class="answer">Answer: B) To measure the strength of relationship between variables</div>
+        </div>
+
+        <div class="question">
+            <p>20. What does KPI stand for in business analytics?</p>
+            <div class="options">
+                A) Key Performance Indicator<br>
+                B) Key Process Information<br>
+                C) Knowledge Performance Index<br>
+                D) Key Parameter Identification
+            </div>
+            <div class="answer">Answer: A) Key Performance Indicator</div>
+        </div>
+
+        <div class="question">
+            <p>21. Which of these is NOT a common machine learning algorithm?</p>
+            <div class="options">
+                A) Linear Regression<br>
+                B) Decision Tree<br>
+                C) Pivot Table<br>
+                D) Random Forest
+            </div>
+            <div class="answer">Answer: C) Pivot Table</div>
+        </div>
+
+        <div class="question">
+            <p>22. What is the purpose of data sampling?</p>
+            <div class="options">
+                A) To analyze the entire population<br>
+                B) To select a subset of data for analysis<br>
+                C) To clean the dataset<br>
+                D) To visualize the data
+            </div>
+            <div class="answer">Answer: B) To select a subset of data for analysis</div>
+        </div>
+
+        <div class="question">
+            <p>23. Which tool is commonly used for version control in data projects?</p>
+            <div class="options">
+                A) Excel<br>
+                B) Tableau<br>
+                C) Git<br>
+                D) Power BI
+            </div>
+            <div class="answer">Answer: C) Git</div>
+        </div>
+
+        <div class="question">
+            <p>24. What is the purpose of the HAVING clause in SQL?</p>
+            <div class="options">
+                A) To filter groups after aggregation<br>
+                B) To filter rows before grouping<br>
+                C) To sort the results<br>
+                D) To join tables together
+            </div>
+            <div class="answer">Answer: A) To filter groups after aggregation</div>
+        </div>
+
+        <div class="question">
+            <p>25. What is the main difference between supervised and unsupervised learning?</p>
+            <div class="options">
+                A) Supervised learning uses labeled data, unsupervised doesn't<br>
+                B) Supervised learning is faster than unsupervised<br>
+                C) Unsupervised learning always gives better results<br>
+                D) Supervised learning doesn't require data cleaning
+            </div>
+            <div class="answer">Answer: A) Supervised learning uses labeled data, unsupervised doesn't</div>
+        </div>
+
+        <div class="question">
+            <p>26. Which of these is NOT a common data analysis technique?</p>
+            <div class="options">
+                A) Regression analysis<br>
+                B) Cluster analysis<br>
+                C) Time series analysis<br>
+                D) Data deletion analysis
+            </div>
+            <div class="answer">Answer: D) Data deletion analysis</div>
+        </div>
+
+        <div class="question">
+            <p>27. What is the purpose of a data dictionary?</p>
+            <div class="options">
+                A) To store large amounts of data<br>
+                B) To document the structure and meaning of data elements<br>
+                C) To visualize data relationships<br>
+                D) To clean data automatically
+            </div>
+            <div class="answer">Answer: B) To document the structure and meaning of data elements</div>
+        </div>
+
+        <div class="question">
+            <p>28. Which of these is a common big data technology?</p>
+            <div class="options">
+                A) Hadoop<br>
+                B) Excel<br>
+                C) PowerPoint<br>
+                D) Word
+            </div>
+            <div class="answer">Answer: A) Hadoop</div>
+        </div>
+
+        <div class="question">
+            <p>29. What is the purpose of outlier detection in data analysis?</p>
+            <div class="options">
+                A) To remove all unusual data points<br>
+                B) To identify data points that differ significantly from others<br>
+                C) To make the data look more uniform<br>
+                D) To reduce the size of the dataset
+            </div>
+            <div class="answer">Answer: B) To identify data points that differ significantly from others</div>
+        </div>
+
+        <div class="question">
+            <p>30. What is the primary goal of exploratory data analysis (EDA)?</p>
+            <div class="options">
+                A) To build predictive models<br>
+                B) To summarize the main characteristics of the data<br>
+                C) To clean all data perfectly<br>
+                D) To create final reports
+            </div>
+            <div class="answer">Answer: B) To summarize the main characteristics of the data</div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button onclick="showAllAnswers()">Show All Answers</button>
+        <button onclick="hideAllAnswers()">Hide All Answers</button>
+        <button onclick="window.print()">Print Exam</button>
+    </div>
+
+    <script>
+        // Timer functionality
+        function startTimer(duration, display) {
+            let timer = duration, minutes, seconds;
+            const interval = setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    clearInterval(interval);
+                    alert("Time's up!");
+                    showAllAnswers();
+                }
+            }, 1000);
+        }
+
+        window.onload = function () {
+            const thirtyMinutes = 60 * 30,
+                display = document.querySelector('#timer');
+            startTimer(thirtyMinutes, display);
+        };
+
+        // Answer display functions
+        function showAllAnswers() {
+            const answers = document.querySelectorAll('.answer');
+            answers.forEach(answer => {
+                answer.style.display = 'block';
+            });
+        }
+
+        function hideAllAnswers() {
+            const answers = document.querySelectorAll('.answer');
+            answers.forEach(answer => {
+                answer.style.display = 'none';
+            });
+        }
+
+        // Toggle individual answers when clicking on questions
+        const questions = document.querySelectorAll('.question');
+        questions.forEach(question => {
+            question.addEventListener('click', function() {
+                const answer = this.querySelector('.answer');
+                if (answer.style.display === 'block') {
+                    answer.style.display = 'none';
+                } else {
+                    answer.style.display = 'block';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Science Exam</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .timer {
+            text-align: center;
+            font-size: 24px;
+            margin: 20px 0;
+            padding: 10px;
+            background: #3498db;
+            color: white;
+            border-radius: 5px;
+        }
+        .question {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .question-number {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .option {
+            margin: 5px 0;
+        }
+        .answers {
+            margin-top: 30px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            display: none;
+        }
+        .answers h2 {
+            color: #2c3e50;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+        .answer {
+            margin: 10px 0;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        @media print {
+            button, .timer {
+                display: none;
+            }
+            .answers {
+                display: block !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Data Science & Generative AI by SATISH @ Sathya Technologies</h1>
+        
+        <div class="timer" id="timer">30:00</div>
+        
+        <div class="exam">
+            <div class="question">
+                <div class="question-number">1. What is the primary goal of Principal Component Analysis (PCA)?</div>
+                <div class="options">
+                    <div class="option">A) To increase the dimensionality of the data</div>
+                    <div class="option">B) To reduce the dimensionality of the data while preserving variance</div>
+                    <div class="option">C) To classify data into categories</div>
+                    <div class="option">D) To predict continuous values</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">2. Which of the following is NOT a supervised learning algorithm?</div>
+                <div class="options">
+                    <div class="option">A) Linear Regression</div>
+                    <div class="option">B) Decision Trees</div>
+                    <div class="option">C) K-Means Clustering</div>
+                    <div class="option">D) Support Vector Machines</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">3. What does the term "overfitting" refer to in machine learning?</div>
+                <div class="options">
+                    <div class="option">A) When a model performs well on training data but poorly on unseen data</div>
+                    <div class="option">B) When a model is too simple to capture patterns in the data</div>
+                    <div class="option">C) When a model has too few parameters</div>
+                    <div class="option">D) When a model takes too long to train</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">4. Which evaluation metric would you use for an imbalanced classification problem?</div>
+                <div class="options">
+                    <div class="option">A) Accuracy</div>
+                    <div class="option">B) Precision-Recall curve</div>
+                    <div class="option">C) Mean Squared Error</div>
+                    <div class="option">D) R-squared</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">5. What is the purpose of a confusion matrix?</div>
+                <div class="options">
+                    <div class="option">A) To visualize the performance of a classification algorithm</div>
+                    <div class="option">B) To reduce dimensionality of the data</div>
+                    <div class="option">C) To normalize feature values</div>
+                    <div class="option">D) To optimize hyperparameters</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">6. Which Python library is primarily used for numerical computations in Data Science?</div>
+                <div class="options">
+                    <div class="option">A) Pandas</div>
+                    <div class="option">B) NumPy</div>
+                    <div class="option">C) Matplotlib</div>
+                    <div class="option">D) Scikit-learn</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">7. What is the main difference between bagging and boosting?</div>
+                <div class="options">
+                    <div class="option">A) Bagging builds models in parallel, while boosting builds them sequentially</div>
+                    <div class="option">B) Bagging reduces variance, while boosting reduces bias</div>
+                    <div class="option">C) Both A and B</div>
+                    <div class="option">D) There is no difference between them</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">8. Which of the following is NOT a type of cross-validation?</div>
+                <div class="options">
+                    <div class="option">A) K-Fold</div>
+                    <div class="option">B) Leave-One-Out</div>
+                    <div class="option">C) Stratified</div>
+                    <div class="option">D) Random Forest</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">9. What does NLP stand for in the context of Data Science?</div>
+                <div class="options">
+                    <div class="option">A) Natural Language Processing</div>
+                    <div class="option">B) Neural Learning Process</div>
+                    <div class="option">C) Numerical Linear Programming</div>
+                    <div class="option">D) Non-Linear Projection</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">10. Which activation function is commonly used in the output layer for binary classification?</div>
+                <div class="options">
+                    <div class="option">A) ReLU</div>
+                    <div class="option">B) Sigmoid</div>
+                    <div class="option">C) Tanh</div>
+                    <div class="option">D) Linear</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">11. What is the purpose of the 'dropout' layer in a neural network?</div>
+                <div class="options">
+                    <div class="option">A) To increase model complexity</div>
+                    <div class="option">B) To prevent overfitting by randomly deactivating neurons</div>
+                    <div class="option">C) To speed up training time</div>
+                    <div class="option">D) To normalize input data</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">12. Which algorithm would you use for recommendation systems?</div>
+                <div class="options">
+                    <div class="option">A) Collaborative Filtering</div>
+                    <div class="option">B) Decision Trees</div>
+                    <div class="option">C) Support Vector Machines</div>
+                    <div class="option">D) Linear Regression</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">13. What is the main advantage of using a ROC curve?</div>
+                <div class="options">
+                    <div class="option">A) It shows the trade-off between true positive rate and false positive rate</div>
+                    <div class="option">B) It measures the accuracy of a regression model</div>
+                    <div class="option">C) It helps in feature selection</div>
+                    <div class="option">D) It visualizes clustering results</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">14. Which of the following is NOT a generative AI model?</div>
+                <div class="options">
+                    <div class="option">A) GAN (Generative Adversarial Network)</div>
+                    <div class="option">B) VAE (Variational Autoencoder)</div>
+                    <div class="option">C) Transformer</div>
+                    <div class="option">D) SVM (Support Vector Machine)</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">15. What is the purpose of word embeddings in NLP?</div>
+                <div class="options">
+                    <div class="option">A) To convert text to numerical representations that capture semantic meaning</div>
+                    <div class="option">B) To count word frequencies in documents</div>
+                    <div class="option">C) To remove stop words from text</div>
+                    <div class="option">D) To perform part-of-speech tagging</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">16. Which technique is used to handle missing data in a dataset?</div>
+                <div class="options">
+                    <div class="option">A) Imputation</div>
+                    <div class="option">B) Normalization</div>
+                    <div class="option">C) Standardization</div>
+                    <div class="option">D) One-hot encoding</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">17. What is the main advantage of using a decision tree algorithm?</div>
+                <div class="options">
+                    <div class="option">A) It requires little data preparation</div>
+                    <div class="option">B) The results are easy to interpret and explain</div>
+                    <div class="option">C) It can handle both numerical and categorical data</div>
+                    <div class="option">D) All of the above</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">18. Which of the following is NOT a common data visualization technique?</div>
+                <div class="options">
+                    <div class="option">A) Histogram</div>
+                    <div class="option">B) Scatter plot</div>
+                    <div class="option">C) Box plot</div>
+                    <div class="option">D) K-means plot</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">19. What is the purpose of the 'learning rate' in gradient descent?</div>
+                <div class="options">
+                    <div class="option">A) To control how much the weights are updated during training</div>
+                    <div class="option">B) To determine the number of layers in a neural network</div>
+                    <div class="option">C) To select the activation function</div>
+                    <div class="option">D) To initialize the weights</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">20. Which of the following is true about the bias-variance tradeoff?</div>
+                <div class="options">
+                    <div class="option">A) Increasing model complexity reduces bias but increases variance</div>
+                    <div class="option">B) Decreasing model complexity increases bias but reduces variance</div>
+                    <div class="option">C) The ideal model balances bias and variance</div>
+                    <div class="option">D) All of the above</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">21. What is the main purpose of the Transformer architecture in NLP?</div>
+                <div class="options">
+                    <div class="option">A) To process sequential data using attention mechanisms</div>
+                    <div class="option">B) To perform image classification</div>
+                    <div class="option">C) To reduce dimensionality of text data</div>
+                    <div class="option">D) To visualize word embeddings</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">22. Which of the following is NOT a common data preprocessing step?</div>
+                <div class="options">
+                    <div class="option">A) Feature scaling</div>
+                    <div class="option">B) Feature engineering</div>
+                    <div class="option">C) Data augmentation</div>
+                    <div class="option">D) Model deployment</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">23. What is the main advantage of using a random forest over a single decision tree?</div>
+                <div class="options">
+                    <div class="option">A) It reduces overfitting by averaging multiple trees</div>
+                    <div class="option">B) It requires less computational resources</div>
+                    <div class="option">C) It always provides better accuracy</div>
+                    <div class="option">D) It doesn't require hyperparameter tuning</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">24. Which of the following is a key component of a GAN (Generative Adversarial Network)?</div>
+                <div class="options">
+                    <div class="option">A) Generator and Discriminator</div>
+                    <div class="option">B) Encoder and Decoder</div>
+                    <div class="option">C) Input and Output layers</div>
+                    <div class="option">D) None of the above</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">25. What does the term "feature engineering" refer to?</div>
+                <div class="options">
+                    <div class="option">A) The process of creating new features from raw data</div>
+                    <div class="option">B) The selection of machine learning algorithms</div>
+                    <div class="option">C) The visualization of data distributions</div>
+                    <div class="option">D) The deployment of models to production</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">26. Which metric would you use to evaluate a regression model?</div>
+                <div class="options">
+                    <div class="option">A) Mean Absolute Error (MAE)</div>
+                    <div class="option">B) Accuracy</div>
+                    <div class="option">C) F1 Score</div>
+                    <div class="option">D) Precision</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">27. What is the purpose of the 'softmax' function?</div>
+                <div class="options">
+                    <div class="option">A) To convert a vector of numbers into a probability distribution</div>
+                    <div class="option">B) To normalize input features</div>
+                    <div class="option">C) To perform feature selection</div>
+                    <div class="option">D) To calculate the gradient during backpropagation</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">28. Which of the following is NOT a common deep learning framework?</div>
+                <div class="options">
+                    <div class="option">A) TensorFlow</div>
+                    <div class="option">B) PyTorch</div>
+                    <div class="option">C) Keras</div>
+                    <div class="option">D) Scikit-learn</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">29. What is the main advantage of using transfer learning?</div>
+                <div class="options">
+                    <div class="option">A) It allows leveraging pre-trained models for new tasks with limited data</div>
+                    <div class="option">B) It reduces the need for data preprocessing</div>
+                    <div class="option">C) It eliminates the need for model evaluation</div>
+                    <div class="option">D) It works only for image classification tasks</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">30. Which of the following is a common technique for text generation in Generative AI?</div>
+                <div class="options">
+                    <div class="option">A) GPT (Generative Pre-trained Transformer)</div>
+                    <div class="option">B) CNN (Convolutional Neural Network)</div>
+                    <div class="option">C) KNN (K-Nearest Neighbors)</div>
+                    <div class="option">D) SVM (Support Vector Machine)</div>
+                </div>
+            </div>
+        </div>
+        
+        <button onclick="showAnswers()">Show Answers</button>
+        
+        <div class="answers" id="answers">
+            <h2>Answer Key</h2>
+            
+            <div class="answer"><strong>1.</strong> B) To reduce the dimensionality of the data while preserving variance</div>
+            <div class="answer"><strong>2.</strong> C) K-Means Clustering</div>
+            <div class="answer"><strong>3.</strong> A) When a model performs well on training data but poorly on unseen data</div>
+            <div class="answer"><strong>4.</strong> B) Precision-Recall curve</div>
+            <div class="answer"><strong>5.</strong> A) To visualize the performance of a classification algorithm</div>
+            <div class="answer"><strong>6.</strong> B) NumPy</div>
+            <div class="answer"><strong>7.</strong> C) Both A and B</div>
+            <div class="answer"><strong>8.</strong> D) Random Forest</div>
+            <div class="answer"><strong>9.</strong> A) Natural Language Processing</div>
+            <div class="answer"><strong>10.</strong> B) Sigmoid</div>
+            <div class="answer"><strong>11.</strong> B) To prevent overfitting by randomly deactivating neurons</div>
+            <div class="answer"><strong>12.</strong> A) Collaborative Filtering</div>
+            <div class="answer"><strong>13.</strong> A) It shows the trade-off between true positive rate and false positive rate</div>
+            <div class="answer"><strong>14.</strong> D) SVM (Support Vector Machine)</div>
+            <div class="answer"><strong>15.</strong> A) To convert text to numerical representations that capture semantic meaning</div>
+            <div class="answer"><strong>16.</strong> A) Imputation</div>
+            <div class="answer"><strong>17.</strong> D) All of the above</div>
+            <div class="answer"><strong>18.</strong> D) K-means plot</div>
+            <div class="answer"><strong>19.</strong> A) To control how much the weights are updated during training</div>
+            <div class="answer"><strong>20.</strong> D) All of the above</div>
+            <div class="answer"><strong>21.</strong> A) To process sequential data using attention mechanisms</div>
+            <div class="answer"><strong>22.</strong> D) Model deployment</div>
+            <div class="answer"><strong>23.</strong> A) It reduces overfitting by averaging multiple trees</div>
+            <div class="answer"><strong>24.</strong> A) Generator and Discriminator</div>
+            <div class="answer"><strong>25.</strong> A) The process of creating new features from raw data</div>
+            <div class="answer"><strong>26.</strong> A) Mean Absolute Error (MAE)</div>
+            <div class="answer"><strong>27.</strong> A) To convert a vector of numbers into a probability distribution</div>
+            <div class="answer"><strong>28.</strong> D) Scikit-learn</div>
+            <div class="answer"><strong>29.</strong> A) It allows leveraging pre-trained models for new tasks with limited data</div>
+            <div class="answer"><strong>30.</strong> A) GPT (Generative Pre-trained Transformer)</div>
+        </div>
+    </div>
+
+    <script>
+        // Timer functionality
+        function startTimer(duration, display) {
+            let timer = duration, minutes, seconds;
+            const interval = setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    clearInterval(interval);
+                    display.textContent = "TIME'S UP!";
+                    display.style.background = "#e74c3c";
+                    alert("Time's up! Please submit your answers.");
+                }
+            }, 1000);
+        }
+
+        window.onload = function () {
+            const thirtyMinutes = 60 * 30,
+                display = document.querySelector('#timer');
+            startTimer(thirtyMinutes, display);
+        };
+
+        // Show answers
+        function showAnswers() {
+            const answers = document.getElementById('answers');
+            answers.style.display = answers.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
+</body>
+</html>
